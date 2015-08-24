@@ -1,0 +1,36 @@
+@width: 300px;
+
+body {
+  overflow-x: hidden;
+}
+
+.slide-in {
+  position: absolute;
+
+  z-index: 1;
+  width: @width;
+  height: 100%;
+
+  &.left {
+    left: -@width;
+    transition: left 0.25s ease-in-out 0s;
+    &.open {
+      left: 0px;
+    }
+    border-right: 1px solid #dddddd;
+  }
+  &.right {
+    transition: right 0.25s ease-in-out 0s;
+    right: -@width;
+    &.open {
+      right: 0px;
+    }
+    border-left: 1px solid #dddddd;
+  }
+
+  >.container-fluid {
+    padding-top: 10px;
+    height: 100%;
+    background: white;
+  }
+}

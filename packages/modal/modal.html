@@ -1,0 +1,9 @@
+<body>
+ {{> modal}}
+</body>
+
+<template name="modal">
+  <div class="modal fade" id="modal">
+    {{> Template.dynamic template=template data=data}}
+  </div>
+</template>

@@ -1,3 +1,16 @@
 <template name="medialist">
-  
+  {{#with medialist}}
+    <h3>{{purpose}}</h3>
+    <div class="btn-group">
+        <a href="#" class="btn btn-primary" data-action="add-new">Add New</a>
+        <a href="#" data-target="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+        </ul>
+    </div>
+  {{/with}}
 </template>

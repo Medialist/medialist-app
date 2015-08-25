@@ -110,6 +110,8 @@
       "_": false,
       "$": false,
       "FlowRouter": false,
-      "BlazeLayout": false
+      "BlazeLayout": false,
+      "Spacebars": false,
+      "App": true
     }
 }

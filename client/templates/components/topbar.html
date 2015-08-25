@@ -5,8 +5,9 @@
       </div>
       <div class="navbar-collapse collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav navbar-left medialist-breadcrumbs">
-          <li><a href="#">Contacts</a></li>
-          <li><a href="#">Will Findlater</a></li>
+          {{#each breadcrumbs}}
+            <li><a href="{{getPath route}}">{{text}}</a></li>
+          {{/each}}
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="#"><i class="glyphicon glyphicon-plus"></i></a></li>

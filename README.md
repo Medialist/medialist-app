@@ -1,6 +1,26 @@
 # Medialist
 
-Data structure
+## Settings
+
+To run Medialists, you need to specify a *settings.json* and pass it as follows:
+
+*settings.json*
+```json
+{
+  "twitter": {
+    "consumer_key": "###",
+    "consumer_secret": "###",
+    "access_token_key": "###",
+    "access_token_secret": "###"
+  }
+}
+```
+
+```shell
+meteor --settings settings.json
+```
+
+## Data structure
 
 **medialist**
 

@@ -10,4 +10,7 @@ kadira:blaze-layout
 less
 nemo64:bootstrap
 material-design-less
+accounts-twitter
+service-configuration
+fortawesome:fontawesome
 tableflip:slide-ins

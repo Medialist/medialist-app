@@ -1,8 +1,17 @@
-.medialist-breadcrumbs {
-  li:not(:last-child):after {
-    content: '/';
-    position: absolute;
-    top: 20px;
-    right: 0;
+.navbar.topbar {
+  font-size:18px;
+  .navbar-brand {
+    line-height: 33px;
+  }
+  .medialist-breadcrumbs {
+    li > a {
+      line-height: 21px;
+    }
+    li:not(:last-child) a:after {
+      content: '>';
+      display:inline-block;
+      position:relative;
+      right:-0.8em;
+    }
   }
 }

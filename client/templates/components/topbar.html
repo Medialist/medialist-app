@@ -6,7 +6,7 @@
       <div class="navbar-collapse collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav navbar-left medialist-breadcrumbs">
           {{#each breadcrumbs}}
-            <li><a href="{{getPath route}}">{{text}}</a></li>
+            <li><a href="{{getPath route params queryParams}}">{{text}}</a></li>
           {{/each}}
         </ul>
         <ul class="nav navbar-nav navbar-right">

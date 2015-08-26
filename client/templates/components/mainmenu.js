@@ -1,5 +1,5 @@
 Template.mainmenu.events({
-  'click [data-action="close"]': function () {
+  'click [data-action="hide-mainmenu"]': function () {
     SlideIns.hide('left')
   }
 })

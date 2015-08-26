@@ -5,8 +5,8 @@ Template.topbar.helpers({
 })
 
 Template.topbar.events({
-  'click [data-action="show-slide-in-menu"]': function () {
-    SlideIns.show('left', 'mainmenu')
+  'click [data-action="toggle-mainmenu"]': function () {
+    SlideIns.toggle('left', 'mainmenu')
   },
   'click [data-action="create-medialist"]': function () {
     Modal.show('createMedialist')

@@ -36,6 +36,14 @@ SlideIns = {
     if (!dir) return
     $('.slide-in.' + dir).removeClass('open')
     SlideIns[dir].open = false
+  },
+  toggle: function (dir, template, data) {
+    if (!dir) return
+    if (SlideIns[dir].open) {
+      SlideIns.hide(dir)
+    } else {
+      SlideIns.show(dir, template, data)
+    }
   }
 }
 

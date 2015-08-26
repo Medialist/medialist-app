@@ -14,5 +14,7 @@ Template.Layout.events({
 // Meteor.loginWith... as if we ever need to use redirect login style it
 // won't get called
 Accounts.onLogin(function () {
-  FlowRouter.go('dashboard')
+  if (FlowRouter.current().route.group.name === 'public') {
+    FlowRouter.redirect('dashboard')
+  }
 })

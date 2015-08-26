@@ -1,0 +1,67 @@
+<template name="addContact">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Add to Medialist</h4>
+        </div>
+        <div class="modal-body">
+          <div class="panel">
+            <div class="panel-heading">
+              <form>
+                <div class="form-group">
+                  <input data-field="contact-name" class="form-control input-lg" type="text" placeholder="Find..." autofocus />
+                </div>
+              </form>
+            </div>
+            <div class="list-group">
+              <div class="list-group-item" href="#" title="click to add">
+                <div class="row">
+                  <div class="col-xs-2">
+                    <div class="placeholder-avatar">
+                      <span class="glyphicon glyphicon-user"></span>
+                    </div>
+                  </div>
+                  <div class="col-xs-7">
+                    <h5>{{name}}</h5>
+                  </div>
+                  <div class="col-xs-3">
+                    <button class="btn btn-primary" data-action="create-contact">Create</button>
+                  </div>
+                </div>
+              </div>
+              {{#each contacts}}
+                <div class="list-group-separator"></div>
+                <a class="list-group-item" href="#" title="click to add">
+                  {{> contactRow }}
+                </a>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</template>
+
+<template name="contactRow">
+  <div class="row">
+    <div class="col-xs-2">
+      {{#if avatar}}
+        <img width="40" height="40" src="{{avatar}}" alt="twitter profile image"/>
+      {{else}}
+        <div class="placeholder-avatar">
+          <span class="glyphicon glyphicon-user"></span>
+        </div>
+      {{/if}}
+    </div>
+    <div class="col-xs-8">
+      <h5>{{name}}</h5>
+      <div>{{jobs.[0].org}}</div>
+    </div>
+    <div class="col-xs-2">
+      <span class="btn btn-primary btn-flat {{#if status}}disabled{{/if}}" data-action="add-contact">
+        <span class="glyphicon glyphicon-plus"></span>
+      </span>
+    </div>
+  </div>
+</template>

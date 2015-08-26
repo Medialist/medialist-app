@@ -10,6 +10,7 @@ Modal = {
         Modal.$el.modal('show')
       })
       Modal.open = false
+      Modal.$el.off('hidden.bs.modal')
       Modal.$el.on('hidden.bs.modal', function () {
         Modal.open = false
       })

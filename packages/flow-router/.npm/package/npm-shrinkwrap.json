@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "page": {
+      "version": "https://github.com/kadirahq/page.js/archive/f29d4d4491178b285b9058c32d74975a4f945dea.tar.gz",
+      "dependencies": {
+        "path-to-regexp": {
+          "version": "1.0.3",
+          "dependencies": {
+            "isarray": {
+              "version": "0.0.1"
+            }
+          }
+        }
+      }
+    },
+    "qs": {
+      "version": "3.1.0"
+    }
+  }
+}

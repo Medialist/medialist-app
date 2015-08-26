@@ -1,0 +1,57 @@
+<template name="createContact">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Create contact</h4>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="placeholder-avatar">
+                  <span class="glyphicon glyphicon-user"></span>
+                </div>
+              </div>
+              <div class="col-sm-9">
+                <form>
+                  <div class="form-group">
+                    <label for="contact-create-name">Name</label>
+                    <input type="text" value="{{name}}" id="contact-create-name" class="form-control" autofocus >
+                  </div>
+                  <div class="form-group">
+                    <label for="contact-create-twitter">Twitter</label>
+                    <input type="text" id="contact-create-twitter" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="contact-create-org">Organisation</label>
+                    <input type="text" id="contact-create-org" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="contact-create-title">Title</label>
+                    <input type="text" id="contact-create-title" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="contact-create-email">Email</label>
+                    <input type="email" id="contact-create-email" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="contact-create-phone">Phone</label>
+                    <input type="text" id="contact-create-phone" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="contact-create-bio">Bio</label>
+                    <textarea id="contact-create-bio" class="form-control"></textarea>
+                  </div>
+                  <div class="form-group" style="text-align:right">
+                    <a class="btn btn-text" data-dismiss="modal" aria-label="Close">Cancel</a>
+                    <button class="btn btn-primary">Save</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</template>

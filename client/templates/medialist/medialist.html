@@ -1,16 +1,32 @@
 <template name="medialist">
-  {{#with medialist}}
-    <h3>{{purpose}}</h3>
-    <div class="btn-group">
-        <a href="#" class="btn btn-primary" data-action="add-new">Add New</a>
-        <a href="#" data-target="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
-        <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-        </ul>
+  <div class="container">
+    {{#with medialist}}
+      <h3>{{purpose}}</h3>
+      <div class="btn-group">
+          <a href="#" class="btn btn-primary" data-action="add-new">Add New</a>
+          <a href="#" data-target="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="#">Action</a></li>
+              <li><a href="#">Another action</a></li>
+              <li><a href="#">Something else here</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Separated link</a></li>
+          </ul>
+      </div>
+    {{/with}}
+    <div class="list-group">
+      {{#each contacts}}
+        <div class="list-group-item">
+            <div class="row-picture">
+                <img class="circle" src="{{avatar}}" alt="icon">
+            </div>
+            <div class="row-content">
+                <h4 class="list-group-item-heading">{{name}}</h4>
+                <p class="list-group-item-text">{{jobs.[0].org}}</p>
+            </div>
+        </div>
+        <div class="list-group-separator"></div>
+      {{/each}}
     </div>
-  {{/with}}
+  </div>
 </template>

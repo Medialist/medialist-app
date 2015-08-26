@@ -90,6 +90,7 @@
 
     // Custom Globals
     "globals"       : {
+      // Meteor internals
       "Meteor": false,
       "DDP": false,
       "Session": false,
@@ -109,9 +110,20 @@
       "Random": false,
       "_": false,
       "$": false,
+      "Spacebars": false,
+      // Packages
       "FlowRouter": false,
       "BlazeLayout": false,
-      "Spacebars": false,
-      "App": true
+      "SimpleSchema": false,
+      "slugify": false,
+      "SlideIns": true,
+      "Modal": true,
+      // Globals
+      "App": true,
+      "Schemas": true,
+      // Collections
+      "Medialists": true,
+      "Contacts": true,
+      "Posts": true
     }
 }

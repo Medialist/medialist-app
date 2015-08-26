@@ -1,11 +1,11 @@
 SlideIns = {
   left: {
-    template: new ReactiveVar('content-one'),
+    template: new ReactiveVar(''),
     data: new ReactiveVar({}),
     open: false
   },
   right: {
-    template: new ReactiveVar('content-two'),
+    template: new ReactiveVar(''),
     data: new ReactiveVar({}),
     open: false
   },

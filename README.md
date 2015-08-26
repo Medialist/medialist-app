@@ -36,7 +36,7 @@ meteor --settings settings.json
 ```
 
 
-**contacts**
+**contact**
 
 ```js
 {
@@ -64,7 +64,7 @@ meteor --settings settings.json
 }
 ```
 
-**feedback**
+**post**
 
 ```js
 {

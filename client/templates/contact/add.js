@@ -1,8 +1,22 @@
-var name = new ReactiveVar()
+var name = new ReactiveVar('')
+
+Template.addContact.onCreated(function () {
+  var tpl = this
+  tpl.autorun(function () {
+    tpl.subscribe('contacts', name.get())
+  })
+})
 
 Template.addContact.helpers({
   contacts: function () {
-    return Contacts.find()
+    var regex = new RegExp(name.get(), 'gi')
+    var query = {
+      name: {
+        $regex: regex,
+        $options: 'i'
+      }
+    }
+    return Contacts.find(query)
   },
   name: function () {
     return name.get()
@@ -14,11 +28,15 @@ Template.addContact.events({
     name.set(tpl.$(evt.currentTarget).val())
   },
   'click [data-action="create-contact"]': function () {
-    Modal.show('createContact', {
-      name: name.get(),
-      medialist: FlowRouter.getParam('slug')
-    })
-    name.set(null)
+    var context = { medialist: FlowRouter.getParam('slug') }
+    var identifier = name.get()
+    if (identifier.slice(0, 1) === '@') {
+      context.screenName = identifier.slice(1)
+    } else {
+      context.name = identifier
+    }
+    Modal.show('createContact', context)
+    name.set('')
   }
 });
 

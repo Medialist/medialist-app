@@ -24,7 +24,7 @@ Template.createContact.onRendered(function () {
 })
 
 Template.createContact.events({
-  'change #contact-create-twitter': function (evt, tpl) {
+  'change #contact-create-screenName': function (evt, tpl) {
     tpl.screenName = tpl.$(evt.currentTarget).val()
     tpl.getTwitterDetails()
   },

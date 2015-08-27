@@ -30,9 +30,8 @@ Meteor.methods({
   'contacts/addToMedialist': function (contactSlug, medialistSlug) {
     check(contactSlug, String)
     check(medialistSlug, String)
-
+    if (!this.userId) throw new Meteor.Error('Only a logged in user can add contacts to a medialist')
     var contact = Contacts.findOne({slug: contactSlug})
-
     if (!contact) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
     if (typeof contact.medialists[medialistSlug] !== 'undefined') throw new Meteor.Error('Contact #' + contactSlug + ' is already in that medialist')
     if (!Medialists.find({slug: medialistSlug}).count()) throw new Meteor.Error('Medialist #' + medialistSlug + ' does not exist')
@@ -45,6 +44,17 @@ Meteor.methods({
     }, {
       $set: set
     })
+  },
+
+  'contacts/addRole': function (contactSlug, role) {
+    check(contactSlug, String)
+    check(role, Schemas.Roles)
+    if (!this.userId) throw new Meteor.Error('Only a logged in user can add roles to a contact')
+    if (!Contacts.find({slug: contactSlug}).count()) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
+
+    return Contacts.update({slug: contactSlug}, {$push: {
+      roles: role
+    }})
   }
 
 })

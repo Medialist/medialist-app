@@ -8,49 +8,35 @@
       </div>
       <div class="modal-body">
         <div class="container-fluid">
-          <h2>Roles</h2>
-          <div class="row">
-            {{#each roles}}
-              {{> contactRole}}
-            {{/each}}
-            <div class="col-xs-4">
-              {{#if addRole}}
-                <div class="panel panel-default" data-action="contact-add-role">
-                  <div class="panel-heading"></div>
-                  <div class="panel-body text-center">
-                    <h1><a href="#"><i class="glyphicon glyphicon-plus"></i></a></h1>
-                  </div>
+          <form>
+            <div class="panel-body">
+              <div class="form-group">
+                <label for="contact-role-org">Organisation</label>
+                <input type="text" class="form-control" id="contact-role-org" data-field="org" placeholder="Organisation">
+              </div>
+              <div class="form-group">
+                <label for="contact-role-title">Title</label>
+                <input type="text" class="form-control" id="contact-role-title" data-field="title" placeholder="Title">
+              </div>
+              <div class="form-group">
+                <label for="contact-role-email">Email</label>
+                <input type="email" class="form-control" id="contact-role-email" data-field="email" placeholder="Email">
+              </div>
+              <div class="form-group">
+                <label for="contact-role-number-block">Phone Number</label>
+                <div class="input-group" id="contact-role-number-block">
+                  <a class="input-group-addon" data-action="toggle-phone-type">
+                    <i class="glyphicon glyphicon-phone{{#if equal phoneType 'landline'}}-alt{{/if}}"></i>
+                  </a>
+                  <input type="text" class="form-control" id="contact-role-number" placeholder="Number">
                 </div>
-              {{else}}
-                <div class="panel panel-default" data-action="contact-add-role">
-                  <div class="panel-heading"></div>
-                  <div class="panel-body text-center">
-                    <h1><a href="#"><i class="glyphicon glyphicon-plus"></i></a></h1>
-                  </div>
-                </div>
-              {{/if}}
+              </div>
+              <button type="sumbit" class="btn btn-primary">Add Role</button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
   {{/with}}
-</template>
-
-<template name="contactRole">
-  <div class="col-xs-4">
-    <div class="panel panel-default">
-      <div class="panel-heading">{{org}}</div>
-      <div class="panel-body">
-        <address>
-          <strong>{{title}}</strong><br>
-          {{#if email}}{{email}}<br>{{/if}}
-          {{#each phones}}
-            <i class="glyphicon glyphicon-phone{{#if equal type 'landline'}}-alt{{/if}}"></i> {{number}}<br>
-          {{/each}}
-        </address>
-      </div>
-    </div>
-  </div>
 </template>

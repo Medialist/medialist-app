@@ -1,3 +1,16 @@
-Meteor.publish('contacts', function () {
-  return Contacts.find()
+Meteor.publish('contacts', function (string) {
+  if (typeof string !== 'string') string = ''
+  var regex = new RegExp(string, 'gi')
+  var query = {
+    name: {
+      $regex: regex,
+      $options: 'i'
+    }
+  }
+  return Contacts.find(query)
+})
+
+Meteor.publish('contact', function (slug) {
+  check(slug, String)
+  return Contacts.find({slug: slug})
 })

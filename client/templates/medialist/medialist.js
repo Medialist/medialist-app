@@ -1,7 +1,11 @@
 Template.medialist.onCreated(function () {
   var tpl = this
-  tpl.slug = new ReactiveVar(FlowRouter.getParam('slug'))
-  tpl.subscribe('medialist', this.slug.get())
+  tpl.slug = new ReactiveVar()
+  tpl.autorun(function () {
+    FlowRouter.watchPathChange()
+    tpl.slug.set(FlowRouter.getParam('slug'))
+  })
+  tpl.subscribe('medialist', tpl.slug.get())
 })
 
 Template.medialist.helpers({

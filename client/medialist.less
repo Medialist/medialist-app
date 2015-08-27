@@ -2,5 +2,26 @@
 @import "packages/material-design-less/less/material.less";
 @import "packages/material-design-less/less/ripples.less";
 @import "packages/material-design-less/less/roboto.less";
+@import "templates/components/mainmenu.import.less";
 
-@primary: @grey;
+@primary: @grey-500;
+@body-bg: @grey-50;
+
+.btn.btn-twitter:not(.btn-link):not(.btn-flat) {
+  color: #ffffff;
+  background-color: #55acee;
+  &:hover {
+    background-color: lighten(#55acee, 3%)
+  }
+}
+
+.btn-link {
+  text-transform: none;
+  &:hover {
+    background: transparent;
+  }
+}
+
+.slide-in.left {
+  background: #fff;
+}

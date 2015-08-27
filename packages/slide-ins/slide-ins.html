@@ -5,12 +5,6 @@
 
 <template name="slideIn">
   <div class="slide-in {{dir}}">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-12">
-          {{> Template.dynamic template=template data=data}}
-        </div>
-      </div>
-    </div>
+    {{> Template.dynamic template=template data=data}}
   </div>
 </template>

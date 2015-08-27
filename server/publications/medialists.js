@@ -6,3 +6,8 @@ Meteor.publish('medialist', function (slug) {
     Contacts.find(contactsQuery)
   ]
 })
+
+Meteor.publish('medialist-favourites', function () {
+  if (!this.userId) return []
+  return Medialists.find({}, {limit:5, sort: [['createdAt', 'desc']]})
+})

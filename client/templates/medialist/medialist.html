@@ -1,32 +1,103 @@
 <template name="medialist">
-  <div class="container">
-    {{#with medialist}}
-      <h3>{{purpose}}</h3>
-      <div class="btn-group">
-          <a href="#" class="btn btn-primary" data-action="add-new">Add New</a>
-          <a href="#" data-target="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
-          <ul class="dropdown-menu">
-              <li><a href="#">Action</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
-              <li class="divider"></li>
-              <li><a href="#">Separated link</a></li>
-          </ul>
-      </div>
-    {{/with}}
-    <div class="list-group">
-      {{#each contacts}}
-        <div class="list-group-item">
-            <div class="row-picture">
-                <img class="circle" src="{{avatar}}" alt="icon">
-            </div>
-            <div class="row-content">
-                <h4 class="list-group-item-heading">{{name}}</h4>
-                <p class="list-group-item-text">{{jobs.[0].org}}</p>
-            </div>
-        </div>
-        <div class="list-group-separator"></div>
-      {{/each}}
+{{#with medialist}}
+<div class="medialist-purpose">
+  <p>{{purpose}}</p>
+</div>
+<div class="medialist-toolbar">
+  <div class="container-fluid">
+    <button class="btn btn-link">All contacts</button>
+    <div class="btn-group">
+      <a href="#" class="btn btn-primary" data-action="add-new">Add New</a>
+      <a href="#" data-target="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><a href="#">Action</a></li>
+        <li><a href="#">Another action</a></li>
+        <li><a href="#">Something else here</a></li>
+        <li class="divider"></li>
+        <li><a href="#">Separated link</a></li>
+      </ul>
     </div>
   </div>
+</div>
+{{/with}}
+<table class="medialist-table table table-responsive">
+  <thead>
+  <tr>
+    <th class="col-checkbox">
+      <div class="checkbox checkbox-default">
+        <label>
+          <input type="checkbox"/>
+          <span class="checkbox-material">
+            <span class="check"></span>
+          </span>
+        </label>
+      </div>
+    </th>
+    <th></th>
+    <th>Name</th>
+    <th class="hidden-xs">Organisation</th>
+    <th>Status</th>
+    <th class="hidden-xs">Coverage</th>
+    <th class="hidden-xs">Latest feedback</th>
+  </tr>
+  </thead>
+  <tbody>
+    {{#each contacts}}
+    <tr class="contact-row">
+      <td class="col-checkbox">
+        <div class="checkbox checkbox-default">
+          <label>
+            <input type="checkbox"/>
+            <span class="checkbox-material">
+              <span class="check"></span>
+            </span>
+          </label>
+        </div>
+      </td>
+      <td class="col-img">
+      {{#if avatar}}
+        <img class="img-rounded" width="40" height="40" src="{{avatar}}" alt="twitter profile image"/>
+      {{/if}}
+      </td>
+      <td class="col-name">
+        {{name}}
+      </td>
+      <td class="col-org hidden-xs">
+        {{role.[0].organisation}}
+      </td>
+      <td>
+          <div class="btn-group btn-group-sm btn-group-status">
+            {{#with status}}
+              <button class="btn {{bootstrapify text}} dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <span>{{text}}</span>
+                <span class="caret"></span>
+              </button>
+            {{/with}}
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Completed</a></li>
+              <li><a href="#">Hot lead</a></li>
+              <li><a href="#">Contacted</a></li>
+              <li><a href="#">Not interested</a></li>
+            </ul>
+          </div>
+      </td>
+      <td>
+      </td>
+      <td class="hidden-xs col-feedback">
+      {{#with latestFeedback}}
+        {{> contactFeedback}}
+        {{else}}
+        <p>&hellip;</p>
+      {{/with}}
+      </td>
+    </tr>
+  {{else}}
+    <tr>
+      <td colspan="6">
+        <strong>Add some people to contact&hellip;</strong>
+      </td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>
 </template>

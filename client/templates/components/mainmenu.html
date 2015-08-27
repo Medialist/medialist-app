@@ -1,6 +1,45 @@
 <template name="mainmenu">
-  <div class="container-fluid">
-    <h1>Menu</h1>
-    <button class="btn btn-primary" data-action="hide-mainmenu">Close</button>
+<div class="mainmenu">
+  <div class="mainmenu-user">
+    <div class="container-fluid">
+      <div class="media">
+        {{#if profileImage}}
+        <div class="media-left">
+          <img class="media-object" src="{{profileImage}}" alt="{{currentUser.profile.name}} avatar">
+        </div>
+        {{/if}}
+        <div class="media-body">
+          <h4 class="media-heading">{{currentUser.profile.name}}</h4>
+          <h5>Job title</h5>
+        </div>
+      </div>
+    </div>
   </div>
+  <div class="container-fluid">
+    <div class="mainmenu-nav">
+      <ul class="nav nav-pills nav-stacked">
+        <li role="presentation">
+          <a href="/dashboard"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a>
+        </li>
+        <li role="presentation">
+          <a href="/medialists"><span class="glyphicon glyphicon-list-alt"></span> Medialists</a>
+        </li>
+        <li role="presentation">
+          <a href="/contacts"><span class="glyphicon glyphicon-user"></span> Contacts</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr />
+  <div class="container-fluid">
+    <div class="mainmenu-favourites">
+      <h4>Favourites</h4>
+      <ul class="nav nav-pills nav-stacked">
+        {{#each medialists}}
+        <li role="presentation"><a href="/medialist/{{slug}}" title="{{purpose}}">#{{slug}}</a></li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+</div>
 </template>

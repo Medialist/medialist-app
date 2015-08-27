@@ -1,9 +1,22 @@
 <template name="dashboard">
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
-      <div class="col-xs-12">
-        <h1>Dashboard</h1>
-        {{> logoutButton}}
+      <div class="col-sm-6 col-sm-offset-3">
+        <div class="row">
+          <div class="col-sm-3">
+            <p class="btn btn-default btn-link">Today</p>
+          </div>
+          <div class="col-sm-9 text-right">
+            <button class="btn btn-default btn-link">#foobar <span class="caret"></span></button>
+            <button class="btn btn-default btn-link">All activity <span class="caret"></span></button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="panel panel-default"></div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+
       </div>
     </div>
   </div>

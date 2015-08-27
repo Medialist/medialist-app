@@ -1,2 +1,4 @@
 .meteor/local
 settings.json
+packages/flow-router/client.browserify.js.cached
+packages/flow-router/client.browserify.js.map

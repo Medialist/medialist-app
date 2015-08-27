@@ -7,14 +7,20 @@ Meteor.methods({
 
     contact.createdAt = new Date()
     contact.createdBy = this.userId
-    contact.slug = contact.twitter || slugify(contact.name)
+    contact.twitter = {}
+    if (contact.screenName) {
+      contact.twitter.screenName = contact.screenName
+      delete contact.screenName
+    }
+    contact.roles = []
+    contact.slug = contact.twitter.screenName || slugify(contact.name)
     contact.medialists = {}
     contact.medialists[medialist] = Contacts.status.toContact
 
     check(contact, Schemas.Contacts)
     Contacts.insert(contact)
-    if (contact.twitter) {
-      TwitterClient.grabUserByScreenName(contact.twitter, addTwitterDetailsToContact.bind(contact))
+    if (contact.twitter.screenName) {
+      TwitterClient.grabUserByScreenName(contact.twitter.screenName, addTwitterDetailsToContact.bind(contact))
     }
 
     return contact
@@ -46,7 +52,8 @@ function addTwitterDetailsToContact(err, user) {
   if (err || !user) return console.log('Couldn\'t get Twitter info for ' + this.name)
   Contacts.update(this, {
     $set: {
-      avatar: user.profile_image_url_https
+      avatar: user.profile_image_url_https,
+      'twitter.id': user.id_str
     }
   })
 }

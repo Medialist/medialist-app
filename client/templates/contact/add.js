@@ -27,7 +27,8 @@ Template.addContact.events({
   'keyup [data-field="contact-name"]': function (evt, tpl) {
     name.set(tpl.$(evt.currentTarget).val())
   },
-  'click [data-action="create-contact"]': function () {
+  'submit, click [data-action="create-contact"]': function (evt) {
+    evt.preventDefault()
     var context = { medialist: FlowRouter.getParam('slug') }
     var identifier = name.get()
     if (identifier.slice(0, 1) === '@') {
@@ -36,7 +37,6 @@ Template.addContact.events({
       context.name = identifier
     }
     Modal.show('createContact', context)
-    name.set('')
   }
 });
 

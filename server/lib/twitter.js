@@ -21,8 +21,14 @@ TwitterClient = new Twitter({
 TwitterClient.grabUser = function (query, cb) {
   cb = cb || function () {}
   TwitterClient.twitter.get('users/show', query, Meteor.bindEnvironment(function (err, user) {
-    if (err) return console.error('TwitterClient.grabUser: ', err, query);
-    if (!user.id_str) return console.log('TwitterClient.grabUser: got user with no id_str for ', query)
+    if (err) {
+      console.error('TwitterClient.grabUser: ', err, query)
+      return cb(err)
+    }
+    if (!user.id_str) {
+      console.log('TwitterClient.grabUser: got user with no id_str for ', query)
+      return cb('User has no id_str', user)
+    }
     user._id = user.id_str
     console.log('TwitterClient.grabUser: Got ' + user.screen_name, user.name)
     TwitterUsers.upsert(user._id, user)

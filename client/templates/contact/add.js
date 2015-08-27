@@ -16,7 +16,7 @@ Template.addContact.helpers({
         $options: 'i'
       }
     }
-    return Contacts.find(query)
+    return Contacts.find(query, {limit:5})
   },
   name: function () {
     return name.get()

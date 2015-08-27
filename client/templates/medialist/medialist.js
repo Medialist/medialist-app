@@ -22,5 +22,8 @@ Template.medialist.helpers({
 Template.medialist.events({
   'click [data-action="add-new"]': function () {
     Modal.show('addContact')
+  },
+  'click [data-action="show-contact-details"]': function () {
+    SlideIns.show('right', 'contactDetails', { contact: this })
   }
 })

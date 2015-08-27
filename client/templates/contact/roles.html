@@ -1,0 +1,56 @@
+<template name="editContactRoles">
+  {{#with contact}}
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">{{name}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <h2>Roles</h2>
+          <div class="row">
+            {{#each roles}}
+              {{> contactRole}}
+            {{/each}}
+            <div class="col-xs-4">
+              {{#if addRole}}
+                <div class="panel panel-default" data-action="contact-add-role">
+                  <div class="panel-heading"></div>
+                  <div class="panel-body text-center">
+                    <h1><a href="#"><i class="glyphicon glyphicon-plus"></i></a></h1>
+                  </div>
+                </div>
+              {{else}}
+                <div class="panel panel-default" data-action="contact-add-role">
+                  <div class="panel-heading"></div>
+                  <div class="panel-body text-center">
+                    <h1><a href="#"><i class="glyphicon glyphicon-plus"></i></a></h1>
+                  </div>
+                </div>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/with}}
+</template>
+
+<template name="contactRole">
+  <div class="col-xs-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">{{org}}</div>
+      <div class="panel-body">
+        <address>
+          <strong>{{title}}</strong><br>
+          {{#if email}}{{email}}<br>{{/if}}
+          {{#each phones}}
+            <i class="glyphicon glyphicon-phone{{#if equal type 'landline'}}-alt{{/if}}"></i> {{number}}<br>
+          {{/each}}
+        </address>
+      </div>
+    </div>
+  </div>
+</template>

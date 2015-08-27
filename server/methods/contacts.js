@@ -13,6 +13,7 @@ Meteor.methods({
       delete contact.screenName
     }
     contact.roles = []
+    contact.avatar = '/images/avatar.svg'
     contact.slug = contact.twitter.screenName || slugify(contact.name)
     contact.medialists = {}
     contact.medialists[medialist] = Contacts.status.toContact

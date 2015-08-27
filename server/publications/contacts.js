@@ -1,5 +1,5 @@
 Meteor.publish('contacts', function (string) {
-  check(string, String)
+  if (typeof string !== 'string') string = ''
   var regex = new RegExp(string, 'gi')
   var query = {
     name: {
@@ -8,4 +8,9 @@ Meteor.publish('contacts', function (string) {
     }
   }
   return Contacts.find(query)
+})
+
+Meteor.publish('contact', function (slug) {
+  check(slug, String)
+  return Contacts.find({slug: slug})
 })

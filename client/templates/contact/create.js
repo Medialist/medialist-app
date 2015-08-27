@@ -39,9 +39,9 @@ Template.createContact.events({
       return contact
     }, {})
 
-    Meteor.call('contacts/create', contact, tpl.data.medialist, function (err) {
+    Meteor.call('contacts/create', contact, tpl.data.medialist, function (err, contact) {
       if (err) return console.error(err)
-      Modal.hide()
+      Modal.show('editContactRoles', {slug: contact.slug})
     })
   }
 })

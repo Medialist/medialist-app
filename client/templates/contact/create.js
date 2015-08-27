@@ -1,8 +1,12 @@
+var queryingTwitter = new ReactiveVar(false)
+
 Template.createContact.onCreated(function () {
   var tpl = this
   tpl.screenName = ''
   tpl.getTwitterDetails = _.debounce(function () {
+    queryingTwitter.set(true)
     Meteor.call('twitter/grabUserByScreenName', tpl.screenName, function (err, res) {
+      queryingTwitter.set(false)
       if (err) return console.error(err)
       if (!tpl.$('#contact-create-name').val()) {
         tpl.$('#contact-create-name').val(res.name)
@@ -12,7 +16,7 @@ Template.createContact.onCreated(function () {
       }
       tpl.$('#contact-create-avatar').attr('src', res.profile_image_url_https)
     })
-  }, 1000)
+  }, 1000, true)
 })
 
 Template.createContact.onRendered(function () {
@@ -20,6 +24,12 @@ Template.createContact.onRendered(function () {
   if (tpl.data.screenName) {
     tpl.screenName = tpl.data.screenName
     tpl.getTwitterDetails()
+  }
+})
+
+Template.createContact.helpers({
+  queryingTwitter: function () {
+    return queryingTwitter.get()
   }
 })
 

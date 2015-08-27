@@ -15,6 +15,6 @@ Template.Layout.events({
 // won't get called
 Accounts.onLogin(function () {
   if (FlowRouter.current().route.group.name === 'public') {
-    FlowRouter.redirect('dashboard')
+    FlowRouter.go('dashboard')
   }
 })

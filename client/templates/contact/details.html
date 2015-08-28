@@ -1,9 +1,9 @@
-<template name="contactDetails">
+<template name="contactSlideIn">
   {{#with contact}}
-  <div class="contact-details">
+  <div class="contact-slide-in">
     <ul class="nav nav-pills pull-left">
       <li role="presentation">
-        <a href="#" data-action="close-contact-details"><i class="glyphicon glyphicon-chevron-right"></i></a>
+        <a href="#" data-action="close-contact-slide-in"><i class="glyphicon glyphicon-chevron-right"></i></a>
       </li>
     </ul>
     <ul class="nav nav-pills pull-right">
@@ -30,50 +30,61 @@
         </div>
         <div class="contact-menu">
           <div class="row">
-            <div class="col-xs-4 contact-menu-option active">
-              <a href="#">Details</a>
-            </div>
-            <div class="col-xs-4 contact-menu-option">
-              <a href="#">Activity</a>
-            </div>
-            <div class="col-xs-4 contact-menu-option">
-              <a href="#">Related</a>
-            </div>
+            <a href="#" data-section="contactDetails" class="col-xs-4 contact-menu-option {{#if equal contactSection 'contactDetails'}}active{{/if}}">
+              Details
+            </a>
+            <a href="#" data-section="contactActivity" class="col-xs-4 contact-menu-option {{#if equal contactSection 'contactActivity'}}active{{/if}}">
+              Activity
+            </a>
+            <a href="#" data-section="contactRelated" class="col-xs-4 contact-menu-option {{#if equal contactSection 'contactRelated'}}active{{/if}}">
+              Related
+            </a>
           </div>
         </div>
       </div>
     </div>
-    <div class="container-fluid contact-info">
-      <form>
-        <div class="form-group">
-          <label for="contact-detail-name">Name</label>
-          <p class="form-control" id="contact-detail-name">{{name}}</p>
-        </div>
-        <div class="form-group">
-          <label for="contact-detail-title">Title</label>
-          <p class="form-control" id="contact-detail-title">{{roles.[0].title}}</p>
-        </div>
-        <div class="form-group">
-          <label for="contact-detail-org">Organisation</label>
-          <p class="form-control" id="contact-detail-org">{{roles.[0].org}}</p>
-        </div>
-        <div class="form-group">
-          <label for="contact-detail-screenName">Twitter</label>
-          <p class="form-control" id="contact-detail-screenName">{{twitter.screenName}}</p>
-        </div>
-        <div class="form-group">
-          <label for="contact-detail-email">Email</label>
-          <p class="form-control" id="contact-detail-email">{{roles.[0].email}}</p>
-        </div>
-        <div class="form-group">
-          <label for="contact-detail-phone">Phone</label>
-          <p class="form-control" id="contact-detail-phone">
-            <i class="glyphicon glyphicon-phone{{#if equal roles.[0].phones.[0].type 'landline'}}-alt{{/if}}"></i> {{roles.[0].phones.[0].number}}
-          </p>
-        </div>
-
-      </form>
-    </div>
+    {{> Template.dynamic template=contactSection data=this}}
   </div>
   {{/with}}
+</template>
+
+<template name="contactDetails">
+  <div class="container-fluid contact-info">
+    <form>
+      <div class="form-group">
+        <label for="contact-detail-name">Name</label>
+        <p class="form-control" id="contact-detail-name">{{name}}</p>
+      </div>
+      <div class="form-group">
+        <label for="contact-detail-title">Title</label>
+        <p class="form-control" id="contact-detail-title">{{roles.[0].title}}</p>
+      </div>
+      <div class="form-group">
+        <label for="contact-detail-org">Organisation</label>
+        <p class="form-control" id="contact-detail-org">{{roles.[0].org}}</p>
+      </div>
+      <div class="form-group">
+        <label for="contact-detail-screenName">Twitter</label>
+        <p class="form-control" id="contact-detail-screenName">{{twitter.screenName}}</p>
+      </div>
+      <div class="form-group">
+        <label for="contact-detail-email">Email</label>
+        <p class="form-control" id="contact-detail-email">{{roles.[0].email}}</p>
+      </div>
+      <div class="form-group">
+        <label for="contact-detail-phone">Phone</label>
+        <p class="form-control" id="contact-detail-phone">
+          <i class="glyphicon glyphicon-phone{{#if equal roles.[0].phones.[0].type 'landline'}}-alt{{/if}}"></i> {{roles.[0].phones.[0].number}}
+        </p>
+      </div>
+    </form>
+  </div>
+</template>
+
+<template name="contactActivity">
+  <h2>Activity</h2>
+</template>
+
+<template name="contactRelated">
+  <h2>Related</h2>
 </template>

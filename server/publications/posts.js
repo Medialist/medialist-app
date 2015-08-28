@@ -11,3 +11,15 @@ Meteor.publish('latestPost', function (medialistSlug, contactSlug) {
     limit: 1
   })
 })
+
+Meteor.publish('postsByContact', function (contactSlug) {
+  if (!this.userId) return this.ready()
+  return Posts.find({
+    contacts: contactSlug
+  }, {
+    sort: {
+      createdAt: -1
+    },
+    limit: 10
+  })
+})

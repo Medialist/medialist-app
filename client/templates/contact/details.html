@@ -84,10 +84,11 @@
 <template name="contactActivity">
   <div class="container-fluid contact-activity-log">
     <ul class="nav nav-pills">
-      <li role="presentation" class="active"><a href="#">Log Feedback</a></li>
-      <li role="presentation"><a href="#">Log coverage</a></li>
-      <li role="presentation"><a href="#">Add need-to-know</a></li>
+      <li role="presentation" class="{{#if equal option 'logFeedback'}}active{{/if}}"><a href="#" data-option="logFeedback">Log Feedback</a></li>
+      <li role="presentation" class="{{#if equal option 'logCoverage'}}active{{/if}}"><a href="#" data-option="logCoverage">Log coverage</a></li>
+      <li role="presentation" class="{{#if equal option 'addNeedToKnow'}}active{{/if}}"><a href="#" data-option="addNeedToKnow">Add need-to-know</a></li>
     </ul>
+    {{#if equal option 'logFeedback'}}
     <form>
       <p class="medialist-select">
         for
@@ -107,7 +108,7 @@
         <textarea class="form-control col-xs-12" rows="5" data-field="message"></textarea>
       </div>
       <div class="form-group" style="text-align:right">
-        <a class="btn btn-text" aria-label="Close">Cancel</a>
+        <a class="btn btn-text" aria-label="Close" data-option="">Cancel</a>
         <div class="btn-group">
             <a href="#" class="btn btn-primary" data-toggle="dropdown">Save as</a>
             <a href="#" data-target="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><i class="caret"></i></a>
@@ -119,9 +120,12 @@
         </div>
       </div>
     </form>
+    {{/if}}
   </div>
-  <div class="container-fluid">
-
+  <div class="container-fluid contact-activity-posts">
+    {{#each posts}}
+      {{> displayPost this}}
+    {{/each}}
   </div>
 </template>
 

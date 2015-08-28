@@ -1,0 +1,27 @@
+<template name="displayPost">
+  <div class="panel panel-default display-post">
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-xs-9">
+          <p class="display-post-details">
+            <a href="#">{{createdBy.name}}</a> logged <a href="#">@{{contacts.[0]}}</a> as '{{status}}' for <a href="/medialist/{{medialists.[0]}}">#{{medialists.[0]}}</a>
+          </p>
+        </div>
+        <div class="col-xs-3">
+          <p class="display-post-time-ago">
+            {{fromNow createdAt}}
+          </p>
+        </div>
+      </div>
+      {{#if message}}
+      <div class="row">
+        <div class="col-xs-12">
+          <p class="display-post-message">
+            {{message}}
+          </p>
+        </div>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</template>

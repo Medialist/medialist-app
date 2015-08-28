@@ -45,6 +45,10 @@ Template.editContactRoles.events({
       role.phones = []
     }
 
+    if (!role.org && !role.title) {
+      return Modal.hide()
+    }
+
     if (!roleValidator.validate(role)) {
       return validationError.set(roleValidator.keyErrorMessage(roleValidator.invalidKeys()[0].name))
     }

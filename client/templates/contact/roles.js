@@ -1,4 +1,6 @@
 var phoneType = new ReactiveVar('mobile')
+var validationError = new ReactiveVar()
+var roleValidator = Schemas.Roles.namedContext('roles')
 
 Template.editContactRoles.onCreated(function () {
   this.subscribe('contact', this.data.slug)
@@ -10,6 +12,9 @@ Template.editContactRoles.helpers({
   },
   phoneType: function () {
     return phoneType.get()
+  },
+  validationError: function () {
+    return validationError.get()
   }
 })
 
@@ -38,6 +43,10 @@ Template.editContactRoles.events({
       }]
     } else {
       role.phones = []
+    }
+
+    if (!roleValidator.validate(role)) {
+      return validationError.set(roleValidator.keyErrorMessage(roleValidator.invalidKeys()[0].name))
     }
 
     Meteor.call('contacts/addRole', tpl.data.slug, role, function (err) {

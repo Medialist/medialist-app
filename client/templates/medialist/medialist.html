@@ -66,22 +66,23 @@
         {{roles.[0].org}}
       </td>
       <td>
-          <div class="btn-group btn-group-sm btn-group-status">
-            {{#with status}}
-              <button class="btn {{bootstrapify text}} dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                <span>{{text}}</span>
-                <span class="caret"></span>
-              </button>
-            {{/with}}
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#">Completed</a></li>
-              <li><a href="#">Hot lead</a></li>
-              <li><a href="#">Contacted</a></li>
-              <li><a href="#">Not interested</a></li>
-            </ul>
-          </div>
+        <div class="btn-group btn-group-sm btn-group-status">
+          {{#with status}}
+            <button class="btn {{bootstrapify text}} dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+              <span>{{text}}</span>
+              <span class="caret"></span>
+            </button>
+          {{/with}}
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Completed</a></li>
+            <li><a href="#">Hot lead</a></li>
+            <li><a href="#">Contacted</a></li>
+            <li><a href="#">Not interested</a></li>
+          </ul>
+        </div>
       </td>
-      <td>
+      <td class="hidden-xs col-coverage">
+        <p>&hellip;</p>
       </td>
       <td class="hidden-xs col-feedback">
       {{#with latestFeedback}}

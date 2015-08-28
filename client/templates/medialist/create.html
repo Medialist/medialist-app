@@ -8,17 +8,19 @@
       <div class="modal-body">
         <form id="addMedialist">
           <div class="form-group">
-            <label for="medialist-name">Name</label>
+            <label for="medialist-name">Campaign</label>
             <div class="input-group">
               <span class="input-group-addon">#</span>
-              <input type="text" id="medialist-name" class="form-control" autofocus >
+              <input type="text" id="medialist-name" class="form-control" placeholder="hashtag" autofocus >
             </div>
           </div>
           <div class="form-group">
             <label for="medialist-purpose">Purpose</label>
-            <input type="text" id="medialist-purpose" class="form-control">
+            <div class="input-group">
+              <span class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></span>
+              <input type="text" id="medialist-purpose" class="form-control" placeholder="Tell the world about...">
+            </div>
           </div>
-          <hr/>
           <div class="text-right">
             <a class="btn btn-flat btn-default" data-dismiss="modal" aria-label="Close">Cancel</a>
             <button type="submit" class="btn btn-primary">Submit</button>

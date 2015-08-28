@@ -3,3 +3,9 @@ Template.medialists.helpers({
     return Medialists.find({}).fetch()
   }
 })
+
+Template.medialists.events({
+  'click [data-action="create-medialist"]': function () {
+    Modal.show('createMedialist')
+  }
+})

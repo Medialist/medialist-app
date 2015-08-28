@@ -1,3 +1,7 @@
+.slide-in.contactSlideIn {
+  width: 400px;
+}
+
 .contact-slide-in {
   .nav a {
     color: #fff;
@@ -8,12 +12,15 @@
   color:#fff;
   background: @grey-300;
   padding: 60px 0 0 0;
-  margin: 0 0 30px 0;
+  margin: 0 0 15px 0;
   img {
     margin-right: 10px;
     height: 48px;
     width: 48px;
     background-color: #fff;
+  }
+  .media {
+    padding: 0 60px 0 60px;
   }
   .media-heading {
     font-weight: bold;
@@ -43,4 +50,33 @@ a.contact-menu-option {
   p {
     background-image: none;
   }
+}
+
+.contact-activity-log .nav-pills li {
+  a {
+    background-color: transparent;
+    font-size: 0.9em;
+    padding: 5px;
+    color: @grey-400;
+    text-transform: uppercase;
+  }
+  &.active {
+    a {
+      background-color: transparent;
+      color: @grey-400;
+      font-weight: bold;
+    }
+  }
+}
+
+.contact-activity-log .medialist-select {
+  margin-left: 20px;
+  .dropdown-toggle {
+    text-transform: none;
+    padding: 10px;
+  }
+}
+
+.btn-group.btn-flat {
+  box-shadow: none;
 }

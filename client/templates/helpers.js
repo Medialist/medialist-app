@@ -6,6 +6,11 @@ var helpers = {
   },
   equal: function (x, y) {
     return x === y
+  },
+  getMedialists: function (contact) {
+    contact = contact || this
+    var medialistSlugs = Object.keys(contact.medialists)
+    return Medialists.find({slug: {$in: medialistSlugs}})
   }
 }
 

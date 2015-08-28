@@ -82,9 +82,51 @@
 </template>
 
 <template name="contactActivity">
-  <h2>Activity</h2>
+  <div class="container-fluid contact-activity-log">
+    <ul class="nav nav-pills">
+      <li role="presentation" class="active"><a href="#">Log Feedback</a></li>
+      <li role="presentation"><a href="#">Log coverage</a></li>
+      <li role="presentation"><a href="#">Add need-to-know</a></li>
+    </ul>
+    <form>
+      <p class="medialist-select">
+        for
+        <div class="btn-group btn-flat">
+          <a data-target="#" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
+            #{{medialistSlug}}
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            {{#each getMedialists}}
+            <li><a href="#" data-medialist-slug="{{slug}}">#{{slug}}</a></li>
+            {{/each}}
+          </ul>
+        </div>
+      </p>
+      <div class="form-group">
+        <textarea class="form-control col-xs-12" rows="5" data-field="message"></textarea>
+      </div>
+      <div class="form-group" style="text-align:right">
+        <a class="btn btn-text" aria-label="Close">Cancel</a>
+        <div class="btn-group">
+            <a href="#" class="btn btn-primary" data-toggle="dropdown">Save as</a>
+            <a href="#" data-target="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><i class="caret"></i></a>
+            <ul class="dropdown-menu">
+              {{#each statuses}}
+              <li><a href="#" data-status="{{this}}">{{this}}</a></li>
+              {{/each}}
+            </ul>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="container-fluid">
+
+  </div>
 </template>
 
 <template name="contactRelated">
-  <h2>Related</h2>
+  <div class="container-fluid">
+    <h2>Related</h2>
+  </div>
 </template>

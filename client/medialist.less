@@ -6,11 +6,23 @@
 @import "templates/contact/details.import.less";
 @import "templates/medialist/medialist.import.less";
 
-@primary: @grey-500;
+@primary: @blue-400;
 @body-bg: @grey-50;
 
-.navbar{
-  margin-bottom:0;
+body {
+  padding-top: 64px;
+}
+
+.navbar.topbar {
+  background: @grey-600;
+}
+
+.mainmenu-user {
+  color:#fff;
+  background: @grey-300;
+}
+.mainmenu .nav a {
+  color: @grey-600;
 }
 
 .btn.btn-twitter:not(.btn-link):not(.btn-flat) {
@@ -30,4 +42,14 @@
 
 .slide-in.left {
   background: #fff;
+}
+
+.slide-in {
+  bottom:0;
+  height: calc(~"100% - 62px")
+}
+
+.modal-dialog{
+  max-height: 90vh;
+  overflow-y: auto;
 }

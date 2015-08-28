@@ -7,7 +7,9 @@ Template.medialist.onCreated(function () {
     FlowRouter.watchPathChange()
     medialistTpl.slug.set(FlowRouter.getParam('slug'))
   })
-  medialistTpl.subscribe('medialist', medialistTpl.slug.get())
+  medialistTpl.autorun(function () {
+    medialistTpl.subscribe('medialist', medialistTpl.slug.get())
+  })
 })
 
 Template.medialist.helpers({

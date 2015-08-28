@@ -26,3 +26,32 @@
 .col-img {
   width:60px;
 }
+
+.btn-group.btn-group-status {
+  box-shadow: none;
+  border-radius: 8px;
+  .btn {
+    color: #fff;
+    text-transform: capitalize;
+    font-weight: bold;
+  }
+  .btn.to-contact, .btn.to-contact:hover {
+    background-color: @grey-600;
+  }
+  .btn.contacted, .btn.contacted:hover {
+    background-color: @light-blue-600;
+  }
+  .btn.not-interested, .btn.not-interested:hover {
+    background-color: @red-600;
+  }
+  .btn.hot-lead, .btn.hot-lead:hover {
+    background-color: @orange-600;
+  }
+  .btn.completed, .btn.completed:hover {
+    background-color: @green-600;
+  }
+}
+
+.feedback-details {
+  color: @grey-500;
+}

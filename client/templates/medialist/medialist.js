@@ -27,9 +27,19 @@ Template.medialist.events({
   }
 })
 
+Template.medialistContactRow.onCreated(function () {
+  this.subscribe('latestPost', medialistTpl.slug.get(), this.data.slug)
+})
+
 Template.medialistContactRow.helpers({
   contactMedialist: function () {
     return this.medialists[medialistTpl.slug.get()]
+  },
+  latestFeedback: function () {
+    return Posts.findOne({
+      medialists: medialistTpl.slug.get(),
+      contacts: this.slug
+    })
   }
 })
 

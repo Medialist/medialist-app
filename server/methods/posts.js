@@ -3,13 +3,14 @@ Meteor.methods({
     check(contact, String)
     check(medialist, String)
     check(message, Match.Where(function (message) {
-      return !message || message instanceof String
+      return !message || typeof message === 'string'
     }))
     check(status, Match.OneOf.apply(null, _.values(Contacts.status)))
     if (!this.userId) throw new Meteor.Error('Only a logged in user can post feedback')
     if (!Medialists.find({slug: medialist}).count()) throw new Meteor.Error('Cannot find medialist #' + medialist)
     if (!Contacts.find({slug: contact}).count()) throw new Meteor.Error('Cannot find contact @' + contact)
 
+    var thisUser = Meteor.users.findOne(this.userId)
     var extraMedialists = _.filter(findHashtags(message), function (hashtag) {
       return Medialists.find({slug: hashtag}).count()
     })
@@ -20,7 +21,10 @@ Meteor.methods({
     var contacts = _.uniq(extraContacts.concat(contact))
 
     var post = {
-      createdBy: this.userId,
+      createdBy: {
+        _id: this.userId,
+        name: thisUser.profile.name
+      },
       createdAt: new Date(),
       contacts: contacts,
       medialists: medialists,

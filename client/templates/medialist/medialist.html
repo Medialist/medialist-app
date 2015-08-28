@@ -96,10 +96,17 @@
     </td>
     <td class="hidden-xs col-feedback">
     {{#with latestFeedback}}
-      {{> contactFeedback}}
-      {{else}}
+      {{> contactFeedback this}}
+    {{else}}
       <p>&hellip;</p>
     {{/with}}
     </td>
   </tr>
+</template>
+
+<template name="contactFeedback">
+  {{message}}
+  <div class="feedback-details">
+    {{createdBy.name}} | {{fromNow createdAt}}
+  </div>
 </template>

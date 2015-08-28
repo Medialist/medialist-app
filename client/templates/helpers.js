@@ -17,6 +17,9 @@ var helpers = {
   },
   classify: function (string) {
     return s.slugify(string)
+  },
+  fromNow: function (date) {
+    return moment(date).fromNow()
   }
 }
 

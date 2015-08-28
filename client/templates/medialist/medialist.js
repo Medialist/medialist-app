@@ -1,20 +1,22 @@
+var medialistTpl
+
 Template.medialist.onCreated(function () {
-  var tpl = this
-  tpl.slug = new ReactiveVar()
-  tpl.autorun(function () {
+  medialistTpl = this
+  medialistTpl.slug = new ReactiveVar()
+  medialistTpl.autorun(function () {
     FlowRouter.watchPathChange()
-    tpl.slug.set(FlowRouter.getParam('slug'))
+    medialistTpl.slug.set(FlowRouter.getParam('slug'))
   })
-  tpl.subscribe('medialist', tpl.slug.get())
+  medialistTpl.subscribe('medialist', medialistTpl.slug.get())
 })
 
 Template.medialist.helpers({
   medialist: function () {
-    return Medialists.findOne({slug: Template.instance().slug.get()})
+    return Medialists.findOne({slug: medialistTpl.slug.get()})
   },
   contacts: function () {
     var query = {}
-    query['medialists.' + Template.instance().slug.get()] = { $exists: true }
+    query['medialists.' + medialistTpl.slug.get()] = { $exists: true }
     return Contacts.find(query)
   }
 })
@@ -22,8 +24,28 @@ Template.medialist.helpers({
 Template.medialist.events({
   'click [data-action="add-new"]': function () {
     Modal.show('addContact')
+  }
+})
+
+Template.medialistContactRow.helpers({
+  contactMedialist: function () {
+    return this.medialists[medialistTpl.slug.get()]
+  }
+})
+
+Template.medialistContactRow.events({
+  'click [data-action="show-contact-slide-in"]': function (evt, tpl) {
+    var $el = tpl.$(evt.target)
+    if (!$el.parents('[data-field="status"]').length) {
+      SlideIns.show('right', 'contactSlideIn', { contact: this })
+    }
   },
-  'click [data-action="show-contact-slide-in"]': function () {
-    SlideIns.show('right', 'contactSlideIn', { contact: this })
+  'click [data-status]': function (evt, tpl) {
+    var status = tpl.$(evt.currentTarget).data('status')
+    var contact = tpl.data.slug
+    var medialist = medialistTpl.slug.get()
+    Meteor.call('posts/create', contact, medialist, null, status, function (err) {
+      if (err) console.error(err)
+    })
   }
 })

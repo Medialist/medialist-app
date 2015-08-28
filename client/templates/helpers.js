@@ -11,6 +11,12 @@ var helpers = {
     contact = contact || this
     var medialistSlugs = Object.keys(contact.medialists)
     return Medialists.find({slug: {$in: medialistSlugs}})
+  },
+  statuses: function () {
+    return _.values(Contacts.status)
+  },
+  classify: function (string) {
+    return s.slugify(string)
   }
 }
 

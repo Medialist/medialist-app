@@ -17,6 +17,6 @@ tableflip:slide-ins
 reactive-var
 tableflip:modal
 aldeed:simple-schema
-yasaricli:slugify
 tableflip:twitter
 sacha:spin
+underscorestring:underscore.string

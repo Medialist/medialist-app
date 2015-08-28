@@ -24,10 +24,7 @@ Template.contactActivity.onRendered(function () {
 Template.contactActivity.helpers({
   medialistSlug: function () {
     return medialistSlug.get()
-  },
-  statuses: function () {
-    return _.values(Contacts.status)
-  },
+  }
 })
 
 Template.contactActivity.events({
@@ -41,9 +38,8 @@ Template.contactActivity.events({
     var contact = tpl.data.slug
     var message = tpl.$('[data-field="message"]').val()
     if (!message) return
-    Meteor.call('posts/create', contact, medialist, message, status, function (err, res) {
+    Meteor.call('posts/create', contact, medialist, message, status, function (err) {
       if (err) console.error(err)
-      console.log(res)
     })
   }
 })

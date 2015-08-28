@@ -2,7 +2,9 @@ Meteor.methods({
   'posts/create': function (contact, medialist, message, status) {
     check(contact, String)
     check(medialist, String)
-    check(message, String)
+    check(message, Match.Where(function (message) {
+      return !message || message instanceof String
+    }))
     check(status, Match.OneOf.apply(null, _.values(Contacts.status)))
     if (!this.userId) throw new Meteor.Error('Only a logged in user can post feedback')
     if (!Medialists.find({slug: medialist}).count()) throw new Meteor.Error('Cannot find medialist #' + medialist)
@@ -20,11 +22,11 @@ Meteor.methods({
     var post = {
       createdBy: this.userId,
       createdAt: new Date(),
-      message: message,
       contacts: contacts,
       medialists: medialists,
       status: status
     }
+    if (message) post.message = message
 
     var contactUpdate = {}
     contactUpdate['medialists.' + medialist] = status

@@ -35,6 +35,11 @@
                 <a class="btn btn-text" data-dismiss="modal" aria-label="Close">Cancel</a>
                 <button class="btn btn-primary">Save</button>
               </div>
+              {{#if validationError}}
+              <div class="alert alert-danger">
+                {{validationError}}
+              </div>
+              {{/if}}
             </div>
           </form>
         </div>

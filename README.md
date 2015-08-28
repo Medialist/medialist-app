@@ -71,8 +71,10 @@ meteor --settings settings.json
 
 ```js
 {
-  createdBy: 'userId',
-  createdByName: 'User Name',
+  createdBy: {
+    _id: 'userId',  
+    name: 'User Name'
+  },
   createdAt: 'timestamp',
   message: 'Spoke to @janesmith about #medialist, she loves it',
   contacts: ['janesmith'],

@@ -1,5 +1,6 @@
 var contactSection = new ReactiveVar('contactDetails')
-var medialistSlug = new ReactiveVar()
+var medialistSlugLog = new ReactiveVar()
+var medialistSlugPosts = new ReactiveVar()
 var option = new ReactiveVar()
 
 Template.contactSlideIn.helpers({
@@ -19,24 +20,34 @@ Template.contactSlideIn.events({
 })
 
 Template.contactActivity.onCreated(function () {
-  this.subscribe('postsByContact', this.data.slug)
+  var tpl = this
+  tpl.autorun(function () {
+    var medialist = medialistSlugPosts.get()
+    tpl.subscribe('posts', medialist, tpl.data.slug, 10)
+  })
 })
 
 Template.contactActivity.onRendered(function () {
-  medialistSlug.set(FlowRouter.getParam('slug') || Object.keys(this.data.medialists)[0])
+  medialistSlugLog.set(FlowRouter.getParam('slug') || Object.keys(this.data.medialists)[0])
 })
 
 Template.contactActivity.helpers({
   option: function () {
     return option.get()
   },
-  medialistSlug: function () {
-    return medialistSlug.get()
+  medialistSlugLog: function () {
+    return medialistSlugLog.get()
+  },
+  medialistSlugPosts: function () {
+    return medialistSlugPosts.get()
   },
   posts: function () {
-    return Posts.find({
-      contacts: this.slug
-    }, {
+    var query = { contacts: this.slug }
+    var medialist = medialistSlugPosts.get()
+    if (medialist) {
+      query.medialists = medialist
+    }
+    return Posts.find(query, {
       sort: { createdAt: -1 },
       limit: 10
     })
@@ -47,13 +58,17 @@ Template.contactActivity.events({
   'click [data-option]': function (evt, tpl) {
     option.set(tpl.$(evt.currentTarget).data('option'))
   },
-  'click [data-medialist-slug]': function (evt, tpl) {
-    var medialist = tpl.$(evt.currentTarget).data('medialist-slug')
-    medialistSlug.set(medialist)
+  'click [data-medialist-slug-log]': function (evt, tpl) {
+    var medialist = tpl.$(evt.currentTarget).data('medialist-slug-log')
+    medialistSlugLog.set(medialist)
+  },
+  'click [data-medialist-slug-posts]': function (evt, tpl) {
+    var medialist = tpl.$(evt.currentTarget).data('medialist-slug-posts')
+    medialistSlugPosts.set(medialist)
   },
   'click [data-status]': function (evt, tpl) {
     var status = tpl.$(evt.currentTarget).data('status')
-    var medialist = medialistSlug.get()
+    var medialist = medialistSlugLog.get()
     var contact = tpl.data.slug
     var message = tpl.$('[data-field="message"]').val()
     if (!message) return

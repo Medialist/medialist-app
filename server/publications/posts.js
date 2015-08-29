@@ -1,25 +1,14 @@
-Meteor.publish('latestPost', function (medialistSlug, contactSlug) {
+Meteor.publish('posts', function (medialistSlug, contactSlug, limit, message) {
   if (!this.userId) return this.ready()
-  return Posts.find({
-    medialists: medialistSlug,
-    contacts: contactSlug,
-    message: { $exists: true }
-  }, {
+  if (!limit) limit = 1
+  var query = {}
+  if (medialistSlug) query.medialists = medialistSlug
+  if (contactSlug) query.contacts = contactSlug
+  if (message) query.message = { $exists: true }
+  return Posts.find(query, {
     sort: {
       createdAt: -1
     },
-    limit: 1
-  })
-})
-
-Meteor.publish('postsByContact', function (contactSlug) {
-  if (!this.userId) return this.ready()
-  return Posts.find({
-    contacts: contactSlug
-  }, {
-    sort: {
-      createdAt: -1
-    },
-    limit: 10
+    limit: limit
   })
 })

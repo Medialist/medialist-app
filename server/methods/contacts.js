@@ -15,7 +15,7 @@ Meteor.methods({
     }
     contact.roles = []
     contact.avatar = '/images/avatar.svg'
-    contact.slug = contact.twitter.screenName || slugify(contact.name)
+    contact.slug = contact.twitter.screenName || s.slugify(contact.name)
     contact.medialists = {}
     contact.medialists[medialistSlug] = Contacts.status.toContact
 

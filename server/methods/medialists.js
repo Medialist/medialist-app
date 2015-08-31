@@ -6,6 +6,8 @@ Meteor.methods({
 
     medialist.createdAt = new Date()
     medialist.createdBy = this.userId
+    medialist.updatedAt = new Date()
+    medialist.updatedBy = this.userId
     medialist.contacts = []
     medialist.slug = slugify(medialist.name)
 

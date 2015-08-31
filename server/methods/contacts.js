@@ -1,9 +1,10 @@
 Meteor.methods({
 
-  'contacts/create': function (contact, medialist) {
+  'contacts/create': function (contact, medialistSlug) {
     check(contact, Object)
-    check(medialist, String)
+    check(medialistSlug, String)
     if (!this.userId) throw new Meteor.Error('Only a logged in user can create a contact')
+    if (!Medialists.find({slug: medialistSlug}).count()) throw new Meteor.Error('Medialist #' + medialistSlug + ' does not exist')
 
     contact.createdAt = new Date()
     contact.createdBy = this.userId
@@ -16,10 +17,14 @@ Meteor.methods({
     contact.avatar = '/images/avatar.svg'
     contact.slug = contact.twitter.screenName || slugify(contact.name)
     contact.medialists = {}
-    contact.medialists[medialist] = Contacts.status.toContact
+    contact.medialists[medialistSlug] = Contacts.status.toContact
 
     check(contact, Schemas.Contacts)
     Contacts.insert(contact)
+    Medialists.update({ slug: medialistSlug }, { $set: {
+      updatedBy: this.id,
+      updatedAt: new Date()
+    }})
     if (contact.twitter.screenName) {
       TwitterClient.grabUserByScreenName(contact.twitter.screenName, addTwitterDetailsToContact.bind(contact))
     }
@@ -38,6 +43,11 @@ Meteor.methods({
 
     var set = {}
     set['medialists.' + medialistSlug] = Contacts.status.toContact
+
+    Medialists.update({ slug: medialistSlug }, { $set: {
+      updatedBy: this.id,
+      updatedAt: new Date()
+    }})
 
     return Contacts.update({
       slug: contactSlug

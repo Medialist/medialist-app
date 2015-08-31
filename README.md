@@ -28,6 +28,8 @@ meteor --settings settings.json
 {
   createdBy: 'userId',
   createdAt: 'timestamp',
+  updatedBy: 'userId',
+  updatedAt: 'timestamp',
   name: '',
   purpose: '',
   slug: '',

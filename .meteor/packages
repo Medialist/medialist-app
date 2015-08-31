@@ -20,4 +20,4 @@ aldeed:simple-schema
 yasaricli:slugify
 tableflip:twitter
 sacha:spin
-test-login
+tests-helpers

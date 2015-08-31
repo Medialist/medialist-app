@@ -1,2 +1,4 @@
 .meteor/local
 settings.json
+tests/nightwatch/screenshots/*
+tests/nightwatch/reports/*

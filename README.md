@@ -20,6 +20,32 @@ To run Medialists, you need to specify a *settings.json* and pass it as follows:
 meteor --settings settings.json
 ```
 
+## Running Nightwatch tests
+
+Install Selenium:
+
+```
+npm install -g selenium-server
+```
+
+Install Starry Night:
+
+```
+npm install starrynight -g
+```
+
+You need to run Meteor **using a test database**.  If you do not specify an alternative database, the tests will wipe your local app DB!  Assuming you don't want this to happen, make sure you're running a mongod as a separate process on the default port 27017 and use:
+
+```
+MONGO_URL=mongodb://localhost:27017/medialist-test meteor --settings settings.json
+```
+
+Run the tests with the *StarryNight* CLI:
+
+```
+starrynight run-tests --framework nightwatch
+```
+
 ## Data structure
 
 **medialist**

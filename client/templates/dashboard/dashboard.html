@@ -12,7 +12,9 @@
           </div>
         </div>
         <div class="row">
-          <div class="panel panel-default"></div>
+          {{#each posts}}
+            {{> displayPost this}}
+          {{/each}}
         </div>
       </div>
       <div class="col-sm-3">

@@ -17,3 +17,13 @@ Meteor.publish('posts', function (medialistSlug, contactSlug, limit, message) {
     limit: limit
   })
 })
+
+Meteor.publish('recentPosts', function () {
+  if (!this.userId) return this.ready()
+  return Posts.find({}, {
+    sort: {
+      createdAt: -1
+    },
+    limit: 10
+  })
+})

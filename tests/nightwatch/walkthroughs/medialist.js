@@ -17,6 +17,7 @@ module.exports = {
     client
       .click('a[href="/medialist/medialist1"]')
       .click('[data-action="toggle-mainmenu"]')
+      .pause(1000)
     client
       .expect.element('.medialist-breadcrumbs li:last-child a').text.to.equal('#medialist1').before(1000)
     client
@@ -80,6 +81,50 @@ module.exports = {
 
       client
         .expect.element('tbody .contact-row:last-child .col-name').text.to.equal('Twitter').before(1000)
+  },
+
+  'Show existing contact details': function (client) {
+    client
+      .pause(1000)
+      .click('[data-action="toggle-mainmenu"]')
+      .waitForElementVisible('[href="/medialist/medialist1"]', 1000)
+      .click('[href="/medialist/medialist1"]')
+      .pause(100)
+      .click('[data-action="toggle-mainmenu"]')
+      .waitForElementNotVisible('.mainmenu-user', 1000)
+      .click('[data-contact="contactone"] .col-name')
+      .waitForElementVisible('.contact-slide-in', 1000)
+
+    client
+      .expect.element('#contact-detail-name').text.to.equal('Contact One').before(1000)
+  },
+
+  'Show existing contact feedback': function (client) {
+    client
+      .pause(1000)
+      .click('[data-section="contactActivity"]')
+
+    client
+      .expect.element('.display-post-message').text.to.equal('test message').before(1000)
+  },
+
+  'Add feedback to contact': function (client) {
+    client
+      .pause(1000)
+      .click('[data-option="logFeedback"]')
+      .waitForElementVisible('[data-field="message"]', 1000)
+      .setValue('[data-field="message"]', 'test message involving @contacttwo and #medialist2')
+      .click('.contact-activity-log .form-group [data-toggle="dropdown"]')
+      .waitForElementVisible('[data-status="Hot Lead"]', 1000)
+      .click('[data-status="Hot Lead"]')
+      .click('[data-action="close-contact-slide-in"]')
+      .pause(1000)
+
+    client
+      .expect.element('[data-contact="contactone"] [data-field="status"] span').text.to.equal('Hot Lead').before(1000)
+    client
+      .pause(5000)
+      .expect.element('[data-contact="contactone"] .col-feedback').text.to.equal('test message involving @contacttwo and #medialist2 Test User | just now').before(1000)
   },
 
   'Shut down client': function (client) {

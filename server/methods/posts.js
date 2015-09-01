@@ -35,10 +35,7 @@ Meteor.methods({
     var contactUpdate = {}
     contactUpdate['medialists.' + medialistSlug] = status
     Contacts.update({ slug: contact }, { $set: contactUpdate })
-    Medialists.update({ slug: medialistSlug }, { $set: {
-      updatedBy: this.id,
-      updatedAt: new Date()
-    }})
+    App.medialistUpdated(medialistSlug, this.userId)
     return Posts.insert(post)
   }
 });

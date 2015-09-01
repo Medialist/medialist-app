@@ -17,7 +17,8 @@ tableflip:slide-ins
 reactive-var
 tableflip:modal
 aldeed:simple-schema
-yasaricli:slugify
 tableflip:twitter
 sacha:spin
 tests-helpers
+underscorestring:underscore.string
+momentjs:moment

@@ -117,8 +117,9 @@
       "FlowRouter": false,
       "BlazeLayout": false,
       "SimpleSchema": false,
-      "slugify": false,
+      "s": false,
       "Twitter": false,
+      "moment": false,
       "SlideIns": true,
       "Modal": true,
       // Globals

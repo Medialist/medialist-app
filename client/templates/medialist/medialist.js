@@ -1,22 +1,22 @@
+var medialistTpl
+
 Template.medialist.onCreated(function () {
-  var tpl = this
-  tpl.slug = new ReactiveVar()
-  tpl.autorun(function () {
+  medialistTpl = this
+  medialistTpl.slug = new ReactiveVar()
+  medialistTpl.autorun(function () {
     FlowRouter.watchPathChange()
-    tpl.slug.set(FlowRouter.getParam('slug'))
+    medialistTpl.slug.set(FlowRouter.getParam('slug'))
   })
-  tpl.autorun(function () {
-    tpl.subscribe('medialist', tpl.slug.get())
-  })
+  tpl.subscribe('medialist', tpl.slug.get())
 })
 
 Template.medialist.helpers({
   medialist: function () {
-    return Medialists.findOne({slug: Template.instance().slug.get()})
+    return Medialists.findOne({slug: medialistTpl.slug.get()})
   },
   contacts: function () {
     var query = {}
-    query['medialists.' + Template.instance().slug.get()] = { $exists: true }
+    query['medialists.' + medialistTpl.slug.get()] = { $exists: true }
     return Contacts.find(query)
   }
 })
@@ -24,8 +24,38 @@ Template.medialist.helpers({
 Template.medialist.events({
   'click [data-action="add-new"]': function () {
     Modal.show('addContact')
+  }
+})
+
+Template.medialistContactRow.onCreated(function () {
+  this.subscribe('post', medialistTpl.slug.get(), this.data.slug, 1, true)
+})
+
+Template.medialistContactRow.helpers({
+  contactMedialist: function () {
+    return this.medialists[medialistTpl.slug.get()]
   },
-  'click [data-action="show-contact-details"]': function () {
-    SlideIns.show('right', 'contactDetails', { contact: this })
+  latestFeedback: function () {
+    return Posts.findOne({
+      medialists: medialistTpl.slug.get(),
+      contacts: this.slug
+    })
+  }
+})
+
+Template.medialistContactRow.events({
+  'click [data-action="show-contact-slide-in"]': function (evt, tpl) {
+    var $el = tpl.$(evt.target)
+    if (!$el.parents('[data-field="status"]').length) {
+      SlideIns.show('right', 'contactSlideIn', { contact: this })
+    }
+  },
+  'click [data-status]': function (evt, tpl) {
+    var status = tpl.$(evt.currentTarget).data('status')
+    var contact = tpl.data.slug
+    var medialist = medialistTpl.slug.get()
+    Meteor.call('posts/create', contact, medialist, null, status, function (err) {
+      if (err) console.error(err)
+    })
   }
 })

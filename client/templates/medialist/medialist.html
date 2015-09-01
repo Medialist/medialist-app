@@ -43,62 +43,70 @@
   </thead>
   <tbody>
     {{#each contacts}}
-    <tr class="contact-row" data-action="show-contact-details">
-      <td class="col-checkbox">
-        <div class="checkbox checkbox-default">
-          <label>
-            <input type="checkbox"/>
-            <span class="checkbox-material">
-              <span class="check"></span>
-            </span>
-          </label>
-        </div>
-      </td>
-      <td class="col-img">
-      {{#if avatar}}
-        <img class="img-rounded" width="40" height="40" src="{{avatar}}" alt="twitter profile image"/>
-      {{/if}}
-      </td>
-      <td class="col-name">
-        {{name}}
-      </td>
-      <td class="col-org hidden-xs">
-        {{roles.[0].org}}
-      </td>
-      <td>
-        <div class="btn-group btn-group-sm btn-group-status">
-          {{#with status}}
-            <button class="btn {{bootstrapify text}} dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-              <span>{{text}}</span>
-              <span class="caret"></span>
-            </button>
-          {{/with}}
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Completed</a></li>
-            <li><a href="#">Hot lead</a></li>
-            <li><a href="#">Contacted</a></li>
-            <li><a href="#">Not interested</a></li>
-          </ul>
-        </div>
-      </td>
-      <td class="hidden-xs col-coverage">
-        <p>&hellip;</p>
-      </td>
-      <td class="hidden-xs col-feedback">
-      {{#with latestFeedback}}
-        {{> contactFeedback}}
-        {{else}}
-        <p>&hellip;</p>
-      {{/with}}
-      </td>
-    </tr>
-  {{else}}
-    <tr>
-      <td colspan="6">
-        <strong>Add some people to contact&hellip;</strong>
-      </td>
-    </tr>
-  {{/each}}
+      {{> medialistContactRow this}}
+    {{else}}
+      <tr>
+        <td colspan="6">
+          <strong>Add some people to contact&hellip;</strong>
+        </td>
+      </tr>
+    {{/each}}
   </tbody>
 </table>
+</template>
+
+<template name="medialistContactRow">
+  <tr class="contact-row" data-action="show-contact-slide-in">
+    <td class="col-checkbox">
+      <div class="checkbox checkbox-default">
+        <label>
+          <input type="checkbox"/>
+          <span class="checkbox-material">
+            <span class="check"></span>
+          </span>
+        </label>
+      </div>
+    </td>
+    <td class="col-img">
+    {{#if avatar}}
+      <img class="img-rounded" width="40" height="40" src="{{avatar}}" alt="twitter profile image"/>
+    {{/if}}
+    </td>
+    <td class="col-name">
+      {{name}}
+    </td>
+    <td class="col-org hidden-xs">
+      {{roles.[0].org}}
+    </td>
+    <td>
+      <div class="btn-group btn-group-sm btn-group-status" data-field="status">
+        <button class="btn dropdown-toggle {{classify contactMedialist}}" data-toggle="dropdown" aria-expanded="false">
+          <span>{{contactMedialist}}</span>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          {{#each statuses}}
+          <li><a href="#" data-status="{{this}}">{{this}}</a></li>
+          {{/each}}
+        </ul>
+      </div>
+    </td>
+    <td class="hidden-xs col-coverage">
+      <p>&hellip;</p>
+    </td>
+    <td class="hidden-xs col-feedback">
+    {{#with latestFeedback}}
+      {{> contactFeedback this}}
+    {{else}}
+      <p>&hellip;</p>
+    {{/with}}
+    </td>
+  </tr>
+</template>
+
+<template name="contactFeedback">
+  {{message}}
+  <div class="feedback-details">
+    {{createdBy.name}} | {{fromNow createdAt}}
+  </div>
 </template>

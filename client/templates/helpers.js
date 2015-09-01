@@ -6,6 +6,20 @@ var helpers = {
   },
   equal: function (x, y) {
     return x === y
+  },
+  getMedialists: function (contact) {
+    contact = contact || this
+    var medialistSlugs = Object.keys(contact.medialists)
+    return Medialists.find({slug: {$in: medialistSlugs}})
+  },
+  statuses: function () {
+    return _.values(Contacts.status)
+  },
+  classify: function (string) {
+    return s.slugify(string)
+  },
+  fromNow: function (date) {
+    return moment(date).fromNow()
   }
 }
 

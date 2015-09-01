@@ -36,6 +36,7 @@ Template.addContact.events({
     } else {
       context.name = identifier
     }
+    name.set('')
     Modal.show('createContact', context)
   }
 });

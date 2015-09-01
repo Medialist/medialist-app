@@ -71,7 +71,9 @@ $ nightwatch -c .meteor/nightwatch.json
   name: '',
   purpose: '',
   slug: '',
-  contacts: ['contactSlug']
+  contacts: {
+    'contactSlug': 'status'  
+  }
 }
 ```
 
@@ -85,9 +87,7 @@ $ nightwatch -c .meteor/nightwatch.json
     name: 'User Name'
   },
   createdAt: 'timestamp',
-  medialists: {
-    'medialistSlug': 'status'
-  },
+  medialists: ['medialistSlug'],
   name: 'Jane Smith',
   avatar: 'http://example.com/myImage.png',
   twitter: {

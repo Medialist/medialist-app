@@ -9,7 +9,7 @@ var helpers = {
   },
   getMedialists: function (contact) {
     contact = contact || this
-    var medialistSlugs = Object.keys(contact.medialists)
+    var medialistSlugs = contact.medialists
     return Medialists.find({slug: {$in: medialistSlugs}})
   },
   statuses: function () {

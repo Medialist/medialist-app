@@ -17,9 +17,7 @@ Template.medialist.helpers({
     return Medialists.findOne({slug: medialistTpl.slug.get()})
   },
   contacts: function () {
-    var query = {}
-    query['medialists.' + medialistTpl.slug.get()] = { $exists: true }
-    return Contacts.find(query)
+    return Contacts.find({ medialists: medialistTpl.slug.get() })
   }
 })
 
@@ -35,7 +33,8 @@ Template.medialistContactRow.onCreated(function () {
 
 Template.medialistContactRow.helpers({
   contactMedialist: function () {
-    return this.medialists[medialistTpl.slug.get()]
+    var medialist = Medialists.findOne({ slug: medialistTpl.slug.get() })
+    return medialist && medialist.contacts[this.slug]
   },
   latestFeedback: function () {
     return Posts.findOne({

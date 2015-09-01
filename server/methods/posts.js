@@ -1,6 +1,6 @@
 Meteor.methods({
-  'posts/create': function (contact, medialistSlug, message, status) {
-    check(contact, String)
+  'posts/create': function (contactSlug, medialistSlug, message, status) {
+    check(contactSlug, String)
     check(medialistSlug, String)
     check(message, Match.Where(function (message) {
       return message === null || typeof message === 'string'
@@ -8,7 +8,7 @@ Meteor.methods({
     check(status, Match.OneOf.apply(null, _.values(Contacts.status)))
     if (!this.userId) throw new Meteor.Error('Only a logged in user can post feedback')
     if (!Medialists.find({slug: medialistSlug}).count()) throw new Meteor.Error('Cannot find medialist #' + medialistSlug)
-    if (!Contacts.find({slug: contact}).count()) throw new Meteor.Error('Cannot find contact @' + contact)
+    if (!Contacts.find({slug: contactSlug}).count()) throw new Meteor.Error('Cannot find contact @' + contactSlug)
 
     var thisUser = Meteor.users.findOne(this.userId)
     var extraMedialists = _.filter(findHashtags(message), function (hashtag) {
@@ -18,7 +18,7 @@ Meteor.methods({
     var extraContacts = _.filter(findHandles(message), function (handle) {
       return Contacts.find({slug: handle}).count()
     })
-    var contacts = _.uniq(extraContacts.concat(contact))
+    var contacts = _.uniq(extraContacts.concat(contactSlug))
 
     var post = {
       createdBy: {
@@ -32,10 +32,9 @@ Meteor.methods({
     }
     if (message) post.message = message
 
-    var contactUpdate = {}
-    contactUpdate['medialists.' + medialistSlug] = status
-    Contacts.update({ slug: contact }, { $set: contactUpdate })
-    App.medialistUpdated(medialistSlug, this.userId)
+    var medialistUpdate = {}
+    medialistUpdate['contacts.' + contactSlug] = status
+    Medialists.update({ slug: medialistSlug }, { $set: medialistUpdate })
     return Posts.insert(post)
   }
 });

@@ -32,7 +32,7 @@ Template.contactActivity.onCreated(function () {
 })
 
 Template.contactActivity.onRendered(function () {
-  medialistSlugLog.set(FlowRouter.getParam('slug') || Object.keys(this.data.medialists)[0])
+  medialistSlugLog.set(FlowRouter.getParam('slug') || this.data.medialists[0])
 })
 
 Template.contactActivity.helpers({

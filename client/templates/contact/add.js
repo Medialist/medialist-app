@@ -43,7 +43,8 @@ Template.addContact.events({
 
 Template.contactRow.helpers({
   status: function () {
-    return this.medialists[FlowRouter.getParam('slug')]
+    var medialist = Medialists.findOne(FlowRouter.getParam('slug'))
+    return medialist && medialist.contacts[this.slug]
   }
 })
 

@@ -1,0 +1,64 @@
+[{
+  "_id": "5SbmbhJK3ZLRTpe3g",
+  "createdBy": {
+    "_id": "dNemSrYhw8hdFjxaK",
+    "name": "Existing User"
+  },
+  "createdAt": "2015-08-28T15:07:15.866Z",
+  "contacts": ["barbora"],
+  "medialists": ["medialist2"],
+  "status": "contacted",
+  "message": "test message"
+}, {
+  "_id": "RzGDReQdZyR4ezXKE",
+  "createdBy": {
+    "_id": "dNemSrYhw8hdFjxaK",
+    "name": "Existing User"
+  },
+  "createdAt": "2015-08-28T15:15:13.802Z",
+  "contacts": ["johan"],
+  "medialists": ["medialist2"],
+  "status": "not interested"
+}, {
+  "_id": "zaunaYqjfKMHhPjbx",
+  "createdBy": {
+    "_id": "dNemSrYhw8hdFjxaK",
+    "name": "Existing User"
+  },
+  "createdAt": "2015-08-28T15:15:49.843Z",
+  "contacts": ["johan"],
+  "medialists": ["medialist1", "medialist2"],
+  "status": "contacted",
+  "message": "also refers to #medialist1"
+}, {
+  "_id": "wL5f3F28zJugydb5G",
+  "createdBy": {
+    "_id": "dNemSrYhw8hdFjxaK",
+    "name": "Existing User"
+  },
+  "createdAt": "2015-08-28T15:32:33.936Z",
+  "contacts": ["dean"],
+  "medialists": ["medialist3"],
+  "status": "not interested"
+}, {
+  "_id": "3o8dHxiCqeQrKLhYk",
+  "createdBy": {
+    "_id": "dNemSrYhw8hdFjxaK",
+    "name": "Existing User"
+  },
+  "createdAt": "2015-08-28T15:33:00.668Z",
+  "contacts": ["pierre"],
+  "medialists": ["medialist4"],
+  "status": "contacted",
+  "message": "A message lorem ipsum"
+}, {
+  "_id": "FprdigDYgDBrKrKHj",
+  "createdBy": {
+    "_id": "dNemSrYhw8hdFjxaK",
+    "name": "Existing User"
+  },
+  "createdAt": "2015-08-31T08:32:39.731Z",
+  "contacts": ["johan"],
+  "medialists": ["medialist2"],
+  "status": "Not Interested"
+}]

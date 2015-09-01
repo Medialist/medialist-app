@@ -19,5 +19,6 @@ tableflip:modal
 aldeed:simple-schema
 tableflip:twitter
 sacha:spin
+tests-helpers
 underscorestring:underscore.string
 momentjs:moment

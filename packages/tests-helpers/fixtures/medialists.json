@@ -4,7 +4,13 @@
   "purpose": "A Medialist",
   "createdAt": "2015-08-25T15:28:42.381Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
-  "contacts": [],
+  "contacts": {
+      "contactone": "Completed",
+      "contacttwo": "To Contact",
+      "contactthree": "Hot Lead",
+      "contactfour": "Not Interested",
+      "contactfive": "Contacted"
+  },
   "slug": "medialist1"
 }, {
   "_id": "nA7c8tyqFAim4dSwP",
@@ -12,7 +18,13 @@
   "purpose": "Another Medialist",
   "createdAt": "2015-08-26T12:15:00.252Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
-  "contacts": [],
+  "contacts": {
+    "contactsix": "Completed",
+    "contactseven": "To Contact",
+    "contactthree": "Hot Lead",
+    "contactfour": "Not Interested",
+    "contactfive": "Contacted"
+  },
   "slug": "medialist2"
 }, {
   "_id": "vFeyKLkizjjRC5xEd",
@@ -20,7 +32,13 @@
   "purpose": "The Third Medialist",
   "createdAt": "2015-08-26T13:12:07.829Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
-  "contacts": [],
+  "contacts": {
+    "contactone": "Completed",
+    "contactsix": "To Contact",
+    "contactseven": "Hot Lead",
+    "contacteight": "Not Interested",
+    "contactnine": "Contacted"
+  },
   "slug": "medialist3"
 }, {
   "_id": "GGm4phbCz6CYEfKwX",
@@ -28,6 +46,12 @@
   "purpose": "Final Medialist",
   "createdAt": "2015-08-26T14:03:12.017Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
-  "contacts": [],
+  "contacts": {
+    "contactnine": "Completed",
+    "contactten": "To Contact",
+    "contactteleven": "Hot Lead",
+    "contacttwelve": "Not Interested",
+    "contactthirteen": "Contacted"
+  },
   "slug": "medialist4"
 }]

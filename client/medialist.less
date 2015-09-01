@@ -22,7 +22,8 @@ body {
   color:#fff;
   background: @grey-300;
 }
-.mainmenu .nav a {
+.mainmenu-nav a,
+.mainmenu-favourites a {
   color: @grey-600;
 }
 .medialist-toolbar {
@@ -47,13 +48,16 @@ body {
   }
 }
 
-.slide-in.left {
-  background: #fff;
-}
-
 .slide-in {
   bottom:0;
-  height: calc(~"100% - 62px")
+  height: calc(~"100% - 62px");
+
+  .nav-slide-in a {
+    color: #fff;
+  }
+}
+.slide-in.left {
+  background: #fff;
 }
 
 .modal-dialog{

@@ -14,3 +14,4 @@ Template.mainmenu.helpers({
     return Medialists.find({}, {sort:['slug']}).fetch()
   }
 })
+

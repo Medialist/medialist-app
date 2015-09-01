@@ -1,8 +1,8 @@
 Meteor.methods({
 
-  'contacts/create': function (contact, medialist) {
+  'contacts/create': function (contact, medialistSlug) {
     check(contact, Object)
-    check(medialist, String)
+    check(medialistSlug, String)
     if (!this.userId) throw new Meteor.Error('Only a logged in user can create a contact')
 
     contact.createdAt = new Date()
@@ -15,10 +15,13 @@ Meteor.methods({
     contact.roles = []
     contact.avatar = '/images/avatar.svg'
     contact.slug = contact.twitter.screenName || s.slugify(contact.name)
-    contact.medialists = {}
-    contact.medialists[medialist] = Contacts.status.toContact
+    contact.medialists = [medialistSlug]
+
+    var updateMedialist = {}
+    updateMedialist['contacts.' + contact.slug] = Contacts.status.toContact
 
     check(contact, Schemas.Contacts)
+    Medialists.update({ slug: medialistSlug }, {$set: updateMedialist})
     Contacts.insert(contact)
     if (contact.twitter.screenName) {
       TwitterClient.grabUserByScreenName(contact.twitter.screenName, addTwitterDetailsToContact.bind(contact))
@@ -33,14 +36,15 @@ Meteor.methods({
     if (!this.userId) throw new Meteor.Error('Only a logged in user can add contacts to a medialist')
     var contact = Contacts.findOne({slug: contactSlug})
     if (!contact) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
-    if (typeof contact.medialists[medialistSlug] !== 'undefined') throw new Meteor.Error('Contact #' + contactSlug + ' is already in that medialist')
+    if (contact.medialists.indexOf(medialistSlug) > -1) throw new Meteor.Error('Contact #' + contactSlug + ' is already in that medialist')
     if (!Medialists.find({slug: medialistSlug}).count()) throw new Meteor.Error('Medialist #' + medialistSlug + ' does not exist')
 
     var set = {}
-    set['medialists.' + medialistSlug] = Contacts.status.toContact
+    set['contacts.' + contactSlug] = Contacts.status.toContact
 
-    return Contacts.update({
-      slug: contactSlug
+    Contacts.update({ slug: contactSlug }, { $push: { medialists: medialistSlug } })
+    return Medialists.update({
+      slug: medialistSlug
     }, {
       $set: set
     })
@@ -52,7 +56,7 @@ Meteor.methods({
     if (!this.userId) throw new Meteor.Error('Only a logged in user can add roles to a contact')
     if (!Contacts.find({slug: contactSlug}).count()) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
 
-    return Contacts.update({slug: contactSlug}, {$push: {
+    return Contacts.update({ slug: contactSlug }, {$push: {
       roles: role
     }})
   }

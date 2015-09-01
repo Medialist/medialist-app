@@ -31,7 +31,9 @@ meteor --settings settings.json
   name: '',
   purpose: '',
   slug: '',
-  contacts: ['contactSlug']
+  contacts: {
+    'contactSlug': 'status'  
+  }
 }
 ```
 
@@ -42,9 +44,7 @@ meteor --settings settings.json
 {
   createdBy: 'userId',
   createdAt: 'timestamp',
-  medialists: {
-    'medialistSlug': 'status'
-  },
+  medialists: ['medialistSlug'],
   name: 'Jane Smith',
   avatar: 'http://example.com/myImage.png',
   twitter: {

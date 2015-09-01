@@ -23,7 +23,11 @@ Template.contactActivity.onCreated(function () {
   var tpl = this
   tpl.autorun(function () {
     var medialist = medialistSlugPosts.get()
-    tpl.subscribe('posts', medialist, tpl.data.slug, 10)
+    tpl.subscribe('posts', medialist, Template.currentData().slug, 10)
+  })
+  tpl.autorun(function () {
+    FlowRouter.watchPathChange()
+    medialistSlugPosts.set(FlowRouter.getParam('slug'))
   })
 })
 

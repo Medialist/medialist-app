@@ -73,7 +73,8 @@ Template.contactActivity.events({
     var message = tpl.$('[data-field="message"]').val()
     if (!message) return
     Meteor.call('posts/create', contact, medialist, message, status, function (err) {
-      if (err) console.error(err)
+      if (err) return console.error(err)
+      tpl.$('[data-field="message"]').val('')
     })
   }
 })

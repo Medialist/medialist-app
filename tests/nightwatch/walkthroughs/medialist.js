@@ -113,7 +113,7 @@ module.exports = {
       .pause(1000)
       .click('[data-option="logFeedback"]')
       .waitForElementVisible('[data-field="message"]', 1000)
-      .setValue('[data-field="message"]', 'test message involving @contacttwo and #medialist2')
+      .setValue('[data-field="message"]', 'test message involving @contactthree and #medialist2')
       .click('.contact-activity-log .form-group [data-toggle="dropdown"]')
       .waitForElementVisible('.contact-activity-log [data-status="Hot Lead"]', 1000)
       .click('.contact-activity-log [data-status="Hot Lead"]')
@@ -123,11 +123,39 @@ module.exports = {
     client
       .expect.element('[data-contact="contactone"] [data-field="status"] span').text.to.equal('Hot Lead').before(1000)
     client
-      .expect.element('[data-contact="contactone"] .col-feedback').text.to.equal('test message involving @contacttwo and #medialist2\nTest User | a few seconds ago').before(1000)
+      .expect.element('[data-contact="contactone"] .col-feedback').text.to.equal('test message involving @contactthree and #medialist2\nTest User | a few seconds ago').before(1000)
+  },
+
+  'Check feedback propagates to referenced medialists/contacts': function (client) {
+    client
+      .pause(1000)
+      .click('[data-action="toggle-mainmenu"]')
+      .waitForElementVisible('.mainmenu-favourites [href="/medialist/medialist2"]', 1000)
+      .click('.mainmenu-favourites [href="/medialist/medialist2"]')
+      .pause(100)
+      .click('[data-action="toggle-mainmenu"]')
+      .waitForElementNotVisible('.mainmenu-user', 1000)
+
+      client
+        .expect.element('[data-contact="contactthree"] .col-feedback').text.to.contain('test message involving @contactthree and #medialist2').before(1000)
+
+  },
+
+  'Update status from medialist summary page': function (client) {
+    client
+      .pause(1000)
+      .click('[data-contact="contactseven"] [data-field="status"] [data-toggle="dropdown"]')
+      .waitForElementVisible('[data-contact="contactseven"] [data-field="status"] [data-status="Completed"]', 1000)
+      .click('[data-contact="contactseven"] [data-field="status"] [data-status="Completed"]')
+
+    client
+      .expect.element('[data-contact="contactseven"] [data-field="status"] [data-toggle="dropdown"]').text.to.equal('Completed').before(1000)
+
   },
 
   'Shut down client': function (client) {
     client
+      .clearDB()
       .end()
   }
 }

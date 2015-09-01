@@ -7,7 +7,7 @@ Meteor.methods({
     medialist.createdAt = new Date()
     medialist.createdBy = this.userId
     medialist.contacts = []
-    medialist.slug = slugify(medialist.name)
+    medialist.slug = s.slugify(medialist.name)
 
     check(medialist, Schemas.Medialists)
 

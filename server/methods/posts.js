@@ -3,7 +3,7 @@ Meteor.methods({
     check(contact, String)
     check(medialist, String)
     check(message, Match.Where(function (message) {
-      return !message || typeof message === 'string'
+      return message === null || typeof message === 'string'
     }))
     check(status, Match.OneOf.apply(null, _.values(Contacts.status)))
     if (!this.userId) throw new Meteor.Error('Only a logged in user can post feedback')

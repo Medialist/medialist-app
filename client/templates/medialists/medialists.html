@@ -19,9 +19,9 @@
       </div>
     </th>
     <th class="col-campaign">Campaign</th>
+    <th class="col-purpose">Purpose</th>
     <th class="col-updated-on">Last updated</th>
     <th class="col-updated-by">Last updated by</th>
-    <th class="col-purpose">Purpose</th>
   </tr>
   </thead>
   <tbody>
@@ -37,12 +37,10 @@
           </label>
         </div>
       </td>
-      <td class="col-campaign">
-        <a href="/medialist/{{slug}}">#{{slug}}</a>
-      </td>
-      <td>&hellip;</td>
-      <td>&hellip;</td>
+      <td class="col-campaign"><a href="/medialist/{{slug}}">#{{slug}}</a></td>
       <td class="col-purpose">{{purpose}}</td>
+      <td class="col-updated-on">{{fromNow updatedOn}}</td>
+      <td class="col-updated-by">{{updatedBy.name}}</td>
     </tr>
   {{/each}}
   </tbody>

@@ -17,7 +17,6 @@ module.exports = {
     client
       .click('a[href="/medialist/medialist1"]')
       .click('[data-action="toggle-mainmenu"]')
-      .pause(1000)
     client
       .expect.element('.medialist-breadcrumbs li:last-child a').text.to.equal('#medialist1').before(1000)
     client

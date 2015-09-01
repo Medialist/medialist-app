@@ -19,10 +19,10 @@
   }],
   "avatar": "https://pbs.twimg.com/profile_images/636403259507277824/hXmYA-0b_normal.jpg",
   "slug": "dean",
-  "medialists": {
-    "medialist1": "hot lead",
-    "medialist2": "not interested"
-  }
+  "medialists": [
+    "medialist1",
+    "medialist2"
+  ]
 }, {
   "_id": "G86wq8eRaKe3svgok",
   "name": "Johan Myrberger",
@@ -36,9 +36,9 @@
   "roles": [],
   "avatar": "https://pbs.twimg.com/profile_images/14180842/j_myrberger_normal.jpg",
   "slug": "johan",
-  "medialists": {
-    "medialist1": "to contact"
-  }
+  "medialists": [
+    "medialist1"
+  ]
 }, {
   "_id": "XWSdpSyRj2e8Pbfkc",
   "name": "barbora dorflova",
@@ -51,9 +51,9 @@
   "roles": [],
   "avatar": "https://abs.twimg.com/sticky/default_profile_images/default_profile_2_normal.png",
   "slug": "barbora",
-  "medialists": {
-    "medialist1": "contacted"
-  }
+  "medialists": [
+    "medialist1"
+  ]
 }, {
   "_id": "663fp8qBxHWNQPXoR",
   "name": "Trevor Fancher",
@@ -70,9 +70,9 @@
   }],
   "avatar": "https://pbs.twimg.com/profile_images/1530477889/884a5ce43adb4b21b7dae38488d51534_normal.jpg",
   "slug": "trevor",
-  "medialists": {
-    "medialist1": "to contact"
-  }
+  "medialists": [
+    "medialist1"
+  ]
 }, {
   "_id": "zxGMoYqhnQkweXAPd",
   "name": "Malcolm",
@@ -86,9 +86,9 @@
   "roles": [],
   "avatar": "https://pbs.twimg.com/profile_images/2776114982/9154b69d5b979ecbae8eaa5f7bbcd34f_normal.jpeg",
   "slug": "malcolm",
-  "medialists": {
-    "medialist1": "to contact"
-  }
+  "medialists": [
+    "medialist1"
+  ]
 }, {
   "_id": "5GyBDDtWXfpWMMP9Y",
   "name": "Arnold",
@@ -102,9 +102,9 @@
   "roles": [],
   "avatar": "https://pbs.twimg.com/profile_images/1880208035/164_21258363192_647538192_398945_620_n_normal.jpg",
   "slug": "arnold",
-  "medialists": {
-    "medialist1": "to contact"
-  }
+  "medialists": [
+    "medialist1"
+  ]
 }, {
   "_id": "aZNf2oPnYfEcCWMRC",
   "name": "Pierre Omidyar",
@@ -118,9 +118,9 @@
   "roles": [],
   "avatar": "https://pbs.twimg.com/profile_images/860459345/PierreCB2_normal.jpg",
   "slug": "pierre",
-  "medialists": {
-    "medialist3": "contacted"
-  }
+  "medialists": [
+    "medialist3"
+  ]
 }, {
   "_id": "qRkvs4FDekjjTXm8n",
   "name": "Bob Johnston",
@@ -134,9 +134,9 @@
   "roles": [],
   "avatar": "https://pbs.twimg.com/profile_images/452258135927828481/o8sRBUcj_normal.jpeg",
   "slug": "bob",
-  "medialists": {
-    "medialist1": "to contact"
-  }
+  "medialists": [
+    "medialist1"
+  ]
 }, {
   "_id": "cY3AEMoKhY9qBhZxo",
   "name": "Alan",
@@ -149,9 +149,9 @@
   "roles": [],
   "avatar": "https://pbs.twimg.com/profile_images/572222279498661888/MyL-sMG2_normal.jpeg",
   "slug": "alan",
-  "medialists": {
-    "medialist1": "contacted"
-  }
+  "medialists": [
+    "medialist1"
+  ]
 }, {
   "_id": "CiNrqH7mfxPSZzz5e",
   "name": "Gary Elliott",
@@ -172,9 +172,9 @@
   }],
   "avatar": "https://pbs.twimg.com/profile_images/753367931/IMG_0487_normal.jpg",
   "slug": "gary",
-  "medialists": {
-    "medialist1": "to contact"
-  }
+  "medialists": [
+    "medialist1"
+  ]
 }, {
   "_id": "mo8FEyS7mqme4ybHH",
   "name": "Peter Berg",
@@ -188,9 +188,9 @@
   "roles": [],
   "avatar": "https://pbs.twimg.com/profile_images/1793006481/headshot_peter_normal.jpg",
   "slug": "peter",
-  "medialists": {
-    "medialist1": "to contact"
-  }
+  "medialists": [
+    "medialist1"
+  ]
 }, {
   "_id": "9fGqHDCGL8iLiaBpR",
   "name": "Phil",
@@ -207,9 +207,9 @@
   }],
   "avatar": "https://pbs.twimg.com/profile_images/62173767/Photo_4_normal.jpg",
   "slug": "phil",
-  "medialists": {
-    "medialist1": "to contact"
-  }
+  "medialists": [
+    "medialist1"
+  ]
 }, {
   "_id": "QfP34uCPXqavGWwkb",
   "name": "Cliff",
@@ -223,9 +223,9 @@
   "roles": [],
   "avatar": "https://pbs.twimg.com/profile_images/90153873/IMG-0001_normal.jpg",
   "slug": "clifforda",
-  "medialists": {
-    "medialist1": "to contact"
-  }
+  "medialists": [
+    "medialist1"
+  ]
 }, {
   "_id": "R94g8v5ePhbWAg2QF",
   "name": "Richard Silverton",
@@ -247,7 +247,7 @@
   }],
   "avatar": "https://pbs.twimg.com/profile_images/532142893419360258/fNiaIU9V_normal.jpeg",
   "slug": "richsilvo",
-  "medialists": {
-    "medialist1": "to contact"
-  }
+  "medialists": [
+    "medialist1"
+  ]
 }]

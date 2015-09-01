@@ -25,7 +25,7 @@
           </div>
           <div class="media-body">
             <h4 class="media-heading">{{name}}</h4>
-            <h5>{{roles.[0].title}} at {{roles.[0].org}}</h5>
+            {{#if roles.[0]}}<h5>{{roles.[0].title}} at {{roles.[0].org}}</h5>{{/if}}
           </div>
         </div>
         <div class="contact-menu">
@@ -55,28 +55,36 @@
         <label for="contact-detail-name">Name</label>
         <p class="form-control" id="contact-detail-name">{{name}}</p>
       </div>
+      {{#if roles.[0].title}}
       <div class="form-group">
         <label for="contact-detail-title">Title</label>
         <p class="form-control" id="contact-detail-title">{{roles.[0].title}}</p>
       </div>
+      {{/if}}
+      {{#if roles.[0].org}}
       <div class="form-group">
         <label for="contact-detail-org">Organisation</label>
         <p class="form-control" id="contact-detail-org">{{roles.[0].org}}</p>
       </div>
+      {{/if}}
       <div class="form-group">
         <label for="contact-detail-screenName">Twitter</label>
-        <p class="form-control" id="contact-detail-screenName">{{twitter.screenName}}</p>
+        <p class="form-control" id="contact-detail-screenName"><a href="https://twitter.com/{{twitter.screenName}}" target="_blank">@{{twitter.screenName}}</a></p>
       </div>
+      {{#if roles.[0].email}}
       <div class="form-group">
         <label for="contact-detail-email">Email</label>
         <p class="form-control" id="contact-detail-email">{{roles.[0].email}}</p>
       </div>
+      {{/if}}
+      {{#if roles.[0].phones.[0]}}
       <div class="form-group">
         <label for="contact-detail-phone">Phone</label>
         <p class="form-control" id="contact-detail-phone">
           <i class="glyphicon glyphicon-phone{{#if equal roles.[0].phones.[0].type 'landline'}}-alt{{/if}}"></i> {{roles.[0].phones.[0].number}}
         </p>
       </div>
+      {{/if}}
     </form>
   </div>
 </template>
@@ -84,33 +92,34 @@
 <template name="contactActivity">
   <div class="container-fluid contact-activity-log">
     <ul class="nav nav-pills">
-      <li role="presentation" class="active"><a href="#">Log Feedback</a></li>
-      <li role="presentation"><a href="#">Log coverage</a></li>
-      <li role="presentation"><a href="#">Add need-to-know</a></li>
+      <li role="presentation" class="{{#if equal option 'logFeedback'}}active{{/if}}"><a href="#" data-option="logFeedback">Log Feedback</a></li>
+      <li role="presentation" class="{{#if equal option 'logCoverage'}}active{{/if}}"><a href="#" data-option="logCoverage">Log coverage</a></li>
+      <li role="presentation" class="{{#if equal option 'addNeedToKnow'}}active{{/if}}"><a href="#" data-option="addNeedToKnow">Add need-to-know</a></li>
     </ul>
+    {{#if equal option 'logFeedback'}}
     <form>
-      <p class="medialist-select">
+      <div class="medialist-select">
         for
         <div class="btn-group btn-flat">
-          <a data-target="#" class="btn btn-default btn-flat dropdown-toggle" data-toggle="dropdown">
-            #{{medialistSlug}}
+          <a data-target="#" class="btn btn-default btn-sm btn-flat dropdown-toggle" data-toggle="dropdown">
+            #{{medialistSlugLog}}
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
             {{#each getMedialists}}
-            <li><a href="#" data-medialist-slug="{{slug}}">#{{slug}}</a></li>
+            <li><a href="#" data-medialist-slug-log="{{slug}}">#{{slug}}</a></li>
             {{/each}}
           </ul>
         </div>
-      </p>
+      </div>
       <div class="form-group">
-        <textarea class="form-control col-xs-12" rows="5" data-field="message"></textarea>
+        <textarea class="form-control col-xs-12" rows="4" data-field="message"></textarea>
       </div>
       <div class="form-group" style="text-align:right">
-        <a class="btn btn-text" aria-label="Close">Cancel</a>
+        <a class="btn btn-text btn-sm" aria-label="Close" data-option="">Cancel</a>
         <div class="btn-group">
-            <a href="#" class="btn btn-primary" data-toggle="dropdown">Save as</a>
-            <a href="#" data-target="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><i class="caret"></i></a>
+            <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown">Save as</a>
+            <a href="#" data-target="#" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"><i class="caret"></i></a>
             <ul class="dropdown-menu">
               {{#each statuses}}
               <li><a href="#" data-status="{{this}}">{{this}}</a></li>
@@ -119,9 +128,30 @@
         </div>
       </div>
     </form>
+    {{/if}}
   </div>
-  <div class="container-fluid">
-
+  <div class="container-fluid contact-activity-posts-select">
+    <div class="row clearfix">
+      <div class="col-xs-12">
+        <div class="btn-group btn-flat pull-right">
+          <a data-target="#" class="btn btn-default btn-sm btn-flat dropdown-toggle" data-toggle="dropdown">
+            {{#if medialistSlugPosts}}#{{medialistSlugPosts}}{{else}}All Medialists{{/if}}
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li><a href="#" data-medialist-slug-posts="">All Medialists</a></li>
+            {{#each getMedialists}}
+            <li><a href="#" data-medialist-slug-posts="{{slug}}">#{{slug}}</a></li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid contact-activity-posts">
+    {{#each posts}}
+      {{> displayPost this}}
+    {{/each}}
   </div>
 </template>
 

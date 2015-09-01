@@ -58,8 +58,16 @@ $ nightwatch -c .meteor/nightwatch.json
 
 ```js
 {
-  createdBy: 'userId',
+  createdBy: {
+    _id: 'userId',
+    name: 'User Name'
+  },
   createdAt: 'timestamp',
+  updatedBy: {
+    _id: 'userId',
+    name: 'User Name'
+  },
+  updatedAt: 'timestamp',
   name: '',
   purpose: '',
   slug: '',
@@ -72,7 +80,10 @@ $ nightwatch -c .meteor/nightwatch.json
 
 ```js
 {
-  createdBy: 'userId',
+  createdBy: {
+    _id: 'userId',
+    name: 'User Name'
+  },
   createdAt: 'timestamp',
   medialists: {
     'medialistSlug': 'status'

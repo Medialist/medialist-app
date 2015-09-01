@@ -37,8 +37,8 @@
     <th>Name</th>
     <th class="hidden-xs">Organisation</th>
     <th>Status</th>
-    <th class="hidden-xs">Coverage</th>
     <th class="hidden-xs">Latest feedback</th>
+    <th class="hidden-xs">Coverage</th>
   </tr>
   </thead>
   <tbody>
@@ -46,7 +46,7 @@
       {{> medialistContactRow this}}
     {{else}}
       <tr>
-        <td colspan="6">
+        <td colspan="7">
           <strong>Add some people to contact&hellip;</strong>
         </td>
       </tr>
@@ -91,15 +91,15 @@
         </ul>
       </div>
     </td>
-    <td class="hidden-xs col-coverage">
-      <p>&hellip;</p>
-    </td>
     <td class="hidden-xs col-feedback">
     {{#with latestFeedback}}
       {{> contactFeedback this}}
     {{else}}
       <p>&hellip;</p>
     {{/with}}
+    </td>
+    <td class="hidden-xs col-coverage">
+      <p>&hellip;</p>
     </td>
   </tr>
 </template>

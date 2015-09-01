@@ -3,7 +3,15 @@
   "name": "Medialist 1",
   "purpose": "A Medialist",
   "createdAt": "2015-08-25T15:28:42.381Z",
-  "createdBy": "dNemSrYhw8hdFjxaK",
+  "createdBy": {
+    "_id": "dNemSrYhw8hdFjxaK",
+    "name": "Existing User"
+  },
+  "updatedAt": "2015-08-25T15:28:42.381Z",
+  "updatedBy": {
+    "_id": "dNemSrYhw8hdFjxaK",
+    "name": "Existing User"
+  },
   "contacts": {
       "contactone": "Completed",
       "contacttwo": "To Contact",
@@ -17,7 +25,15 @@
   "name": "Medialist 2",
   "purpose": "Another Medialist",
   "createdAt": "2015-08-26T12:15:00.252Z",
-  "createdBy": "dNemSrYhw8hdFjxaK",
+  "createdBy": {
+    "_id": "dNemSrYhw8hdFjxaK",
+    "name": "Existing User"
+  },
+  "updatedAt": "2015-08-26T12:15:00.252Z",
+  "updatedBy": {
+    "_id": "dNemSrYhw8hdFjxaK",
+    "name": "Existing User"
+  },
   "contacts": {
     "contactsix": "Completed",
     "contactseven": "To Contact",
@@ -31,7 +47,15 @@
   "name": "Medialist 3",
   "purpose": "The Third Medialist",
   "createdAt": "2015-08-26T13:12:07.829Z",
-  "createdBy": "dNemSrYhw8hdFjxaK",
+  "createdBy": {
+    "_id": "dNemSrYhw8hdFjxaK",
+    "name": "Existing User"
+  },
+  "updatedAt": "2015-08-26T13:12:07.829Z",
+  "updatedBy": {
+    "_id": "dNemSrYhw8hdFjxaK",
+    "name": "Existing User"
+  },
   "contacts": {
     "contactone": "Completed",
     "contactsix": "To Contact",
@@ -45,7 +69,15 @@
   "name": "Medialist 4",
   "purpose": "Final Medialist",
   "createdAt": "2015-08-26T14:03:12.017Z",
-  "createdBy": "dNemSrYhw8hdFjxaK",
+  "createdBy": {
+    "_id": "dNemSrYhw8hdFjxaK",
+    "name": "Existing User"
+  },
+  "updatedAt": "2015-08-26T14:03:12.017Z",
+  "updatedBy": {
+    "_id": "dNemSrYhw8hdFjxaK",
+    "name": "Existing User"
+  },
   "contacts": {
     "contactnine": "Completed",
     "contactten": "To Contact",

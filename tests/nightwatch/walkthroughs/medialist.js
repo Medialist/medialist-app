@@ -153,9 +153,26 @@ module.exports = {
 
   },
 
+  'Check medialists page reflects recent updates': function (client) {
+    client
+      .pause(1000)
+      .click('[data-action="toggle-mainmenu"]')
+      .waitForElementVisible('.mainmenu [href="/medialists"]', 1000)
+      .click('.mainmenu [href="/medialists"]')
+      .waitForElementPresent('.col-campaign', 1000)
+      .click('[data-action="toggle-mainmenu"]')
+      .waitForElementNotVisible('.mainmenu [href="/medialists"]', 1000)
+
+    client
+      .expect.element('[data-medialist="medialist2"] .col-updated-on').text.to.equal('a few seconds ago').before(1000)
+    client
+      .expect.element('[data-medialist="medialist2"] .col-updated-by').text.to.equal('Test User').before(1000)
+
+  },
+
   'Shut down client': function (client) {
     client
-      .clearDB()
+      // .clearDB()
       .end()
   }
 }

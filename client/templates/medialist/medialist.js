@@ -40,6 +40,8 @@ Template.medialistContactRow.helpers({
     return Posts.findOne({
       medialists: medialistTpl.slug.get(),
       contacts: this.slug
+    }, {
+      sort: { createdAt: -1 }
     })
   }
 })

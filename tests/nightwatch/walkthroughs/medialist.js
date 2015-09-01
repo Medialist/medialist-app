@@ -115,16 +115,15 @@ module.exports = {
       .waitForElementVisible('[data-field="message"]', 1000)
       .setValue('[data-field="message"]', 'test message involving @contacttwo and #medialist2')
       .click('.contact-activity-log .form-group [data-toggle="dropdown"]')
-      .waitForElementVisible('[data-status="Hot Lead"]', 1000)
-      .click('[data-status="Hot Lead"]')
+      .waitForElementVisible('.contact-activity-log [data-status="Hot Lead"]', 1000)
+      .click('.contact-activity-log [data-status="Hot Lead"]')
       .click('[data-action="close-contact-slide-in"]')
       .pause(1000)
 
     client
       .expect.element('[data-contact="contactone"] [data-field="status"] span').text.to.equal('Hot Lead').before(1000)
     client
-      .pause(5000)
-      .expect.element('[data-contact="contactone"] .col-feedback').text.to.equal('test message involving @contacttwo and #medialist2 Test User | just now').before(1000)
+      .expect.element('[data-contact="contactone"] .col-feedback').text.to.equal('test message involving @contacttwo and #medialist2\nTest User | a few seconds ago').before(1000)
   },
 
   'Shut down client': function (client) {

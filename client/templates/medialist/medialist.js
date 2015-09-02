@@ -28,7 +28,13 @@ Template.medialist.events({
 })
 
 Template.medialistContactRow.onCreated(function () {
-  this.subscribe('posts', medialistTpl.slug.get(), this.data.slug, 1, true)
+  var opts = {
+    medialist: medialistTpl.slug.get(),
+    contact: this.data.slug,
+    message: true,
+    limit:1
+  }
+  this.subscribe('posts', opts)
 })
 
 Template.medialistContactRow.helpers({

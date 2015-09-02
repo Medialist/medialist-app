@@ -17,6 +17,7 @@ module.exports = {
     client
       .click('a[href="/medialist/medialist1"]')
       .click('[data-action="toggle-mainmenu"]')
+      .pause(1000)
     client
       .expect.element('.medialist-breadcrumbs li:last-child a').text.to.equal('#medialist1').before(1000)
     client
@@ -82,8 +83,96 @@ module.exports = {
         .expect.element('tbody .contact-row:last-child .col-name').text.to.equal('Twitter').before(1000)
   },
 
+  'Show existing contact details': function (client) {
+    client
+      .pause(1000)
+      .click('[data-action="toggle-mainmenu"]')
+      .waitForElementVisible('[href="/medialist/medialist1"]', 1000)
+      .click('[href="/medialist/medialist1"]')
+      .pause(100)
+      .click('[data-action="toggle-mainmenu"]')
+      .waitForElementNotVisible('.mainmenu-user', 1000)
+      .click('[data-contact="contactone"] .col-name')
+      .waitForElementVisible('.contact-slide-in', 1000)
+
+    client
+      .expect.element('#contact-detail-name').text.to.equal('Contact One').before(1000)
+  },
+
+  'Show existing contact feedback': function (client) {
+    client
+      .pause(1000)
+      .click('[data-section="contactActivity"]')
+
+    client
+      .expect.element('.display-post-message').text.to.equal('test message').before(1000)
+  },
+
+  'Add feedback to contact': function (client) {
+    client
+      .pause(1000)
+      .click('[data-option="logFeedback"]')
+      .waitForElementVisible('[data-field="message"]', 1000)
+      .setValue('[data-field="message"]', 'test message involving @contactthree and #medialist2')
+      .click('.contact-activity-log .form-group [data-toggle="dropdown"]')
+      .waitForElementVisible('.contact-activity-log [data-status="Hot Lead"]', 1000)
+      .click('.contact-activity-log [data-status="Hot Lead"]')
+      .click('[data-action="close-contact-slide-in"]')
+      .pause(1000)
+
+    client
+      .expect.element('[data-contact="contactone"] [data-field="status"] span').text.to.equal('Hot Lead').before(1000)
+    client
+      .expect.element('[data-contact="contactone"] .col-feedback').text.to.equal('test message involving @contactthree and #medialist2\nTest User | a few seconds ago').before(1000)
+  },
+
+  'Check feedback propagates to referenced medialists/contacts': function (client) {
+    client
+      .pause(1000)
+      .click('[data-action="toggle-mainmenu"]')
+      .waitForElementVisible('.mainmenu-favourites [href="/medialist/medialist2"]', 1000)
+      .click('.mainmenu-favourites [href="/medialist/medialist2"]')
+      .pause(100)
+      .click('[data-action="toggle-mainmenu"]')
+      .waitForElementNotVisible('.mainmenu-user', 1000)
+
+      client
+        .expect.element('[data-contact="contactthree"] .col-feedback').text.to.contain('test message involving @contactthree and #medialist2').before(1000)
+
+  },
+
+  'Update status from medialist summary page': function (client) {
+    client
+      .pause(1000)
+      .click('[data-contact="contactseven"] [data-field="status"] [data-toggle="dropdown"]')
+      .waitForElementVisible('[data-contact="contactseven"] [data-field="status"] [data-status="Completed"]', 1000)
+      .click('[data-contact="contactseven"] [data-field="status"] [data-status="Completed"]')
+
+    client
+      .expect.element('[data-contact="contactseven"] [data-field="status"] [data-toggle="dropdown"]').text.to.equal('Completed').before(1000)
+
+  },
+
+  'Check medialists page reflects recent updates': function (client) {
+    client
+      .pause(1000)
+      .click('[data-action="toggle-mainmenu"]')
+      .waitForElementVisible('.mainmenu [href="/medialists"]', 1000)
+      .click('.mainmenu [href="/medialists"]')
+      .waitForElementPresent('.col-campaign', 1000)
+      .click('[data-action="toggle-mainmenu"]')
+      .waitForElementNotVisible('.mainmenu [href="/medialists"]', 1000)
+
+    client
+      .expect.element('[data-medialist="medialist2"] .col-updated-on').text.to.equal('a few seconds ago').before(1000)
+    client
+      .expect.element('[data-medialist="medialist2"] .col-updated-by').text.to.equal('Test User').before(1000)
+
+  },
+
   'Shut down client': function (client) {
     client
+      .clearDB()
       .end()
   }
 }

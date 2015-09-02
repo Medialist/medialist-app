@@ -34,10 +34,13 @@ Meteor.methods({
 
     var medialistUpdate = {}
     medialistUpdate['contacts.' + contactSlug] = status
+    _.each(medialists, function (thisMedialistSlug) {
+      App.medialistUpdated(thisMedialistSlug, thisUser._id)
+    })
     Medialists.update({ slug: medialistSlug }, { $set: medialistUpdate })
     return Posts.insert(post)
   }
-});
+})
 
 function findHashtags (message) {
   var hashtagRegex = /(?:#)(\S+)/ig

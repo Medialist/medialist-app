@@ -7,3 +7,15 @@ App.medialistUpdated = function (medialistSlug, userId) {
     'updatedAt': new Date()
   }})
 }
+
+App.checkSlug = function (slug, collection) {
+  var originalSlug = slug
+  var numeral = 1
+  var docCount = collection.find({ slug: slug }).count()
+  while (docCount) {
+    slug = originalSlug + numeral.toString()
+    numeral += 1
+    docCount = collection.find({ slug: slug }).count()
+  }
+  return slug
+}

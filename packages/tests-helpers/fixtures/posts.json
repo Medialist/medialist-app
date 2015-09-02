@@ -5,8 +5,8 @@
     "name": "Existing User"
   },
   "createdAt": "2015-08-28T15:07:15.866Z",
-  "contacts": ["barbora"],
-  "medialists": ["medialist2"],
+  "contacts": ["contactone"],
+  "medialists": ["medialist1"],
   "status": "contacted",
   "message": "test message"
 }, {
@@ -16,8 +16,8 @@
     "name": "Existing User"
   },
   "createdAt": "2015-08-28T15:15:13.802Z",
-  "contacts": ["johan"],
-  "medialists": ["medialist2"],
+  "contacts": ["contacttwo"],
+  "medialists": ["medialist1"],
   "status": "not interested"
 }, {
   "_id": "zaunaYqjfKMHhPjbx",
@@ -26,7 +26,7 @@
     "name": "Existing User"
   },
   "createdAt": "2015-08-28T15:15:49.843Z",
-  "contacts": ["johan"],
+  "contacts": ["contactthree"],
   "medialists": ["medialist1", "medialist2"],
   "status": "contacted",
   "message": "also refers to #medialist1"
@@ -37,8 +37,8 @@
     "name": "Existing User"
   },
   "createdAt": "2015-08-28T15:32:33.936Z",
-  "contacts": ["dean"],
-  "medialists": ["medialist3"],
+  "contacts": ["contactthree"],
+  "medialists": ["medialist2"],
   "status": "not interested"
 }, {
   "_id": "3o8dHxiCqeQrKLhYk",
@@ -47,8 +47,8 @@
     "name": "Existing User"
   },
   "createdAt": "2015-08-28T15:33:00.668Z",
-  "contacts": ["pierre"],
-  "medialists": ["medialist4"],
+  "contacts": ["contactfour"],
+  "medialists": ["medialist2"],
   "status": "contacted",
   "message": "A message lorem ipsum"
 }, {
@@ -58,7 +58,7 @@
     "name": "Existing User"
   },
   "createdAt": "2015-08-31T08:32:39.731Z",
-  "contacts": ["johan"],
+  "contacts": ["contactsix"],
   "medialists": ["medialist2"],
   "status": "Not Interested"
 }]

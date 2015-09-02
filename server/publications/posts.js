@@ -1,4 +1,5 @@
 Meteor.publish('posts', function (medialistSlug, contactSlug, limit, message) {
+  if (!medialistSlug || !contactSlug) return this.ready()
   check(medialistSlug, String)
   check(contactSlug, String)
   if (!message) message = false

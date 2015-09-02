@@ -1,7 +1,14 @@
 var filterState = new ReactiveVar()
 
 Template.dashboard.onCreated(function () {
-  Meteor.subscribe('recentPosts')
+  Meteor.autorun(function () {
+    var opts = { limit:10 }
+    var slug = filterState.get()
+    if (slug) {
+      opts.medialist = slug
+    }
+    Meteor.subscribe('posts', opts)
+  })
 })
 
 Template.dashboard.helpers({

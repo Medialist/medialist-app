@@ -22,8 +22,12 @@ Template.contactSlideIn.events({
 Template.contactActivity.onCreated(function () {
   var tpl = this
   tpl.autorun(function () {
-    var medialist = medialistSlugPosts.get()
-    tpl.subscribe('posts', medialist, Template.currentData().slug, 10)
+    var opts = {
+      medialist: medialistSlugPosts.get(),
+      contact: Template.currentData().slug,
+      limit: 10
+    }
+    tpl.subscribe('posts', opts)
   })
   tpl.autorun(function () {
     FlowRouter.watchPathChange()

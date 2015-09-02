@@ -1,29 +1,22 @@
-Meteor.publish('posts', function (medialistSlug, contactSlug, limit, message) {
-  check(medialistSlug, String)
-  check(contactSlug, String)
-  if (!message) message = false
-  check(message, Boolean)
-  if (!limit) limit = 1
-  check(limit, Number)
+Meteor.publish('posts', function (opts) {
   if (!this.userId) return this.ready()
-  var query = {}
-  if (medialistSlug) query.medialists = medialistSlug
-  if (contactSlug) query.contacts = contactSlug
-  if (message) query.message = { $exists: true }
-  return Posts.find(query, {
-    sort: {
-      createdAt: -1
-    },
-    limit: limit
+  opts = opts || {}
+  check(opts, {
+    medialist: Match.Optional(String),
+    contact: Match.Optional(String),
+    message: Match.Optional(Boolean),
+    limit: Match.Optional(Number)
   })
-})
 
-Meteor.publish('recentPosts', function () {
-  if (!this.userId) return this.ready()
-  return Posts.find({}, {
-    sort: {
-      createdAt: -1
-    },
-    limit: 10
-  })
+  var query = {}
+  if (opts.medialistSlug) query.medialists = opts.medialist
+  if (opts.contactSlug) query.contacts = opts.contact
+  if (opts.message) query.message = { $exists: true }
+
+  var options = {
+    sort: { createdAt: -1 },
+    limit: opts.limit || 1
+  }
+
+  return Posts.find(query, options)
 })

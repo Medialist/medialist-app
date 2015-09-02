@@ -15,10 +15,10 @@ Template.createMedialist.events({
       purpose: tpl.$('#medialist-purpose').val()
     }
 
-    Meteor.call('medialists/create', medialist, function (err) {
+    Meteor.call('medialists/create', medialist, function (err, medialistSlug) {
       if (err) return error.set(err.reason)
       Modal.hide()
-      FlowRouter.go('medialist', { slug: medialist.name })
+      FlowRouter.go('medialist', { slug: medialistSlug })
       FlowRouter.reload()
     })
   }

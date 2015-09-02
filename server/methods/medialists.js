@@ -17,10 +17,12 @@ Meteor.methods({
     }
     medialist.contacts = {}
     medialist.slug = s.slugify(medialist.name)
+    medialist.slug = App.checkSlug(medialist.slug, Medialists)
 
     check(medialist, Schemas.Medialists)
 
-    return Medialists.insert(medialist)
+    Medialists.insert(medialist)
+    return medialist.slug
   }
 
 });

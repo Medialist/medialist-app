@@ -4,15 +4,16 @@
       <div class="col-sm-6 col-sm-offset-3">
         <div class="row">
           <div class="col-sm-3">
-            <p class="btn btn-default btn-link">Today</p>
+            <p class="btn btn-default btn-link">Recent updates</p>
           </div>
           <div class="col-sm-9 text-right">
-            <button class="btn btn-default btn-link">#foobar <span class="caret"></span></button>
-            <button class="btn btn-default btn-link">All activity <span class="caret"></span></button>
+            {{> filterButton allMedialists}}
           </div>
         </div>
         <div class="row">
-          <div class="panel panel-default"></div>
+          {{#each posts}}
+            {{> displayPost this}}
+          {{/each}}
         </div>
       </div>
       <div class="col-sm-3">

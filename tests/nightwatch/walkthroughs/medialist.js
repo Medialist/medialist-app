@@ -172,7 +172,7 @@ module.exports = {
 
   'Shut down client': function (client) {
     client
-      // .clearDB()
+      .clearDB()
       .end()
   }
 }

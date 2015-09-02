@@ -26,7 +26,7 @@
   </thead>
   <tbody>
     {{#each medialists}}
-    <tr class="contact-row" data-action="show-contact-details">
+    <tr class="contact-row" data-medialist="{{slug}}" data-action="show-contact-details">
       <td class="col-checkbox">
         <div class="checkbox checkbox-default">
           <label>
@@ -39,7 +39,7 @@
       </td>
       <td class="col-campaign"><a href="/medialist/{{slug}}">#{{slug}}</a></td>
       <td class="col-purpose">{{purpose}}</td>
-      <td class="col-updated-on">{{fromNow updatedOn}}</td>
+      <td class="col-updated-on">{{fromNow updatedAt}}</td>
       <td class="col-updated-by">{{updatedBy.name}}</td>
     </tr>
   {{/each}}

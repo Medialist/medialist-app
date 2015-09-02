@@ -10,5 +10,5 @@ Template.filterButton.events({
   'click [data-filter]': function (evt, tpl) {
     var filter = tpl.$(evt.currentTarget).data('filter')
     filterState.set(filter)
-  },
+  }
 })

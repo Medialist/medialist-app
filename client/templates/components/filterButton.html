@@ -1,0 +1,14 @@
+<template name="filterButton">
+<div class="btn-group btn-flat pull-right">
+  <a data-target="#" class="btn btn-default btn-link dropdown-toggle" data-toggle="dropdown">
+    {{#if filter}}#{{filter}}{{else}}All Medialists{{/if}}
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-right">
+    <li><a href="#" data-filter="">All Medialists</a></li>
+    {{#each this}}
+    <li><a href="#" data-filter="{{slug}}">#{{slug}}</a></li>
+    {{/each}}
+  </ul>
+</div>
+</template>

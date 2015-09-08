@@ -37,7 +37,7 @@ Meteor.methods({
       status: opts.status
     }
     if (opts.message) post.message = opts.message
-    check(post, SimpleSchema.Posts)
+    check(post, Schemas.Posts)
 
     var medialistUpdate = {}
     medialistUpdate['contacts.' + opts.contactSlug] = opts.status

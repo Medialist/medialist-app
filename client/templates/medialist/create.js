@@ -15,6 +15,8 @@ Template.createMedialist.events({
       purpose: tpl.$('#medialist-purpose').val()
     }
 
+    tpl.$('#addMedialist').get(0).reset()
+
     Meteor.call('medialists/create', medialist, function (err) {
       if (err) return error.set(err.reason)
       Modal.hide()

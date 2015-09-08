@@ -2,11 +2,23 @@
 // http://nightwatchjs.org/api
 
 module.exports = {
-  'Login and show menu': function (client) {
+  before : function(client) {
+    console.log('Setting up...')
     client
       .url('http://localhost:3000')
       .clearDB()
       .populateDB()
+  },
+
+  after : function(client) {
+    console.log('Closing down...')
+    client
+      .clearDB()
+      .end()
+  },
+
+  'Login and show menu': function (client) {
+    client
       .login()
       .verify.elementPresent('body', 'Page loads successfully')
       .click('[data-action="toggle-mainmenu"]')
@@ -168,11 +180,5 @@ module.exports = {
     client
       .expect.element('[data-medialist="medialist2"] .col-updated-by').text.to.equal('Test User').before(1000)
 
-  },
-
-  'Shut down client': function (client) {
-    client
-      .clearDB()
-      .end()
   }
 }

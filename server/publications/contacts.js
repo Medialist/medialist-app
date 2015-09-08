@@ -7,7 +7,7 @@ Meteor.publish('contacts', function (string) {
       $options: 'i'
     }
   }
-  return Contacts.find(query, {limit:5})
+  return Contacts.find(query, { limit: App.contactSuggestions })
 })
 
 Meteor.publish('contact', function (slug) {

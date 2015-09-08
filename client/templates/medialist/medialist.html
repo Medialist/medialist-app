@@ -34,9 +34,9 @@
       </div>
     </th>
     <th></th>
-    <th>Name</th>
-    <th class="hidden-xs">Organisation</th>
-    <th>Status</th>
+    <th data-sort-by="name">Name{{> caret sortedBy 'name'}}</th>
+    <th class="hidden-xs" data-sort-by="roles.$.org">Organisation{{> caret sortedBy 'roles.$.org'}}</th>
+    <th data-sort-by="status">Status{{> caret sortedBy 'status'}}</th>
     <th class="hidden-xs">Latest feedback</th>
     <th class="hidden-xs">Coverage</th>
   </tr>
@@ -53,6 +53,16 @@
     {{/each}}
   </tbody>
 </table>
+</template>
+
+<template name="caret">
+  {{#if equal this 1}}
+    <i class="glyphicon glyphicon-triangle-bottom"></i>
+  {{else}}
+    {{#if equal this -1}}
+      <i class="glyphicon glyphicon-triangle-top"></i>
+    {{/if}}
+  {{/if}}
 </template>
 
 <template name="medialistContactRow">

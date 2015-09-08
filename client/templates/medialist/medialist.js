@@ -1,4 +1,5 @@
 var medialistTpl
+var sortBy = new ReactiveVar({name: 1})
 
 Template.medialist.onCreated(function () {
   medialistTpl = this
@@ -17,13 +18,23 @@ Template.medialist.helpers({
     return Medialists.findOne({slug: medialistTpl.slug.get()})
   },
   contacts: function () {
-    return Contacts.find({ medialists: medialistTpl.slug.get() })
+    return Contacts.find({
+      medialists: medialistTpl.slug.get()
+    }, {
+      sort: sortBy.get()
+    })
+  },
+  sortedBy: function (key) {
+    return sortBy.get()[key]
   }
 })
 
 Template.medialist.events({
   'click [data-action="add-new"]': function () {
     Modal.show('addContact')
+  },
+  'click [data-sort-by]': function (evt, tpl) {
+    App.updateSort(sortBy, tpl.$(evt.currentTarget).data('sort-by'))
   }
 })
 

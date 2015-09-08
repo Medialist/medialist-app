@@ -120,7 +120,10 @@ $ nightwatch -c .meteor/nightwatch.json
   },
   createdAt: 'timestamp',
   message: 'Spoke to @janesmith about #medialist, she loves it',
-  contacts: ['janesmith'],
+  contacts: [{
+    slug: 'janesmith',
+    name: 'Jane Smith'
+  }],
   medialists: ['medialist'],
   status: 'status'
 }

@@ -50,7 +50,7 @@ Template.contactActivity.helpers({
     return medialistSlugPosts.get()
   },
   posts: function () {
-    var query = { contacts: this.slug }
+    var query = { 'contacts.slug': this.slug }
     var medialist = medialistSlugPosts.get()
     if (medialist) {
       query.medialists = medialist
@@ -80,7 +80,12 @@ Template.contactActivity.events({
     var contact = tpl.data.slug
     var message = tpl.$('[data-field="message"]').val()
     if (!message) return
-    Meteor.call('posts/create', contact, medialist, message, status, function (err) {
+    Meteor.call('posts/create', {
+      contactSlug: contact,
+      medialistSlug: medialist,
+      message: message, 
+      status: status
+    }, function (err) {
       if (err) return console.error(err)
       tpl.$('[data-field="message"]').val('')
     })

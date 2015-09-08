@@ -45,7 +45,7 @@ Template.medialistContactRow.helpers({
   latestFeedback: function () {
     return Posts.findOne({
       medialists: medialistTpl.slug.get(),
-      contacts: this.slug
+      'contacts.slug': this.slug
     }, {
       sort: { createdAt: -1 }
     })
@@ -63,7 +63,11 @@ Template.medialistContactRow.events({
     var status = tpl.$(evt.currentTarget).data('status')
     var contact = tpl.data.slug
     var medialist = medialistTpl.slug.get()
-    Meteor.call('posts/create', contact, medialist, null, status, function (err) {
+    Meteor.call('posts/create', {
+      contactSlug: contact,
+      medialistSlug: medialist,
+      status: status
+    }, function (err) {
       if (err) console.error(err)
     })
   }

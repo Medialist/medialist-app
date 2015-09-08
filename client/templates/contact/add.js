@@ -50,8 +50,13 @@ Template.contactRow.helpers({
 
 Template.contactRow.events({
   'click [data-action="add-contact"]': function () {
-    Meteor.call('contacts/addToMedialist', this.slug, FlowRouter.getParam('slug'), function (err) {
-      if (err) console.error(err)
-    })
+    Meteor.call('contacts/addToMedialist', this.slug, FlowRouter.getParam('slug'), clearAddToMedialistForm)
   }
 })
+
+function clearAddToMedialistForm (err) {
+  if (err) console.error(err.error, err)
+  $('[data-field="contact-name"]').val('')
+  $('.modal-body').find('.media').slice(1).remove()
+  $('.modal-body').find('.media-heading').text('')
+}

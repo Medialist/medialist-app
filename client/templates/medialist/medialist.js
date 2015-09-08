@@ -1,4 +1,5 @@
 var medialistTpl
+var checkSelect = new ReactiveVar([])
 
 Template.medialist.onCreated(function () {
   medialistTpl = this
@@ -18,12 +19,18 @@ Template.medialist.helpers({
   },
   contacts: function () {
     return Contacts.find({ medialists: medialistTpl.slug.get() })
+  },
+  checkSelect: function () {
+    return checkSelect.get()
   }
 })
 
 Template.medialist.events({
   'click [data-action="add-new"]': function () {
     Modal.show('addContact')
+  },
+  'click [data-checkbox]': function () {
+    App.toggleReactiveArray(checkSelect, this.slug)
   }
 })
 

@@ -1,4 +1,5 @@
 var name = new ReactiveVar('')
+var errorMsg = new ReactiveVar('')
 
 Template.addContact.onCreated(function () {
   var tpl = this
@@ -9,6 +10,7 @@ Template.addContact.onCreated(function () {
 
 Template.addContact.helpers({
   contacts: function () {
+    if (!name.get()) return
     var regex = new RegExp(name.get(), 'gi')
     var query = {
       name: {
@@ -20,11 +22,15 @@ Template.addContact.helpers({
   },
   name: function () {
     return name.get()
+  },
+  errorMsg: function () {
+    return errorMsg.get()
   }
 });
 
 Template.addContact.events({
   'keyup [data-field="contact-name"]': function (evt, tpl) {
+    errorMsg.set('')
     name.set(tpl.$(evt.currentTarget).val())
   },
   'submit, click [data-action="create-contact"]': function (evt) {
@@ -55,8 +61,6 @@ Template.contactRow.events({
 })
 
 function clearAddToMedialistForm (err) {
-  if (err) console.error(err.error, err)
-  $('[data-field="contact-name"]').val('')
-  $('.modal-body').find('.media').slice(1).remove()
-  $('.modal-body').find('.media-heading').text('')
+  if (err) errorMsg.set(err.error)
+  name.set('')
 }

@@ -34,8 +34,8 @@
   },
   "test_settings": {
     "default": {
-      "launch_url": "http://localhost:5000",
-      "selenium_host": "127.0.0.1",
+      "launch_url": "http://localhost:3000",
+      "selenium_host": "localhost",
       "selenium_port": 4444,
       "pathname": "/wd/hub",
       "silent": true,
@@ -43,7 +43,7 @@
       "firefox_profile": false,
       "ie_driver": "",
       "screenshots": {
-        "enabled": true,
+        "enabled": false,
         "path": "./tests/nightwatch/screenshots"
       },
       "desiredCapabilities": {
@@ -55,6 +55,12 @@
         }
       },
       "exclude": "./tests/nightwatch/unittests/*"
+    },
+    "saucelabs" : {
+      "selenium_host": "ondemand.saucelabs.com",
+      "selenium_port": 80,
+      "username": "olizilla",
+      "access_key": "a891cafa-b70f-4a4c-b02b-ac6afe92abc7"
     },
     "phantomjs": {
       "desiredCapabilities": {

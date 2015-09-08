@@ -103,7 +103,7 @@ module.exports = {
     client
       .pause(1000)
       .click('[data-section="contactActivity"]')
-
+      .pause(1000)
     client
       .expect.element('.display-post-message').text.to.equal('test message').before(1000)
   },

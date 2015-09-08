@@ -1,24 +1,24 @@
 Meteor.methods({
-  'posts/create': function (contactSlug, medialistSlug, message, status) {
-    check(contactSlug, String)
-    check(medialistSlug, String)
-    check(message, Match.Where(function (message) {
-      return message === null || typeof message === 'string'
-    }))
-    check(status, Match.OneOf.apply(null, _.values(Contacts.status)))
+  'posts/create': function (opts) {
+    check(opts, {
+      contactSlug: String,
+      medialistSlug: String,
+      message: Match.Optional(String),
+      status: Match.OneOf.apply(null, _.values(Contacts.status))
+    })
     if (!this.userId) throw new Meteor.Error('Only a logged in user can post feedback')
-    if (!Medialists.find({slug: medialistSlug}).count()) throw new Meteor.Error('Cannot find medialist #' + medialistSlug)
-    if (!Contacts.find({slug: contactSlug}).count()) throw new Meteor.Error('Cannot find contact @' + contactSlug)
+    if (!Medialists.find({slug: opts.medialistSlug}).count()) throw new Meteor.Error('Cannot find medialist #' + opts.medialistSlug)
+    if (!Contacts.find({slug: opts.contactSlug}).count()) throw new Meteor.Error('Cannot find contact @' + opts.contactSlug)
 
     var thisUser = Meteor.users.findOne(this.userId)
-    var extraMedialists = _.filter(findHashtags(message), function (hashtag) {
+    var extraMedialists = _.filter(findHashtags(opts.message), function (hashtag) {
       return Medialists.find({slug: hashtag}).count()
     })
-    var medialists = _.uniq(extraMedialists.concat(medialistSlug))
-    var extraContacts = _.filter(findHandles(message), function (handle) {
+    var medialists = _.uniq(extraMedialists.concat(opts.medialistSlug))
+    var extraContacts = _.filter(findHandles(opts.message), function (handle) {
       return Contacts.find({slug: handle}).count()
     })
-    var contacts = _.uniq(extraContacts.concat(contactSlug))
+    var contacts = _.uniq(extraContacts.concat(opts.contactSlug))
 
     var post = {
       createdBy: {
@@ -26,18 +26,25 @@ Meteor.methods({
         name: thisUser.profile.name
       },
       createdAt: new Date(),
-      contacts: contacts,
+      contacts: _.map(contacts, function (contactSlug) {
+        var contact = Contacts.findOne({ slug: contactSlug })
+        return {
+          slug: contactSlug,
+          name: contact.name
+        }
+      }),
       medialists: medialists,
-      status: status
+      status: opts.status
     }
-    if (message) post.message = message
+    if (opts.message) post.message = opts.message
+    check(post, SimpleSchema.Posts)
 
     var medialistUpdate = {}
-    medialistUpdate['contacts.' + contactSlug] = status
+    medialistUpdate['contacts.' + opts.contactSlug] = opts.status
     _.each(medialists, function (thisMedialistSlug) {
       App.medialistUpdated(thisMedialistSlug, thisUser._id)
     })
-    Medialists.update({ slug: medialistSlug }, { $set: medialistUpdate })
+    Medialists.update({ slug: opts.medialistSlug }, { $set: medialistUpdate })
     return Posts.insert(post)
   }
 })

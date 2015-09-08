@@ -45,7 +45,8 @@ Template.createContact.events({
     var fields = ['name', 'screenName', 'bio']
     var contact = fields.reduce(function (contact, field) {
       var value = tpl.$('#contact-create-' + field).val()
-      if (value) contact[field] = value
+      if (value && field === 'screenName') contact[field] = value.replace('@', '')
+      else if (value) contact[field] = value
       return contact
     }, {})
 

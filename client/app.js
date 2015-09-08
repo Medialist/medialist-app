@@ -13,12 +13,12 @@ App.cleanSBArgument = function (arg) {
   return (arg instanceof Spacebars.kw) ? undefined : arg
 }
 
-App.toggleReactiveArray = function (reactiveArray, value) {
-  var currArray = reactiveArray.get()
-  if (currArray.indexOf(value) > -1) {
-    currArray = _.without(currArray, value)
+App.toggleReactiveObject = function (reactiveObject, key) {
+  var currObj = reactiveObject.get()
+  if (currObj[key]) {
+    delete currObj[key]
   } else {
-    currArray.push(value)
+    currObj[key] = true
   }
-  reactiveArray.set(currArray)
+  reactiveObject.set(currObj)
 }

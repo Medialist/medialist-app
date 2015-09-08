@@ -1,4 +1,6 @@
 .meteor/local
+.DS_Store
 settings.json
 tests/nightwatch/screenshots/*
 tests/nightwatch/reports/*
+tests/.DS_Store

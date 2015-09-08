@@ -25,6 +25,22 @@ Modal = {
   },
   hide: function () {
     Modal.$el.modal('hide')
+  },
+  onClose: function (fn) {
+    check(fn, Function)
+    var executeOnce = function (fn) {
+      var executed = false
+      return function () {
+        if (!executed) {
+          executed = true
+          return fn()
+        } else {
+          Modal.$el.off('hidden.bs.modal', handler)
+        }
+      }
+    }
+    var handler = executeOnce(fn)
+    Modal.$el.on('hidden.bs.modal', handler)
   }
 }
 

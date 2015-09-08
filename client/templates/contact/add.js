@@ -5,6 +5,12 @@ Template.addContact.onCreated(function () {
   tpl.autorun(function () {
     tpl.subscribe('contacts', name.get())
   })
+
+  $('.modal').on('shown.bs.modal', function () {
+    Modal.onClose(function () {
+      name.set('')
+    })
+  })
 })
 
 Template.addContact.helpers({

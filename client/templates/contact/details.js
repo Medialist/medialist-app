@@ -50,7 +50,7 @@ Template.contactActivity.helpers({
     return medialistSlugPosts.get()
   },
   posts: function () {
-    var query = { contacts: this.slug }
+    var query = { 'contacts.slug': this.slug }
     var medialist = medialistSlugPosts.get()
     if (medialist) {
       query.medialists = medialist

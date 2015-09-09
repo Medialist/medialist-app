@@ -1,6 +1,10 @@
+Template.medialists.onCreated(function () {
+  this.subscribe('medialists')
+})
+
 Template.medialists.helpers({
   medialists: function () {
-    return Medialists.find({}).fetch()
+    return Medialists.find({}, {sort: {updatedAt: -1}}).fetch()
   }
 })
 

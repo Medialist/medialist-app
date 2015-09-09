@@ -11,7 +11,7 @@ Template.mainmenu.helpers({
     return user.services.twitter.profile_image_url_https;
   },
   medialists: function () {
-    return Medialists.find({}, {sort:['slug']}).fetch()
+    return Medialists.find({}, {limit: 5, sort: {updatedAt: -1}}).fetch()
   }
 })
 

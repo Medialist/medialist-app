@@ -5,7 +5,7 @@
 </div>
 <div class="medialist-toolbar">
   <div class="container-fluid">
-    <button class="btn btn-link">All contacts</button>
+    <button class="btn btn-link">{{#if checkSelectKeys}}{{pluralize 'contact' checkSelectKeys.length}}{{else}}All Contacts{{/if}}</button>
     <div class="btn-group">
       <a href="#" class="btn btn-primary" data-action="add-new">Add New</a>
       <a href="#" data-target="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
@@ -61,7 +61,7 @@
       <div class="checkbox checkbox-default">
         <label>
           <input type="checkbox"/>
-          <span class="checkbox-material">
+          <span class="checkbox-material" data-checkbox>
             <span class="check"></span>
           </span>
         </label>

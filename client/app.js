@@ -12,3 +12,13 @@ App.breadcrumbs = new ReactiveVar([
 App.cleanSBArgument = function (arg) {
   return (arg instanceof Spacebars.kw) ? undefined : arg
 }
+
+App.toggleReactiveObject = function (reactiveObject, key) {
+  var currObj = reactiveObject.get()
+  if (currObj[key]) {
+    delete currObj[key]
+  } else {
+    currObj[key] = true
+  }
+  reactiveObject.set(currObj)
+}

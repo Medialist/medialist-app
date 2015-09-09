@@ -1,0 +1,32 @@
+general:
+  branches:
+    only:
+      - master # list of branches to build
+
+machine:
+  node:
+    version: 0.10.36
+
+dependencies:
+  post:
+    - envsubst < settings.tpl.json > settings.json
+    - curl https://install.meteor.com | /bin/sh
+    - npm install -g nightwatch
+    - cd ~ && wget https://saucelabs.com/downloads/sc-4.3.11-linux.tar.gz
+    - cd ~ && tar -xzf sc-4.3.11-linux.tar.gz
+
+test:
+  override:
+    # Kick off the meteor dance
+    - meteor --settings settings.json:
+        background: true
+    - cd ~ && sc-4.3.11-linux/bin/sc --readyfile ~/sauce_is_ready:
+        background: true
+    # Wait for tunnel to be ready
+    - while [ ! -e ~/sauce_is_ready ]; do sleep 1; done
+    # Wait for app to be ready
+    - curl --retry 10 --retry-delay 2 -v http://localhost:3000
+    # Run selenium tests
+    - nightwatch -c .meteor/nightwatch.json -e saucelabs
+  post:
+    - killall --wait sc  # wait for Sauce Connect to close the tunnel

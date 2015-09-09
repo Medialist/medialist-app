@@ -30,7 +30,6 @@ Template.medialist.events({
     Modal.show('addContact')
   },
   'click [data-checkbox]': function () {
-    console.log(checkSelect.get())
     App.toggleReactiveObject(checkSelect, this.slug)
   }
 })

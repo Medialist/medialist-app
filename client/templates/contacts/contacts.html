@@ -1,0 +1,82 @@
+<template name="contacts">
+<div class="medialist-toolbar">
+  <div class="container-fluid">
+    <button class="btn btn-link">All contacts</button>
+    <div class="btn-group">
+      <a href="#" class="btn btn-primary" data-action="add-new">Add New</a>
+      <a href="#" data-target="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><a href="#">Action</a></li>
+        <li><a href="#">Another action</a></li>
+        <li><a href="#">Something else here</a></li>
+        <li class="divider"></li>
+        <li><a href="#">Separated link</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<table class="medialist-table table table-responsive">
+  <thead>
+  <tr>
+    <th class="col-checkbox">
+      <div class="checkbox checkbox-default">
+        <label>
+          <input type="checkbox"/>
+          <span class="checkbox-material">
+            <span class="check"></span>
+          </span>
+        </label>
+      </div>
+    </th>
+    <th></th>
+    <th>Name</th>
+    <th class="hidden-xs">Organisation</th>
+    <th class="hidden-xs">Medialists</th>
+  </tr>
+  </thead>
+  <tbody>
+    {{#each allContacts}}
+      {{> allContactsRow this}}
+    {{else}}
+      <tr>
+        <td colspan="7">
+          <strong>Add some contacts&hellip;</strong>
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+</template>
+
+<template name="allContactsRow">
+  <tr class="contact-row" data-contact="{{slug}}" data-action="show-contact-slide-in">
+    <td class="col-checkbox">
+      <div class="checkbox checkbox-default">
+        <label>
+          <input type="checkbox"/>
+          <span class="checkbox-material">
+            <span class="check"></span>
+          </span>
+        </label>
+      </div>
+    </td>
+    <td class="col-img">
+    {{#if avatar}}
+      <img class="img-rounded" width="40" height="40" src="{{avatar}}" alt="twitter profile image"/>
+    {{/if}}
+    </td>
+    <td class="col-name">
+      {{name}}
+    </td>
+    <td class="col-org hidden-xs">
+      {{roles.[0].org}}
+    </td>
+    <td class="hidden-xs col-feedback">
+      <h4>
+      {{#each medialists}}
+        <a class="label label-primary" href="/medialist/{{this}}">#{{this}}</a>
+      {{/each}}
+      </h4>
+    </td>
+  </tr>
+</template>

@@ -3,7 +3,7 @@ var name = new ReactiveVar('')
 Template.addContact.onCreated(function () {
   var tpl = this
   tpl.autorun(function () {
-    tpl.subscribe('contacts', name.get())
+    tpl.subscribe('contacts', { name: name.get() })
   })
 })
 

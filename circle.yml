@@ -1,3 +1,8 @@
+general:
+  branches:
+    only:
+      - master # list of branches to build
+
 machine:
   node:
     version: 0.10.36

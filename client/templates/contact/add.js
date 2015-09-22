@@ -5,12 +5,10 @@ Template.addContact.onCreated(function () {
   tpl.autorun(function () {
     tpl.subscribe('contacts', name.get())
   })
+})
 
-  $('.modal').on('shown.bs.modal', function () {
-    Modal.onClose(function () {
-      name.set('')
-    })
-  })
+Template.addContact.onDestroyed(function () {
+  name.set('')
 })
 
 Template.addContact.helpers({
@@ -32,6 +30,7 @@ Template.addContact.helpers({
 Template.addContact.events({
   'keyup [data-field="contact-name"]': function (evt, tpl) {
     name.set(tpl.$(evt.currentTarget).val())
+    console.log('keyup')
   },
   'submit, click [data-action="create-contact"]': function (evt) {
     evt.preventDefault()

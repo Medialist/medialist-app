@@ -3,44 +3,22 @@ Modal = {
   data: new ReactiveVar({}),
   open: false,
   show: function (template, data) {
-    var changeTemplateAndShow = function() {
+    if (Modal.open) {
+      Modal.$el.one('hidden.bs.modal', changeTemplateAndShow)
+      Modal.$el.modal('hide')
+    } else {
+      changeTemplateAndShow()
+    }
+    function changeTemplateAndShow () {
       if (data) Modal.data.set(data)
       if (template) Modal.template.set(template)
       Tracker.afterFlush(function () {
         Modal.$el.modal('show')
       })
-      Modal.open = false
-      Modal.$el.off('hidden.bs.modal')
-      Modal.$el.on('hidden.bs.modal', function () {
-        Modal.open = false
-      })
-    }
-
-    if (Modal.open && Modal.template.get() !== template) {
-      Modal.$el.on('hidden.bs.modal', changeTemplateAndShow)
-      Modal.$el.modal('hide')
-    } else {
-      changeTemplateAndShow()
     }
   },
   hide: function () {
     Modal.$el.modal('hide')
-  },
-  onClose: function (fn) {
-    check(fn, Function)
-    var executeOnce = function (fn) {
-      var executed = false
-      return function () {
-        if (!executed) {
-          executed = true
-          return fn()
-        } else {
-          Modal.$el.off('hidden.bs.modal', handler)
-        }
-      }
-    }
-    var handler = executeOnce(fn)
-    Modal.$el.on('hidden.bs.modal', handler)
   }
 }
 
@@ -48,6 +26,8 @@ Meteor.startup(function () {
   Modal.$el = $('#modal')
   Modal.$el.on('hidden.bs.modal', function () {
     Modal.open = false
+    Modal.template.set('')
+    Modal.data.set({})
   })
   Modal.$el.on('show.bs.modal', function () {
     Modal.open = true

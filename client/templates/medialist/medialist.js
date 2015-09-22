@@ -2,6 +2,7 @@ var medialistTpl
 var checkSelect = new ReactiveVar({})
 
 Template.medialist.onCreated(function () {
+  console.log('medialist onCreated')
   medialistTpl = this
   medialistTpl.slug = new ReactiveVar()
   medialistTpl.autorun(function () {
@@ -11,6 +12,15 @@ Template.medialist.onCreated(function () {
   medialistTpl.autorun(function () {
     medialistTpl.subscribe('medialist', medialistTpl.slug.get())
   })
+})
+
+Template.medialist.onRendered(function () {
+  var el = this.find('.medialist-table')
+  Meteor.setTimeout(function () {
+    Tracker.afterFlush(function () {
+     new Tablesort(el)
+    })
+  }, 1)
 })
 
 Template.medialist.helpers({
@@ -44,10 +54,17 @@ Template.medialistContactRow.onCreated(function () {
   this.subscribe('posts', opts)
 })
 
+Template.medialistContactRow.onCreated(function () {
+  console.log('medialistContactRow onRendered')
+})
+
 Template.medialistContactRow.helpers({
-  contactMedialist: function () {
+  status: function () {
     var medialist = Medialists.findOne({ slug: medialistTpl.slug.get() })
     return medialist && medialist.contacts[this.slug]
+  },
+  statusIndex: function (status) {
+    return Contacts.statusIndex(status)
   },
   latestFeedback: function () {
     return Posts.findOne({

@@ -74,7 +74,7 @@ Template.medialistContactRow.helpers({
 Template.medialistContactRow.events({
   'click [data-action="show-contact-slide-in"]': function (evt, tpl) {
     var $el = tpl.$(evt.target)
-    if (!$el.parents('[data-field="status"]').length) {
+    if (!$el.parents('[data-no-sidebar]').length) {
       SlideIns.show('right', 'contactSlideIn', { contact: this })
     }
   },

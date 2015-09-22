@@ -57,7 +57,7 @@
 
 <template name="medialistContactRow">
   <tr class="contact-row" data-contact="{{slug}}" data-action="show-contact-slide-in">
-    <td class="col-checkbox">
+    <td class="col-checkbox" data-no-sidebar>
       <div class="checkbox checkbox-default">
         <label>
           <input type="checkbox"/>
@@ -78,7 +78,7 @@
     <td class="col-org hidden-xs">
       {{roles.[0].org}}
     </td>
-    <td>
+    <td data-no-sidebar>
       <div class="btn-group btn-group-sm btn-group-status" data-field="status">
         <button class="btn dropdown-toggle {{classify contactMedialist}}" data-toggle="dropdown" aria-expanded="false">
           <span>{{contactMedialist}}</span>

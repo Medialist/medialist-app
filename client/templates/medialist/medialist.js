@@ -2,7 +2,6 @@ var medialistTpl
 var checkSelect = new ReactiveVar({})
 
 Template.medialist.onCreated(function () {
-  console.log('medialist onCreated')
   medialistTpl = this
   medialistTpl.slug = new ReactiveVar()
   medialistTpl.autorun(function () {
@@ -52,10 +51,6 @@ Template.medialistContactRow.onCreated(function () {
     limit:1
   }
   this.subscribe('posts', opts)
-})
-
-Template.medialistContactRow.onCreated(function () {
-  console.log('medialistContactRow onRendered')
 })
 
 Template.medialistContactRow.helpers({

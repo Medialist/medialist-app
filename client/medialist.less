@@ -68,3 +68,35 @@ body {
 .col-wide {
   width:30%;
 }
+
+th.sort-header::-moz-selection { background:transparent; }
+th.sort-header::selection      { background:transparent; }
+th.sort-header {
+  cursor:pointer;
+}
+th.sort-header::-moz-selection,
+th.sort-header::selection {
+  background:transparent;
+}
+table th.sort-header:after {
+  content:'';
+  display:inline-block;
+  margin:0 5px 2px;
+  border-width:0 4px 4px;
+  border-style:solid;
+  border-color:#404040 transparent;
+  visibility:hidden;
+}
+table th.sort-header:hover:after {
+  visibility:visible;
+}
+table th.sort-up:after,
+table th.sort-down:after,
+table th.sort-down:hover:after {
+  visibility:visible;
+  opacity:0.6;
+}
+table th.sort-up:after {
+  border-bottom:none;
+  border-width:4px 4px 0;
+}

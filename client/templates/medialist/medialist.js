@@ -13,6 +13,15 @@ Template.medialist.onCreated(function () {
   })
 })
 
+Template.medialist.onRendered(function () {
+  var el = this.find('.medialist-table')
+  Meteor.setTimeout(function () {
+    Tracker.afterFlush(function () {
+     new Tablesort(el)
+    })
+  }, 1)
+})
+
 Template.medialist.helpers({
   medialist: function () {
     return Medialists.findOne({slug: medialistTpl.slug.get()})
@@ -45,9 +54,12 @@ Template.medialistContactRow.onCreated(function () {
 })
 
 Template.medialistContactRow.helpers({
-  contactMedialist: function () {
+  status: function () {
     var medialist = Medialists.findOne({ slug: medialistTpl.slug.get() })
     return medialist && medialist.contacts[this.slug]
+  },
+  statusIndex: function (status) {
+    return Contacts.statusIndex(status)
   },
   latestFeedback: function () {
     return Posts.findOne({

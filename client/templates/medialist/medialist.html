@@ -23,7 +23,7 @@
 <table class="medialist-table table table-responsive">
   <thead>
   <tr>
-    <th class="col-checkbox">
+    <th class="no-sort col-checkbox">
       <div class="checkbox checkbox-default">
         <label>
           <input type="checkbox"/>
@@ -33,12 +33,13 @@
         </label>
       </div>
     </th>
-    <th></th>
+    <th class="no-sort col-img"></th>
     <th>Name</th>
+    <th class="hidden-xs">Title</th>
     <th class="hidden-xs">Organisation</th>
-    <th>Status</th>
-    <th class="hidden-xs">Latest feedback</th>
-    <th class="hidden-xs">Coverage</th>
+    <th class="sort-default" data-sort-method="numeric">Status</th>
+    <th class="no-sort hidden-xs">Latest feedback</th>
+    <th class="no-sort hidden-xs">Coverage</th>
   </tr>
   </thead>
   <tbody>
@@ -75,13 +76,16 @@
     <td class="col-name">
       {{name}}
     </td>
+    <td class="col-title hidden-xs">
+      {{roles.[0].title}}
+    </td>
     <td class="col-org hidden-xs">
       {{roles.[0].org}}
     </td>
-    <td data-no-sidebar>
+    <td data-sort="{{statusIndex status}}" data-no-sidebar>
       <div class="btn-group btn-group-sm btn-group-status" data-field="status">
-        <button class="btn dropdown-toggle {{classify contactMedialist}}" data-toggle="dropdown" aria-expanded="false">
-          <span>{{contactMedialist}}</span>
+        <button class="btn dropdown-toggle {{classify status}}" data-toggle="dropdown" aria-expanded="false">
+          <span>{{status}}</span>
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">

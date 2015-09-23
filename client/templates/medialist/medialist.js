@@ -15,11 +15,24 @@ Template.medialist.onCreated(function () {
 
 Template.medialist.onRendered(function () {
   var el = this.find('.medialist-table')
-  Meteor.setTimeout(function () {
-    Tracker.afterFlush(function () {
-     new Tablesort(el)
+  var initTableSort = function () {
+    Meteor.setTimeout(function () {
+      Tracker.afterFlush(function () {
+       new Tablesort(el)
+      })
+    }, 1)
+  }
+  var observeHandle
+  if (!$(el).data('table-empty')) {
+    initTableSort()
+  } else {
+    observeHandle = Contacts.find({ medialists: medialistTpl.slug.get() }).observeChanges({
+      added: function () {
+        initTableSort()
+        observeHandle.stop()
+      }
     })
-  }, 1)
+  }
 })
 
 Template.medialist.helpers({
@@ -27,7 +40,7 @@ Template.medialist.helpers({
     return Medialists.findOne({slug: medialistTpl.slug.get()})
   },
   contacts: function () {
-    return Contacts.find({ medialists: medialistTpl.slug.get() })
+    return Contacts.find({ medialists: medialistTpl.slug.get() }).fetch()
   },
   checkSelectKeys: function () {
     return Object.keys(checkSelect.get())

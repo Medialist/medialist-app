@@ -20,7 +20,7 @@
   </div>
 </div>
 {{/with}}
-<table class="medialist-table table table-responsive">
+<table class="medialist-table table table-responsive" data-table-empty={{#if contacts}}false{{else}}true{{/if}}>
   <thead>
   <tr>
     <th class="no-sort col-checkbox">

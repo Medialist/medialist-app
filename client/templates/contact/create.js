@@ -19,6 +19,10 @@ Template.createContact.onCreated(function () {
   }, 1000, true)
 })
 
+Template.editContactRoles.onDestroyed(function () {
+  queryingTwitter.set(false)
+})
+
 Template.createContact.onRendered(function () {
   var tpl = this
   if (tpl.data.screenName) {

@@ -8,6 +8,7 @@ Template.medialist.onCreated(function () {
   medialistTpl.autorun(function () {
     FlowRouter.watchPathChange()
     medialistTpl.slug.set(FlowRouter.getParam('slug'))
+    medialistTpl.filterTerm.set()
   })
   medialistTpl.autorun(function () {
     medialistTpl.subscribe('medialist', medialistTpl.slug.get())
@@ -39,6 +40,9 @@ Template.medialist.helpers({
       ]
     }
     return Contacts.find(query)
+  },
+  filterTerm: function () {
+    return Template.instance().filterTerm.get()
   },
   checkSelectKeys: function () {
     return Object.keys(checkSelect.get())

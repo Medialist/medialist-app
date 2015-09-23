@@ -3,6 +3,11 @@
   <div class="container-fluid">
     <button class="btn btn-link">All medialists</button>
     <a href="#" class="btn btn-primary" data-action="create-medialist">Add Medialist</a>
+    <div class="navbar-form navbar-right" role="filter">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Filter" data-field="filter-term" value="{{filterTerm}}">
+      </div>
+    </div>
   </div>
 </div>
 <table class="medialist-table table table-responsive">

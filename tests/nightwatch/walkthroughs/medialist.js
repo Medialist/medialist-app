@@ -184,6 +184,31 @@ module.exports = {
 
   },
 
+  'Select all contacts in a Medialist': function (client) {
+    client
+      .pause(1000)
+      .click('[data-action="toggle-mainmenu"]')
+      .waitForElementVisible('.mainmenu-favourites [href="/medialist/medialist2"]', timeout)
+      .click('.mainmenu-favourites [href="/medialist/medialist2"]')
+      .click('[data-action="hide-mainmenu"]')
+      .pause(500)
+      .waitForElementVisible('[data-checkbox-all]', timeout)
+      .click('[data-checkbox-all]')
+      .pause(500)
+
+    client
+      .expect.element('input[type="checkbox"]:not(:checked)').not.to.be.present.before(timeout)
+  },
+
+  'Unselect all contacts in a Medialist': function (client) {
+    client
+      .click('[data-checkbox-all]')
+      .pause(500)
+
+    client
+      .expect.element('input[type="checkbox"]:checked').not.to.be.present.before(timeout)
+  },
+
   'Add contacts to existing Medialist': function (client) {
     client
       .pause(1000)

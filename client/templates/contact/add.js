@@ -7,6 +7,10 @@ Template.addContact.onCreated(function () {
   })
 })
 
+Template.addContact.onDestroyed(function () {
+  name.set('')
+})
+
 Template.addContact.helpers({
   contacts: function () {
     var regex = new RegExp(name.get(), 'gi')

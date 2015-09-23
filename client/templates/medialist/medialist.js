@@ -91,6 +91,7 @@ Template.medialist.events({
     Meteor.call('contacts/removeFromMedialist', contactSlugs, medialistSlug, function (err) {
       if (err) return console.log(err)
     })
+  },
   'keyup [data-field="filter-term"]': function (evt, tpl) {
     var filterTerm = tpl.$(evt.currentTarget).val()
     Template.instance().filterTerm.set(filterTerm)

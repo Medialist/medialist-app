@@ -30,7 +30,6 @@ Template.addContact.helpers({
 Template.addContact.events({
   'keyup [data-field="contact-name"]': function (evt, tpl) {
     name.set(tpl.$(evt.currentTarget).val())
-    console.log('keyup')
   },
   'submit, click [data-action="create-contact"]': function (evt) {
     evt.preventDefault()

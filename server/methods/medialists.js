@@ -15,7 +15,7 @@ Meteor.methods({
       _id: user._id,
       name: user.profile.name
     }
-    medialist.contacts = {}
+    medialist.contacts = medialist.contacts || {}
     medialist.slug = s.slugify(medialist.name)
 
     check(medialist, Schemas.Medialists)

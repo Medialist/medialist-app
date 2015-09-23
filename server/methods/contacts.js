@@ -41,24 +41,49 @@ Meteor.methods({
     return contact
   },
 
-  'contacts/addToMedialist': function (contactSlug, medialistSlug) {
-    check(contactSlug, String)
+  'contacts/addToMedialist': function (contactSlugs, medialistSlug) {
+    if (typeof contactSlugs === 'string') contactSlugs = [contactSlugs]
+    check(contactSlugs, [String])
     check(medialistSlug, String)
-    if (!this.userId) throw new Meteor.Error('Only a logged in user can add contacts to a medialist')
-    var contact = Contacts.findOne({slug: contactSlug})
-    if (!contact) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
-    if (contact.medialists.indexOf(medialistSlug) > -1) throw new Meteor.Error('Contact #' + contactSlug + ' is already in that medialist')
     if (!Medialists.find({slug: medialistSlug}).count()) throw new Meteor.Error('Medialist #' + medialistSlug + ' does not exist')
-
+    if (!this.userId) throw new Meteor.Error('Only a logged in user can add contacts to a medialist')
     var set = {}
-    set['contacts.' + contactSlug] = Contacts.status.toContact
 
-	App.medialistUpdated(medialistSlug, this.userId)
-    Contacts.update({ slug: contactSlug }, { $push: { medialists: medialistSlug } })
+    _.each(contactSlugs, function (contactSlug) {
+      var contact = Contacts.findOne({slug: contactSlug})
+      if (!contact) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
+      set['contacts.' + contactSlug] = Contacts.status.toContact
+      if (contact.medialists.indexOf(medialistSlug) === -1) Contacts.update({ slug: contactSlug }, { $push: { medialists: medialistSlug } })
+    })
+
+	  App.medialistUpdated(medialistSlug, this.userId)
     return Medialists.update({
       slug: medialistSlug
     }, {
       $set: set
+    })
+  },
+
+  'contacts/removeFromMedialist': function (contactSlugs, medialistSlug) {
+    if (typeof contactSlugs === 'string') contactSlugs = [contactSlugs]
+    check(contactSlugs, [String])
+    check(medialistSlug, String)
+    if (!Medialists.find({slug: medialistSlug}).count()) throw new Meteor.Error('Medialist #' + medialistSlug + ' does not exist')
+    if (!this.userId) throw new Meteor.Error('Only a logged in user can add contacts to a medialist')
+    var unset = {}
+
+    _.each(contactSlugs, function (contactSlug) {
+      var contact = Contacts.findOne({slug: contactSlug})
+      if (!contact) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
+      unset['contacts.' + contactSlug] = true
+      Contacts.update({ slug: contactSlug }, { $pull: { medialists: medialistSlug } })
+    })
+
+    App.medialistUpdated(medialistSlug, this.userId)
+    return Medialists.update({
+      slug: medialistSlug
+    }, {
+      $unset: unset
     })
   },
 

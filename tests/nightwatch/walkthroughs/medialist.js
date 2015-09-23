@@ -182,5 +182,114 @@ module.exports = {
     client
       .expect.element('[data-medialist="medialist2"] .col-updated-by').text.to.equal('Test User').before(timeout)
 
+  },
+
+  'Select all contacts in a Medialist': function (client) {
+    client
+      .pause(1000)
+      .click('[data-action="toggle-mainmenu"]')
+      .waitForElementVisible('.mainmenu-favourites [href="/medialist/medialist2"]', timeout)
+      .click('.mainmenu-favourites [href="/medialist/medialist2"]')
+      .click('[data-action="hide-mainmenu"]')
+      .pause(500)
+      .waitForElementVisible('[data-checkbox-all]', timeout)
+      .click('[data-checkbox-all]')
+      .pause(500)
+
+    client
+      .expect.element('input[type="checkbox"]:not(:checked)').not.to.be.present.before(timeout)
+  },
+
+  'Unselect all contacts in a Medialist': function (client) {
+    client
+      .click('[data-checkbox-all]')
+      .pause(500)
+
+    client
+      .expect.element('input[type="checkbox"]:checked').not.to.be.present.before(timeout)
+  },
+
+  'Add contacts to existing Medialist': function (client) {
+    client
+      .pause(1000)
+      .click('[data-action="toggle-mainmenu"]')
+      .waitForElementVisible('.mainmenu-favourites [href="/medialist/medialist2"]', timeout)
+      .click('.mainmenu-favourites [href="/medialist/medialist2"]')
+      .click('[data-action="hide-mainmenu"]')
+      .pause(500)
+      .click('[data-contact="contactsix"] [data-checkbox]')
+      .click('[data-contact="contactseven"] [data-checkbox]')
+      .click('.medialist-toolbar [data-toggle="dropdown"]')
+      .waitForElementVisible('[data-action="add-to-existing-medialist"]', timeout)
+      .click('[data-action="add-to-existing-medialist"]')
+      .waitForElementVisible('#modal', timeout)
+      .click('[data-medialist="medialist1"]')
+      .pause(500)
+
+    client
+      .expect.element('[data-contact="contactsix"]').to.be.present.before(500)
+    client
+      .expect.element('[data-contact="contactseven"]').to.be.present.before(500)
+  },
+
+  'Create medialist from selected contacts': function (client) {
+    var medialistName = 'new-from-old'
+    var medialistPurpose = 'Created from members of another medialist'
+
+    client
+      .pause(1000)
+      .click('[data-action="toggle-mainmenu"]')
+      .waitForElementVisible('.mainmenu-favourites [href="/medialist/medialist1"]', timeout)
+      .click('.mainmenu-favourites [href="/medialist/medialist1"]')
+      .click('[data-action="hide-mainmenu"]')
+      .pause(500)
+      .click('[data-contact="contactone"] [data-checkbox]')
+      .click('[data-contact="contacttwo"] [data-checkbox]')
+      .click('.medialist-toolbar [data-toggle="dropdown"]')
+      .waitForElementVisible('[data-action="create-new-medialist"]', timeout)
+      .click('[data-action="create-new-medialist"]')
+      .waitForElementVisible('#modal', timeout)
+      .setValue('#medialist-name', medialistName)
+      .setValue('#medialist-purpose', medialistPurpose)
+      .submitForm('#addMedialist')
+      .pause(1000)
+
+    client
+      .expect.element('[data-contact="contactone"]').to.be.present.before(500)
+    client
+      .expect.element('[data-contact="contacttwo"]').to.be.present.before(500)
+    client
+      .execute(function () {
+        return $('[data-contact]').length
+      }, [], function (result) {
+        client.assert.equal(result.value, 2, 'Correct number of contacts should appear in the new Medialist')
+      })
+  },
+
+  'Remove contacts from Medialist': function (client) {
+    client
+      .pause(1000)
+      .click('[data-action="toggle-mainmenu"]')
+      .waitForElementVisible('.mainmenu-favourites [href="/medialist/medialist2"]', timeout)
+      .click('.mainmenu-favourites [href="/medialist/medialist2"]')
+      .click('[data-action="hide-mainmenu"]')
+      .pause(500)
+      .click('[data-contact="contactthree"] [data-checkbox]')
+      .click('[data-contact="contactfour"] [data-checkbox]')
+      .click('.medialist-toolbar [data-toggle="dropdown"]')
+      .waitForElementVisible('[data-action="remove-from-medialist"]', timeout)
+      .click('[data-action="remove-from-medialist"]')
+      .pause(1000)
+
+    client
+      .expect.element('[data-contact="contactthree"]').not.to.be.present.before(500)
+    client
+      .expect.element('[data-contact="contactfour"]').not.to.be.present.before(500)
+    client
+      .execute(function () {
+        return $('[data-contact]').length
+      }, [], function (result) {
+        client.assert.equal(result.value, 3, 'Correct number of contacts should remain in the Medialist')
+      })
   }
 }

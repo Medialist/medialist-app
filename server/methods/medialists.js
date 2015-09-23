@@ -16,6 +16,9 @@ Meteor.methods({
       name: user.profile.name
     }
     medialist.contacts = medialist.contacts || {}
+    _.each(_.keys(medialist.contacts), function (contactSlug) {
+      if (!Contacts.findOne({slug: contactSlug}).count()) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
+    })
     medialist.slug = s.slugify(medialist.name)
 
     check(medialist, Schemas.Medialists)

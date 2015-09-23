@@ -1,59 +1,65 @@
 <template name="medialist">
-{{#with medialist}}
-<div class="medialist-purpose">
-  <p>{{purpose}}</p>
-</div>
-<div class="medialist-toolbar">
-  <div class="container-fluid">
-    <button class="btn btn-link">{{#if checkSelectKeys}}{{pluralize 'contact' checkSelectKeys.length}}{{else}}All Contacts{{/if}}</button>
-    <div class="btn-group">
-      <a href="#" class="btn btn-primary" data-action="add-new">Add New</a>
-      <a href="#" data-target="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
-      <ul class="dropdown-menu">
-        <li><a href="#">Action</a></li>
-        <li><a href="#">Another action</a></li>
-        <li><a href="#">Something else here</a></li>
-        <li class="divider"></li>
-        <li><a href="#">Separated link</a></li>
-      </ul>
+  {{#with medialist}}
+  <div class="medialist-purpose">
+    <p>{{purpose}}</p>
+  </div>
+  <div class="medialist-toolbar">
+    <div class="container-fluid">
+      <button class="btn btn-link">{{#if checkSelectKeys}}{{pluralize 'contact' checkSelectKeys.length}}{{else}}All Contacts{{/if}}</button>
+      <div class="btn-group">
+        <a href="#" class="btn btn-primary" data-action="add-new">Add New</a>
+        <a href="#" data-target="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
-{{/with}}
-<table class="medialist-table table table-responsive">
-  <thead>
-  <tr>
-    <th class="no-sort col-checkbox">
-      <div class="checkbox checkbox-default">
-        <label>
-          <input type="checkbox"/>
-          <span class="checkbox-material">
-            <span class="check"></span>
-          </span>
-        </label>
-      </div>
-    </th>
-    <th class="no-sort col-img"></th>
-    <th>Name</th>
-    <th class="hidden-xs">Title</th>
-    <th class="hidden-xs">Organisation</th>
-    <th class="sort-default" data-sort-method="numeric">Status</th>
-    <th class="no-sort hidden-xs">Latest feedback</th>
-    <th class="no-sort hidden-xs">Coverage</th>
-  </tr>
-  </thead>
-  <tbody>
-    {{#each contacts}}
-      {{> medialistContactRow this}}
-    {{else}}
+  {{/with}}
+  <table class="medialist-table table table-responsive">
+    <thead>
+      <tr>
+        <th class="no-sort col-checkbox">
+          <div class="checkbox checkbox-default">
+            <label>
+              <input type="checkbox" />
+              <span class="checkbox-material">
+                <span class="check"></span>
+              </span>
+            </label>
+          </div>
+        </th>
+        <th class="no-sort col-img"></th>
+        <th>Name</th>
+        <th class="hidden-xs">Title</th>
+        <th class="hidden-xs">Organisation</th>
+        <th class="sort-default" data-sort-method="numeric">Status</th>
+        <th class="no-sort hidden-xs">Latest feedback</th>
+        <th class="no-sort hidden-xs">Coverage</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each contacts}} {{> medialistContactRow this}} {{else}}
       <tr>
         <td colspan="7">
           <strong>Add some people to contact&hellip;</strong>
         </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
       </tr>
-    {{/each}}
-  </tbody>
-</table>
+      {{/each}}
+    </tbody>
+  </table>
 </template>
 
 <template name="medialistContactRow">
@@ -61,7 +67,7 @@
     <td class="col-checkbox" data-no-sidebar>
       <div class="checkbox checkbox-default">
         <label>
-          <input type="checkbox"/>
+          <input type="checkbox" />
           <span class="checkbox-material" data-checkbox>
             <span class="check"></span>
           </span>
@@ -69,9 +75,8 @@
       </div>
     </td>
     <td class="col-img">
-    {{#if avatar}}
-      <img class="img-rounded" width="40" height="40" src="{{avatar}}" alt="twitter profile image"/>
-    {{/if}}
+      {{#if avatar}}
+      <img class="img-rounded" width="40" height="40" src="{{avatar}}" alt="twitter profile image" /> {{/if}}
     </td>
     <td class="col-name">
       {{name}}
@@ -96,11 +101,9 @@
       </div>
     </td>
     <td class="hidden-xs col-feedback">
-    {{#with latestFeedback}}
-      {{> contactFeedback this}}
-    {{else}}
+      {{#with latestFeedback}} {{> contactFeedback this}} {{else}}
       <p>&hellip;</p>
-    {{/with}}
+      {{/with}}
     </td>
     <td class="hidden-xs col-coverage">
       <p>&hellip;</p>

@@ -1,0 +1,28 @@
+<template name="selectMedialist">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Select Medialist</h4>
+      </div>
+      <div class="modal-body">
+        <div class="list-group select-medialist">
+          {{#each medialists}}
+          <div class="list-group-item" data-medialist={{slug}}>
+            <div class="row-action-primary">
+              <i class="glyphicon glyphicon-list-alt"></i>
+            </div>
+            <div class="row-content">
+              <h4 class="list-group-item-heading">{{name}}</h4>
+              <p class="list-group-item-text">{{purpose}}</p>
+            </div>
+          </div>
+          <div class="list-group-separator"></div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

@@ -14,6 +14,12 @@ Template.createMedialist.events({
       name: tpl.$('#medialist-name').val(),
       purpose: tpl.$('#medialist-purpose').val()
     }
+    if (Template.currentData().contacts) {
+      medialist.contacts = _.reduce(Template.currentData().contacts, function (contactObj, contactSlug) {
+        contactObj[contactSlug] = Contacts.status.toContact
+        return contactObj
+      }, {})
+    }
 
     tpl.$('#addMedialist').get(0).reset()
 

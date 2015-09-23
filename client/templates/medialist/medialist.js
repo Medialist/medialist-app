@@ -1,14 +1,19 @@
 var medialistTpl
-var checkSelect = new ReactiveVar({})
 
 Template.medialist.onCreated(function () {
   medialistTpl = this
   medialistTpl.slug = new ReactiveVar()
+  medialistTpl.checkSelect = new ReactiveVar({})
+  // DEBUGGING
+  window.checkSelect = medialistTpl.checkSelect
+  // *********
   medialistTpl.autorun(function () {
     FlowRouter.watchPathChange()
     medialistTpl.slug.set(FlowRouter.getParam('slug'))
   })
   medialistTpl.autorun(function () {
+    medialistTpl.checkSelect.set({})
+    $('[data-checkbox-all]').prev('input').prop('checked', false)
     medialistTpl.subscribe('medialist', medialistTpl.slug.get())
   })
 })
@@ -30,7 +35,7 @@ Template.medialist.helpers({
     return Contacts.find({ medialists: medialistTpl.slug.get() })
   },
   checkSelectKeys: function () {
-    return Object.keys(checkSelect.get())
+    return Object.keys(medialistTpl.checkSelect.get())
   }
 })
 
@@ -38,8 +43,41 @@ Template.medialist.events({
   'click [data-action="add-new"]': function () {
     Modal.show('addContact')
   },
+  'click [data-checkbox-all]': function (evt, tpl) {
+    var checked = !tpl.$(evt.currentTarget).prev('input').prop('checked')
+    if (checked) {
+      medialistTpl.checkSelect.set(_.reduce(Contacts.find({ medialists: medialistTpl.slug.get() }).fetch(), function (newCheckSelect, contact) {
+        newCheckSelect[contact.slug] = true
+        return newCheckSelect
+      }, {}))
+    } else {
+      medialistTpl.checkSelect.set({})
+    }
+  },
   'click [data-checkbox]': function () {
-    App.toggleReactiveObject(checkSelect, this.slug)
+    App.toggleReactiveObject(medialistTpl.checkSelect, this.slug)
+  },
+  'click [data-action="create-new-medialist"]': function () {
+    var contactSlugs = _.keys(medialistTpl.checkSelect.get())
+    Modal.show('createMedialist', { contacts: contactSlugs })
+  },
+  'click [data-action="add-to-existing-medialist"]': function () {
+    var contactSlugs = _.keys(medialistTpl.checkSelect.get())
+    var cb = function (medialistSlug) {
+      Meteor.call('contacts/addToMedialist', contactSlugs, medialistSlug, function (err) {
+        if (err) return console.log(err)
+        Modal.hide()
+        FlowRouter.go('medialist', { slug: medialistSlug })
+      })
+    }
+    Modal.show('selectMedialist', { callback: cb })
+  },
+  'click [data-action="remove-from-medialist"]': function () {
+    var contactSlugs = _.keys(medialistTpl.checkSelect.get())
+    var medialistSlug = medialistTpl.slug.get()
+    Meteor.call('contacts/removeFromMedialist', contactSlugs, medialistSlug, function (err) {
+      if (err) return console.log(err)
+    })
   }
 })
 
@@ -68,6 +106,9 @@ Template.medialistContactRow.helpers({
     }, {
       sort: { createdAt: -1 }
     })
+  },
+  checked: function () {
+    return this.slug in medialistTpl.checkSelect.get()
   }
 })
 

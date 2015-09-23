@@ -10,11 +10,9 @@
       <a href="#" class="btn btn-primary" data-action="add-new">Add New</a>
       <a href="#" data-target="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
       <ul class="dropdown-menu">
-        <li><a href="#">Action</a></li>
-        <li><a href="#">Another action</a></li>
-        <li><a href="#">Something else here</a></li>
-        <li class="divider"></li>
-        <li><a href="#">Separated link</a></li>
+        <li><a href="#" data-action="create-new-medialist">Create new Medialist</a></li>
+        <li><a href="#" data-action="add-to-existing-medialist">Add to existing Medialist</a></li>
+        <li><a href="#" data-action="remove-from-medialist">Remove</a></li>
       </ul>
     </div>
   </div>
@@ -26,8 +24,8 @@
     <th class="no-sort col-checkbox">
       <div class="checkbox checkbox-default">
         <label>
-          <input type="checkbox"/>
-          <span class="checkbox-material">
+          <input type="checkbox" />
+          <span class="checkbox-material" data-checkbox-all>
             <span class="check"></span>
           </span>
         </label>
@@ -61,7 +59,7 @@
     <td class="col-checkbox" data-no-sidebar>
       <div class="checkbox checkbox-default">
         <label>
-          <input type="checkbox"/>
+          <input type="checkbox" checked={{checked}} />
           <span class="checkbox-material" data-checkbox>
             <span class="check"></span>
           </span>

@@ -16,12 +16,13 @@ Meteor.methods({
       name: user.profile.name
     }
     medialist.contacts = medialist.contacts || {}
-    _.each(_.keys(medialist.contacts), function (contactSlug) {
-      if (!Contacts.findOne({slug: contactSlug}).count()) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
-    })
     medialist.slug = s.slugify(medialist.name)
-
     check(medialist, Schemas.Medialists)
+
+    _.each(_.keys(medialist.contacts), function (contactSlug) {
+      if (!Contacts.find({slug: contactSlug}).count()) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
+      Contacts.update({ slug: contactSlug }, { $push: { medialists: medialist.slug } })
+    })
 
     return Medialists.insert(medialist)
   }

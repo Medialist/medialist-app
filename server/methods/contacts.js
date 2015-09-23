@@ -76,7 +76,7 @@ Meteor.methods({
       var contact = Contacts.findOne({slug: contactSlug})
       if (!contact) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
       unset['contacts.' + contactSlug] = true
-      if (contact.medialists.indexOf(medialistSlug) === -1) Contacts.update({ slug: contactSlug }, { $pull: { medialists: medialistSlug } })
+      Contacts.update({ slug: contactSlug }, { $pull: { medialists: medialistSlug } })
     })
 
 	  App.medialistUpdated(medialistSlug, this.userId)

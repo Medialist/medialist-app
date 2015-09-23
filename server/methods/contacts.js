@@ -79,7 +79,7 @@ Meteor.methods({
       Contacts.update({ slug: contactSlug }, { $pull: { medialists: medialistSlug } })
     })
 
-	  App.medialistUpdated(medialistSlug, this.userId)
+    App.medialistUpdated(medialistSlug, this.userId)
     return Medialists.update({
       slug: medialistSlug
     }, {

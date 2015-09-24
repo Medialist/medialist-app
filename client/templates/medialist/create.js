@@ -1,7 +1,6 @@
 
 Template.createMedialist.onCreated(function () {
   this.error = new ReactiveVar()
-  this.clientTerm = new ReactiveVar('')
 })
 
 Template.createMedialist.onRendered(function () {

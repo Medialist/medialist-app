@@ -2,6 +2,10 @@
   "_id": "oaF3tY8M2M7HeCJB5",
   "name": "Medialist 1",
   "purpose": "A Medialist",
+  "client": {
+    "name": "Client A",
+    "_id": "CLIENTA"
+  },
   "createdAt": "2015-08-25T15:28:42.381Z",
   "createdBy": {
     "_id": "dNemSrYhw8hdFjxaK",
@@ -24,6 +28,10 @@
   "_id": "nA7c8tyqFAim4dSwP",
   "name": "Medialist 2",
   "purpose": "Another Medialist",
+  "client": {
+    "name": "Client A",
+    "_id": "CLIENTA"
+  },
   "createdAt": "2015-08-26T12:15:00.252Z",
   "createdBy": {
     "_id": "dNemSrYhw8hdFjxaK",
@@ -46,6 +54,10 @@
   "_id": "vFeyKLkizjjRC5xEd",
   "name": "Medialist 3",
   "purpose": "The Third Medialist",
+  "client": {
+    "name": "Client B",
+    "_id": "CLIENTB"
+  },
   "createdAt": "2015-08-26T13:12:07.829Z",
   "createdBy": {
     "_id": "dNemSrYhw8hdFjxaK",
@@ -68,6 +80,10 @@
   "_id": "GGm4phbCz6CYEfKwX",
   "name": "Medialist 4",
   "purpose": "Final Medialist",
+  "client": {
+    "name": "Client B",
+    "_id": "CLIENTB"
+  },
   "createdAt": "2015-08-26T14:03:12.017Z",
   "createdBy": {
     "_id": "dNemSrYhw8hdFjxaK",

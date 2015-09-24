@@ -92,11 +92,18 @@ Meteor.methods({
   },
 
   'contacts/addRole': function (contactSlug, role) {
-    check(contactSlug, String)
-    check(role, Schemas.Roles)
     if (!this.userId) throw new Meteor.Error('Only a logged in user can add roles to a contact')
+    check(contactSlug, String)
     if (!Contacts.find({slug: contactSlug}).count()) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
 
+    var org = Orgs.findOne({ name: role.org.name })
+    if (org) {
+     role.org._id = org._id
+    } else {
+     role.org._id = Orgs.insert({ name: role.org.name })
+    }
+    console.log(role)
+    check(role, Schemas.Roles)
     return Contacts.update({ slug: contactSlug }, {$push: {
       roles: role
     }})

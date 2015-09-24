@@ -4,14 +4,6 @@
     <button class="btn btn-link">All contacts</button>
     <div class="btn-group">
       <a href="#" class="btn btn-primary" data-action="add-new">Add New</a>
-      <a href="#" data-target="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
-      <ul class="dropdown-menu">
-        <li><a href="#">Action</a></li>
-        <li><a href="#">Another action</a></li>
-        <li><a href="#">Something else here</a></li>
-        <li class="divider"></li>
-        <li><a href="#">Separated link</a></li>
-      </ul>
     </div>
     <div class="navbar-form navbar-right" role="filter">
       <div class="form-group">
@@ -23,7 +15,7 @@
 <table class="medialist-table table table-responsive">
   <thead>
   <tr>
-    <th class="col-checkbox">
+    <th class="no-sort col-checkbox">
       <div class="checkbox checkbox-default">
         <label>
           <input type="checkbox"/>
@@ -35,9 +27,9 @@
     </th>
     <th></th>
     <th>Name</th>
-    <th class="hidden-xs">Organisation</th>
+    <th class="hidden-xs sort-default" data-sort-method="numeric">Organisation</th>
     <th class="hidden-xs">Title</th>
-    <th class="hidden-xs col-wide">Medialists</th>
+    <th class="no-sort hidden-xs col-wide">Medialists</th>
   </tr>
   </thead>
   <tbody>
@@ -45,9 +37,14 @@
       {{> allContactsRow this}}
     {{else}}
       <tr>
-        <td colspan="7">
+        <td colspan="6">
           <strong>Add some contacts&hellip;</strong>
         </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
       </tr>
     {{/each}}
   </tbody>

@@ -3,6 +3,15 @@ Template.contacts.onCreated(function () {
   this.subscribe('contacts', {limit: 100})
 })
 
+Template.contacts.onRendered(function () {
+  var el = this.find('.medialist-table')
+  Meteor.setTimeout(function () {
+    Tracker.afterFlush(function () {
+     new Tablesort(el)
+    })
+  }, 1)
+})
+
 Template.contacts.helpers({
   allContacts: function () {
     var filterTerm = Template.instance().filterTerm.get()

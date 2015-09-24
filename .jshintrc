@@ -130,6 +130,7 @@
       "Medialists": true,
       "Contacts": true,
       "Posts": true,
-      "TwitterUsers": true
+      "TwitterUsers": true,
+      "Clients": true
     }
 }

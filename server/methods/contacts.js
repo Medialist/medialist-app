@@ -98,6 +98,7 @@ Meteor.methods({
     } else {
      role.org._id = Orgs.insert({ name: role.org.name })
     }
+    console.log(role)
     check(role, Schemas.Roles)
     return Contacts.update({ slug: contactSlug }, {$push: {
       roles: role

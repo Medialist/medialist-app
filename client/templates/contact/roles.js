@@ -33,12 +33,16 @@ Template.editContactRoles.events({
   'submit': function (evt, tpl) {
     evt.preventDefault()
 
-    var fields = ['org', 'title', 'email']
+    var fields = ['title', 'email']
     var role = fields.reduce(function (role, field) {
       var value = tpl.$('#contact-role-' + field).val()
       if (value) role[field] = value
       return role
     }, {})
+    role.org = {
+      name: tpl.$('#contact-role-org').val(),
+      _id: Random.id()
+    }
     var number = tpl.$('#contact-role-number').val()
     if (number) {
       role.phones = [{

@@ -12,6 +12,7 @@ Template.createMedialist.events({
 
     var medialist = {
       name: tpl.$('#medialist-name').val(),
+      client: { name: tpl.$('#medialist-client').val() },
       purpose: tpl.$('#medialist-purpose').val()
     }
     if (Template.currentData().contacts) {

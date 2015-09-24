@@ -15,7 +15,7 @@ module.exports = {
   after : function(client) {
     console.log('Closing down...')
     client
-      .clearDB()
+      // .clearDB()
       .end()
   },
 

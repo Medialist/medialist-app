@@ -23,6 +23,7 @@
         </label>
       </div>
     </th>
+    <th class="col-client">Client</th>
     <th class="col-campaign">Campaign</th>
     <th class="col-purpose col-wide">Purpose</th>
     <th class="col-updated-on">Last updated</th>
@@ -42,6 +43,7 @@
           </label>
         </div>
       </td>
+      <td class="col-client">{{client.name}}</td>
       <td class="col-campaign"><a href="/medialist/{{slug}}">#{{slug}}</a></td>
       <td class="col-purpose">{{purpose}}</td>
       <td class="col-updated-on">{{fromNow updatedAt}}</td>

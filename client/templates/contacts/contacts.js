@@ -47,7 +47,7 @@ Template.contacts.helpers({
 
 Template.contacts.events({
   'click [data-action="add-new"]': function () {
-    Modal.show('addContact')
+    Modal.show('addContact', { ignoreExisting: true })
   },
   'keyup [data-field="filter-term"]': function (evt, tpl) {
     var filterTerm = tpl.$(evt.currentTarget).val()

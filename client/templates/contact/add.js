@@ -1,19 +1,15 @@
-var name = new ReactiveVar('')
 
 Template.addContact.onCreated(function () {
-  var tpl = this
-  tpl.autorun(function () {
-    tpl.subscribe('contacts', { name: name.get() })
+  this.name = new ReactiveVar('')
+  this.autorun(() => {
+    this.subscribe('contacts', { name: this.name.get() })
   })
-})
-
-Template.addContact.onDestroyed(function () {
-  name.set('')
 })
 
 Template.addContact.helpers({
   contacts: function () {
-    var regex = new RegExp(name.get(), 'gi')
+    if (this.ignoreExisting) return []
+    var regex = new RegExp(Template.instance().name.get(), 'gi')
     var query = {
       name: {
         $regex: regex,
@@ -23,24 +19,24 @@ Template.addContact.helpers({
     return Contacts.find(query, { limit: App.contactSuggestions })
   },
   name: function () {
-    return name.get()
+    return Template.instance().name.get()
   }
 });
 
 Template.addContact.events({
   'keyup [data-field="contact-name"]': function (evt, tpl) {
-    name.set(tpl.$(evt.currentTarget).val())
+    tpl.name.set(tpl.$(evt.currentTarget).val())
   },
-  'submit, click [data-action="create-contact"]': function (evt) {
+  'submit, click [data-action="create-contact"]': function (evt, tpl) {
     evt.preventDefault()
     var context = { medialist: FlowRouter.getParam('slug') }
-    var identifier = name.get()
+    var identifier = tpl.name.get()
     if (identifier.slice(0, 1) === '@') {
       context.screenName = identifier.slice(1)
     } else {
       context.name = identifier
     }
-    name.set('')
+    tpl.name.set('')
     Modal.show('createContact', context)
   }
 });

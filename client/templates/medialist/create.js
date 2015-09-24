@@ -1,8 +1,24 @@
-var error = new ReactiveVar()
+
+Template.createMedialist.onCreated(function () {
+  this.error = new ReactiveVar()
+  this.clientTerm = new ReactiveVar('')
+})
+
+Template.createMedialist.onRendered(function () {
+  $('.typeahead').typeahead({
+    source: function (query, cb) {
+      Meteor.call('clients/search', query, function (err, res) {
+        if (err) return console.error(err)
+        cb(res)
+      })
+    },
+    items: 5
+  })
+})
 
 Template.createMedialist.helpers({
   error: function () {
-    return error.get()
+    return Template.instance().error.get()
   }
 })
 
@@ -15,6 +31,7 @@ Template.createMedialist.events({
       client: { name: tpl.$('#medialist-client').val() },
       purpose: tpl.$('#medialist-purpose').val()
     }
+    var tpl = Template.instance()
     if (Template.currentData().contacts) {
       medialist.contacts = _.reduce(Template.currentData().contacts, function (contactObj, contactSlug) {
         contactObj[contactSlug] = Contacts.status.toContact
@@ -25,7 +42,7 @@ Template.createMedialist.events({
     tpl.$('#addMedialist').get(0).reset()
 
     Meteor.call('medialists/create', medialist, function (err) {
-      if (err) return error.set(err.reason)
+      if (err) return tpl.error.set(err.reason)
       Modal.hide()
       FlowRouter.go('medialist', { slug: medialist.name })
       FlowRouter.reload()

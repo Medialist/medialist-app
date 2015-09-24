@@ -39,7 +39,7 @@ Template.medialist.helpers({
       query.$or = [
         { 'name': filterRegExp },
         { 'roles.0.title': filterRegExp },
-        { 'roles.0.org': filterRegExp }
+        { 'roles.0.org.name': filterRegExp }
       ]
     }
     return Contacts.find(query)

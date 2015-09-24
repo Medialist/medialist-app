@@ -3,6 +3,15 @@ Template.medialists.onCreated(function () {
   this.subscribe('medialists')
 })
 
+Template.medialists.onRendered(function () {
+  var el = this.find('.medialist-table')
+  Meteor.setTimeout(function () {
+    Tracker.afterFlush(function () {
+     new Tablesort(el)
+    })
+  }, 1)
+})
+
 Template.medialists.helpers({
   medialists: function () {
     var filterTerm = Template.instance().filterTerm.get()

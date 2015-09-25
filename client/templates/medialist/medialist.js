@@ -1,5 +1,4 @@
 var medialistTpl
-var checkSelect = new ReactiveVar({})
 
 Template.medialist.onCreated(function () {
   medialistTpl = this

@@ -120,6 +120,7 @@
       "s": false,
       "Twitter": false,
       "moment": false,
+      "Tablesort": true,
       "SlideIns": true,
       "Modal": true,
       // Globals

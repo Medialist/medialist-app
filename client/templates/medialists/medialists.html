@@ -13,7 +13,7 @@
 <table class="medialist-table table table-responsive">
   <thead>
   <tr>
-    <th class="col-checkbox">
+    <th class="no-sort col-checkbox">
       <div class="checkbox checkbox-default">
         <label>
           <input type="checkbox"/>
@@ -24,9 +24,9 @@
       </div>
     </th>
     <th class="col-campaign">Campaign</th>
-    <th class="col-purpose col-wide">Purpose</th>
-    <th class="col-updated-on">Last updated</th>
-    <th class="col-updated-by">Last updated by</th>
+    <th class="no-sort col-purpose col-wide">Purpose</th>
+    <th class="sort-default col-updated-on" data-sort-method="numeric">Last updated</th>
+    <th class="no-sort col-updated-by">Last updated by</th>
   </tr>
   </thead>
   <tbody>
@@ -44,7 +44,7 @@
       </td>
       <td class="col-campaign"><a href="/medialist/{{slug}}">#{{slug}}</a></td>
       <td class="col-purpose">{{purpose}}</td>
-      <td class="col-updated-on">{{fromNow updatedAt}}</td>
+      <td class="col-updated-on" data-sort="{{updatedAt}}">{{fromNow updatedAt}}</td>
       <td class="col-updated-by">{{updatedBy.name}}</td>
     </tr>
   {{/each}}

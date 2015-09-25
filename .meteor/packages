@@ -37,3 +37,4 @@ spacebars
 check
 tableflip:material-design-less
 ecmascript
+es5-shim

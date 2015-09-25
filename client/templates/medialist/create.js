@@ -30,7 +30,6 @@ Template.createMedialist.events({
       client: { name: tpl.$('#medialist-client').val() },
       purpose: tpl.$('#medialist-purpose').val()
     }
-    var tpl = Template.instance()
     if (Template.currentData().contacts) {
       medialist.contacts = _.reduce(Template.currentData().contacts, function (contactObj, contactSlug) {
         contactObj[contactSlug] = Contacts.status.toContact

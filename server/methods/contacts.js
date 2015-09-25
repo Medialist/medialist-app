@@ -22,7 +22,6 @@ Meteor.methods({
     }
     // return if a matching twitter handle already exists
     var existingContact = Contacts.findOne({ 'twitter.screenName': contact.twitter.screenName }, { transform: contact => contact })
-    console.log(existingContact)
     if (existingContact) return existingContact
     contact.roles = []
     contact.avatar = '/images/avatar.svg'

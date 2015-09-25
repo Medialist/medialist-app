@@ -1,15 +1,12 @@
 <template name="contacts">
 <div class="medialist-toolbar">
   <div class="container-fluid">
-    <button class="btn btn-link">{{#if checkSelectKeys}}{{pluralize 'contact' checkSelectKeys.length}}{{else}}All Contacts{{/if}}</button>
-    <div class="btn-group">
-      <a href="#" class="btn btn-primary" data-action="add-new">Add New</a>
-    </div>
     {{#if checkSelectKeys}}
-    <div class="btn-group">
-      <a href="#" class="btn btn-success" data-action="add-to-existing-medialist">Add to existing</a>
-      <a href="#" class="btn btn-success" data-action="create-new-medialist">Create new Medialist</a>
-    </div>
+    <button class="btn btn-link">{{pluralize 'contact' checkSelectKeys.length}}</button>
+    <a href="#" class="btn btn-success" data-action="create-new-medialist">Create Medialist</a>
+    <a href="#" class="btn btn-success" data-action="add-to-existing-medialist">Add to existing</a>
+    {{else}}
+    <a href="#" class="btn btn-primary" data-action="add-new">Add Contact</a>
     {{/if}}
     <div class="navbar-form navbar-right" role="filter">
       <div class="form-group">

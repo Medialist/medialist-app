@@ -1,13 +1,21 @@
-var phoneType = new ReactiveVar('mobile')
-var validationError = new ReactiveVar()
 var roleValidator = Schemas.Roles.namedContext('roles')
 
 Template.editContactRoles.onCreated(function () {
   this.subscribe('contact', this.data.slug)
+  this.phoneType = new ReactiveVar('mobile')
+  this.validationError = new ReactiveVar()
 })
 
-Template.editContactRoles.onDestroyed(function () {
-  validationError.set()
+Template.editContactRoles.onRendered(function () {
+  $('.typeahead').typeahead({
+    source: (query, cb) => {
+      Meteor.call('orgs/search', query, (err, res) => {
+        if (err) return console.error(err)
+        cb(res)
+      })
+    },
+    items: 5
+  })
 })
 
 Template.editContactRoles.helpers({
@@ -15,35 +23,39 @@ Template.editContactRoles.helpers({
     return Contacts.findOne({slug: this.slug})
   },
   phoneType: function () {
-    return phoneType.get()
+    return Template.instance().phoneType.get()
   },
   validationError: function () {
-    return validationError.get()
+    return Template.instance().validationError.get()
   }
 })
 
 Template.editContactRoles.events({
-  'click [data-action=toggle-phone-type]': function () {
-    if (phoneType.get() === 'mobile') {
-      phoneType.set('landline')
+  'click [data-action=toggle-phone-type]': function (evt, tpl) {
+    if (tpl.phoneType.get() === 'mobile') {
+      tpl.phoneType.set('landline')
     } else {
-      phoneType.set('mobile')
+      tpl.phoneType.set('mobile')
     }
   },
   'submit': function (evt, tpl) {
     evt.preventDefault()
 
-    var fields = ['org', 'title', 'email']
+    var fields = ['title', 'email']
     var role = fields.reduce(function (role, field) {
       var value = tpl.$('#contact-role-' + field).val()
       if (value) role[field] = value
       return role
     }, {})
+    role.org = {
+      name: tpl.$('#contact-role-org').val(),
+      _id: Random.id()
+    }
     var number = tpl.$('#contact-role-number').val()
     if (number) {
       role.phones = [{
         number: number,
-        type: phoneType.get()
+        type: tpl.phoneType.get()
       }]
     } else {
       role.phones = []
@@ -54,7 +66,7 @@ Template.editContactRoles.events({
     }
 
     if (!roleValidator.validate(role)) {
-      return validationError.set(roleValidator.keyErrorMessage(roleValidator.invalidKeys()[0].name))
+      return tpl.validationError.set(roleValidator.keyErrorMessage(roleValidator.invalidKeys()[0].name))
     }
 
     Meteor.call('contacts/addRole', tpl.data.slug, role, function (err) {

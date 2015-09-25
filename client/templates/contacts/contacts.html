@@ -1,18 +1,13 @@
 <template name="contacts">
 <div class="medialist-toolbar">
   <div class="container-fluid">
-    <button class="btn btn-link">All contacts</button>
-    <div class="btn-group">
-      <a href="#" class="btn btn-primary" data-action="add-new">Add New</a>
-      <a href="#" data-target="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
-      <ul class="dropdown-menu">
-        <li><a href="#">Action</a></li>
-        <li><a href="#">Another action</a></li>
-        <li><a href="#">Something else here</a></li>
-        <li class="divider"></li>
-        <li><a href="#">Separated link</a></li>
-      </ul>
-    </div>
+    {{#if checkSelectKeys}}
+    <button class="btn btn-link">{{pluralize 'contact' checkSelectKeys.length}}</button>
+    <a href="#" class="btn btn-success" data-action="create-new-medialist">Create Medialist</a>
+    <a href="#" class="btn btn-success" data-action="add-to-existing-medialist">Add to existing</a>
+    {{else}}
+    <a href="#" class="btn btn-primary" data-action="add-new">Add Contact</a>
+    {{/if}}
     <div class="navbar-form navbar-right" role="filter">
       <div class="form-group">
         <input type="text" class="form-control" placeholder="Filter" data-field="filter-term" value="{{filterTerm}}">
@@ -23,11 +18,11 @@
 <table class="medialist-table table table-responsive">
   <thead>
   <tr>
-    <th class="col-checkbox">
+    <th class="no-sort col-checkbox">
       <div class="checkbox checkbox-default">
         <label>
           <input type="checkbox"/>
-          <span class="checkbox-material">
+          <span class="checkbox-material" data-checkbox-all>
             <span class="check"></span>
           </span>
         </label>
@@ -35,9 +30,9 @@
     </th>
     <th></th>
     <th>Name</th>
-    <th class="hidden-xs">Organisation</th>
+    <th class="hidden-xs sort-default">Organisation</th>
     <th class="hidden-xs">Title</th>
-    <th class="hidden-xs col-wide">Medialists</th>
+    <th class="no-sort hidden-xs col-wide">Medialists</th>
   </tr>
   </thead>
   <tbody>
@@ -45,9 +40,14 @@
       {{> allContactsRow this}}
     {{else}}
       <tr>
-        <td colspan="7">
+        <td colspan="6">
           <strong>Add some contacts&hellip;</strong>
         </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
       </tr>
     {{/each}}
   </tbody>
@@ -59,8 +59,8 @@
     <td class="col-checkbox">
       <div class="checkbox checkbox-default">
         <label>
-          <input type="checkbox"/>
-          <span class="checkbox-material">
+          <input type="checkbox" checked={{checked}} />
+          <span class="checkbox-material" data-checkbox>
             <span class="check"></span>
           </span>
         </label>
@@ -75,7 +75,7 @@
       {{name}}
     </td>
     <td class="col-org hidden-xs">
-      {{roles.[0].org}}
+      {{roles.[0].org.name}}
     </td>
     <td class="col-org hidden-xs">
       {{roles.[0].title}}

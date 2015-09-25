@@ -131,6 +131,7 @@
       "Contacts": true,
       "Posts": true,
       "TwitterUsers": true,
+      "Orgs": true,
       "Clients": true
     }
 }

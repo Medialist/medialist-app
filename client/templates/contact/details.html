@@ -25,7 +25,7 @@
           </div>
           <div class="media-body">
             <h4 class="media-heading">{{name}}</h4>
-            {{#if roles.[0]}}<h5>{{roles.[0].title}} at {{roles.[0].org}}</h5>{{/if}}
+            {{#if roles.[0]}}<h5>{{roles.[0].title}} at {{roles.[0].org.name}}</h5>{{/if}}
           </div>
         </div>
         <div class="contact-menu">
@@ -61,10 +61,10 @@
         <p class="form-control" id="contact-detail-title">{{roles.[0].title}}</p>
       </div>
       {{/if}}
-      {{#if roles.[0].org}}
+      {{#if roles.[0].org.name}}
       <div class="form-group">
         <label for="contact-detail-org">Organisation</label>
-        <p class="form-control" id="contact-detail-org">{{roles.[0].org}}</p>
+        <p class="form-control" id="contact-detail-org">{{roles.[0].org.name}}</p>
       </div>
       {{/if}}
       <div class="form-group">

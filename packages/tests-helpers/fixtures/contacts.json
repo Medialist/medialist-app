@@ -9,7 +9,10 @@
     "id": "7257012"
   },
   "roles": [{
-    "org": "Organisation plc.",
+    "org": {
+      "name": "Organisation plc.",
+      "_id": "Organisation plc."
+    },
     "title": "CEO",
     "email": "email@organisation.com",
     "phones": [{
@@ -17,7 +20,7 @@
       "type": "mobile"
     }]
   }],
-  "avatar": "https://pbs.twimg.com/profile_images/636403259507277824/hXmYA-0b_normal.jpg",
+  "avatar": "https://pbs.twimg.com/profile_images/2797131481/9a6e16c27b338ecaaf985f249b3d2645_normal.jpeg",
   "slug": "contactone",
   "medialists": [
     "medialist1",
@@ -65,7 +68,10 @@
     "id": "34893"
   },
   "roles": [{
-    "org": "Test org",
+    "org": {
+      "name": "Test org",
+      "_id": "Test org"
+    },
     "title": "Test contact",
     "phones": []
   }],
@@ -168,7 +174,10 @@
     "id": "365"
   },
   "roles": [{
-    "org": "Nightwatch Ltd.",
+    "org": {
+      "name": "Nightwatch Ltd.",
+      "_id": "Nightwatch Ltd."
+    },
     "title": "Tester",
     "email": "contact@nightwatch.com",
     "phones": [{
@@ -207,7 +216,10 @@
     "id": "209"
   },
   "roles": [{
-    "org": "Testing Central",
+    "org": {
+      "name": "Testing Central",
+      "_id": "Testing Central"
+    },
     "title": "Straw Man",
     "phones": []
   }],
@@ -243,7 +255,10 @@
     "id": "271419228"
   },
   "roles": [{
-    "org": "TABLEFLIP",
+    "org": {
+      "name": "TABLEFLIP",
+      "_id": "TABLEFLIP"
+    },
     "title": "Developer",
     "email": "fake@email.com",
     "phones": [{

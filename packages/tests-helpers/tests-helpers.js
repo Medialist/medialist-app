@@ -25,6 +25,7 @@ if (Meteor.isServer) {
       Medialists.remove({})
       Contacts.remove({})
       Posts.remove({})
+      Clients.remove({})
       return true
     },
 
@@ -37,6 +38,9 @@ if (Meteor.isServer) {
       })
       _.each(data[2], function (post) {
         Posts.insert(post)
+      })
+      _.each(data[3], function (client) {
+        Clients.insert(client)
       })
       return true
     }

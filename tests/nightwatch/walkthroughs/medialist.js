@@ -43,10 +43,12 @@ module.exports = {
   'Create Medialist': function (client) {
     var medialistName = 'test-medialist'
     var medialistPurpose = 'Test Medialist Purpose'
+    var medialistClient = 'Test Client'
     client
       .click('[data-action="create-medialist"]')
       .waitForElementVisible('.modal-body', timeout)
       .setValue('#medialist-name', medialistName)
+      .setValue('#medialist-client', medialistClient)
       .setValue('#medialist-purpose', medialistPurpose)
       .submitForm('#addMedialist')
       .pause(1000)
@@ -235,6 +237,7 @@ module.exports = {
   'Create medialist from selected contacts': function (client) {
     var medialistName = 'new-from-old'
     var medialistPurpose = 'Created from members of another medialist'
+    var medialistClient = 'Test Client'
 
     client
       .pause(1000)
@@ -251,6 +254,7 @@ module.exports = {
       .waitForElementVisible('#modal', timeout)
       .setValue('#medialist-name', medialistName)
       .setValue('#medialist-purpose', medialistPurpose)
+      .setValue('#medialist-client', medialistClient)
       .submitForm('#addMedialist')
       .pause(1000)
 

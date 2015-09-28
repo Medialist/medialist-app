@@ -1,8 +1,11 @@
 <template name="medialists">
 <div class="medialist-toolbar">
   <div class="container-fluid">
-    <button class="btn btn-link">All medialists</button>
+    {{#if checkSelectKeys}}
+    <button class="btn btn-link">{{pluralize 'contact' checkSelectKeys.length}}</button>
+    {{else}}
     <a href="#" class="btn btn-primary" data-action="create-medialist">Add Medialist</a>
+    {{/if}}
     <div class="navbar-form navbar-right" role="filter">
       <div class="form-group">
         <input type="text" class="form-control" placeholder="Filter" data-field="filter-term" value="{{filterTerm}}">
@@ -17,7 +20,7 @@
       <div class="checkbox checkbox-default">
         <label>
           <input type="checkbox"/>
-          <span class="checkbox-material">
+          <span class="checkbox-material" data-checkbox-all>
             <span class="check"></span>
           </span>
         </label>
@@ -36,8 +39,8 @@
       <td class="col-checkbox">
         <div class="checkbox checkbox-default">
           <label>
-            <input type="checkbox"/>
-            <span class="checkbox-material">
+            <input type="checkbox" checked={{checked}} />
+            <span class="checkbox-material" data-checkbox>
               <span class="check"></span>
             </span>
           </label>

@@ -5,12 +5,26 @@ Template.medialist.onCreated(function () {
   medialistTpl.slug = new ReactiveVar()
   medialistTpl.checkSelect = new ReactiveVar({})
   medialistTpl.filterTerm = new ReactiveVar()
-  medialistTpl.autorun(function () {
+  medialistTpl.query = new ReactiveVar({})
+  medialistTpl.autorun(() => {
+    var filterTerm = medialistTpl.filterTerm.get()
+    var query = { medialists: medialistTpl.slug.get() }
+    if (filterTerm) {
+      var filterRegExp = new RegExp(filterTerm, 'gi')
+      query.$or = [
+        { 'name': filterRegExp },
+        { 'roles.0.title': filterRegExp },
+        { 'roles.0.org.name': filterRegExp }
+      ]
+    }
+    medialistTpl.query.set(query)
+  })
+  medialistTpl.autorun(() => {
     FlowRouter.watchPathChange()
     medialistTpl.slug.set(FlowRouter.getParam('slug'))
     medialistTpl.filterTerm.set()
   })
-  medialistTpl.autorun(function () {
+  medialistTpl.autorun(() => {
     medialistTpl.checkSelect.set({})
     $('[data-checkbox-all]').prev('input').prop('checked', false)
     medialistTpl.subscribe('medialist', medialistTpl.slug.get())
@@ -31,17 +45,7 @@ Template.medialist.helpers({
     return Medialists.findOne({slug: medialistTpl.slug.get()})
   },
   contacts: function () {
-    var filterTerm = Template.instance().filterTerm.get()
-    var query = { medialists: medialistTpl.slug.get() }
-    if (filterTerm) {
-      var filterRegExp = new RegExp(filterTerm, 'gi')
-      query.$or = [
-        { 'name': filterRegExp },
-        { 'roles.0.title': filterRegExp },
-        { 'roles.0.org.name': filterRegExp }
-      ]
-    }
-    return Contacts.find(query)
+    return Contacts.find(Template.instance().query.get())
   },
   filterTerm: function () {
     return Template.instance().filterTerm.get()
@@ -58,7 +62,7 @@ Template.medialist.events({
   'click [data-checkbox-all]': function (evt, tpl) {
     var checked = !tpl.$(evt.currentTarget).prev('input').prop('checked')
     if (checked) {
-      medialistTpl.checkSelect.set(_.reduce(Contacts.find({ medialists: medialistTpl.slug.get() }).fetch(), function (newCheckSelect, contact) {
+      medialistTpl.checkSelect.set(_.reduce(Contacts.find(tpl.query.get()).fetch(), function (newCheckSelect, contact) {
         newCheckSelect[contact.slug] = true
         return newCheckSelect
       }, {}))
@@ -89,6 +93,7 @@ Template.medialist.events({
     var medialistSlug = medialistTpl.slug.get()
     Meteor.call('contacts/removeFromMedialist', contactSlugs, medialistSlug, function (err) {
       if (err) return console.log(err)
+      medialistTpl.checkSelect.set({})
     })
   },
   'keyup [data-field="filter-term"]': function (evt, tpl) {

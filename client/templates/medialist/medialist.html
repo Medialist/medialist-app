@@ -39,8 +39,7 @@
     <th class="hidden-xs">Title</th>
     <th class="hidden-xs">Organisation</th>
     <th class="sort-default" data-sort-method="numeric">Status</th>
-    <th class="no-sort hidden-xs">Latest feedback</th>
-    <th class="no-sort hidden-xs">Coverage</th>
+    <th class="no-sort hidden-xs col-wide">Latest feedback</th>
   </tr>
   </thead>
   <tbody>
@@ -48,11 +47,9 @@
       {{> medialistContactRow this}}
     {{else}}
       <tr>
-        <td colspan="7">
-          <strong>Add some people to contact&hellip;</strong>
-        </td>
         <td></td>
         <td></td>
+        <td><strong>Add some people to contact&hellip;</strong></td>
         <td></td>
         <td></td>
         <td></td>
@@ -108,9 +105,6 @@
     {{else}}
       <p>&hellip;</p>
     {{/with}}
-    </td>
-    <td class="hidden-xs col-coverage">
-      <p>&hellip;</p>
     </td>
   </tr>
 </template>

@@ -1,11 +1,16 @@
-var contactSection = new ReactiveVar('contactDetails')
-var medialistSlugLog = new ReactiveVar()
-var medialistSlugPosts = new ReactiveVar()
-var option = new ReactiveVar()
+var slideIn
+
+Template.contactSlideIn.onCreated(function () {
+  slideIn = this
+  this.contactSection = new ReactiveVar('contactDetails')
+  this.medialistSlugLog = new ReactiveVar()
+  this.medialistSlugPosts = new ReactiveVar()
+  this.option = new ReactiveVar()
+})
 
 Template.contactSlideIn.helpers({
   contactSection: function () {
-    return contactSection.get()
+    return slideIn.contactSection.get()
   }
 })
 
@@ -15,7 +20,7 @@ Template.contactSlideIn.events({
   },
   'click [data-section]': function (evt, tpl) {
     var section = tpl.$(evt.currentTarget).data('section')
-    contactSection.set(section)
+    slideIn.contactSection.set(section)
   }
 })
 
@@ -23,7 +28,7 @@ Template.contactActivity.onCreated(function () {
   var tpl = this
   tpl.autorun(function () {
     var opts = {
-      medialist: medialistSlugPosts.get(),
+      medialist: slideIn.medialistSlugPosts.get(),
       contact: Template.currentData().slug,
       limit: 10
     }
@@ -31,27 +36,27 @@ Template.contactActivity.onCreated(function () {
   })
   tpl.autorun(function () {
     FlowRouter.watchPathChange()
-    medialistSlugPosts.set(FlowRouter.getParam('slug'))
+    slideIn.medialistSlugPosts.set(FlowRouter.getParam('slug'))
   })
 })
 
 Template.contactActivity.onRendered(function () {
-  medialistSlugLog.set(FlowRouter.getParam('slug') || this.data.medialists[0])
+  slideIn.medialistSlugLog.set(FlowRouter.getParam('slug') || this.data.medialists[0])
 })
 
 Template.contactActivity.helpers({
   option: function () {
-    return option.get()
+    return slideIn.option.get()
   },
   medialistSlugLog: function () {
-    return medialistSlugLog.get()
+    return slideIn.medialistSlugLog.get()
   },
   medialistSlugPosts: function () {
-    return medialistSlugPosts.get()
+    return slideIn.medialistSlugPosts.get()
   },
   posts: function () {
     var query = { 'contacts.slug': this.slug }
-    var medialist = medialistSlugPosts.get()
+    var medialist = slideIn.medialistSlugPosts.get()
     if (medialist) {
       query.medialists = medialist
     }
@@ -64,30 +69,32 @@ Template.contactActivity.helpers({
 
 Template.contactActivity.events({
   'click [data-option]': function (evt, tpl) {
-    option.set(tpl.$(evt.currentTarget).data('option'))
+    slideIn.option.set(tpl.$(evt.currentTarget).data('option'))
   },
   'click [data-medialist-slug-log]': function (evt, tpl) {
     var medialist = tpl.$(evt.currentTarget).data('medialist-slug-log')
-    medialistSlugLog.set(medialist)
+    slideIn.medialistSlugLog.set(medialist)
   },
   'click [data-medialist-slug-posts]': function (evt, tpl) {
     var medialist = tpl.$(evt.currentTarget).data('medialist-slug-posts')
-    medialistSlugPosts.set(medialist)
+    slideIn.medialistSlugPosts.set(medialist)
   },
   'click [data-status]': function (evt, tpl) {
     var status = tpl.$(evt.currentTarget).data('status')
-    var medialist = medialistSlugLog.get()
+    var medialist = slideIn.medialistSlugLog.get()
     var contact = tpl.data.slug
     var message = tpl.$('[data-field="message"]').val()
     if (!message) return
     Meteor.call('posts/create', {
       contactSlug: contact,
       medialistSlug: medialist,
-      message: message, 
+      message: message,
       status: status
     }, function (err) {
       if (err) return console.error(err)
       tpl.$('[data-field="message"]').val('')
+      slideIn.option.set(null)
+      slideIn.medialistSlugLog.set(FlowRouter.getParam('slug'))
     })
   }
 })

@@ -25,7 +25,8 @@ Meteor.methods({
     if (existingContact) return existingContact
     contact.roles = []
     contact.avatar = '/images/avatar.svg'
-    contact.slug = contact.twitter.screenName.toLowerCase() || App.cleanSlug(contact.name)
+    contact.slug = contact.twitter.screenName || App.cleanSlug(contact.name)
+    contact.slug = App.uniqueSlug(contact.slug, Contacts)
     contact.medialists = []
     if (medialistSlug) contact.medialists.push(medialistSlug)
     check(contact, Schemas.Contacts)

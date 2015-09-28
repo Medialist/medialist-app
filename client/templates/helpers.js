@@ -16,7 +16,7 @@ var helpers = {
     return _.values(Contacts.status)
   },
   classify: function (string) {
-    return s.slugify(string)
+    return App.cleanSlug(string)
   },
   fromNow: function (date) {
     return date.fromNow()

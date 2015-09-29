@@ -32,12 +32,11 @@ Template.medialist.onCreated(function () {
 })
 
 Template.medialist.onRendered(function () {
-  var el = this.find('.medialist-table')
-  Meteor.setTimeout(function () {
-    Tracker.afterFlush(function () {
-     new Tablesort(el)
-    })
-  }, 1)
+  var tpl = this
+  this.tablesort = MeteorTablesort('.medialist-table', {
+    collection: Contacts,
+    query: () => tpl.query.get()
+  })
 })
 
 Template.medialist.helpers({

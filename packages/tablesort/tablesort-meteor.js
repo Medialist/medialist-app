@@ -1,23 +1,23 @@
-MeteorTablesort = function (el, refreshFunc) {
+MeteorTablesort = function (el, refresh) {
   var el = $(el)[0]
-  var ts = { el, refreshFunc }
+  var meteorTablesort = { el, refresh }
   Meteor.setTimeout(() => {
     Tracker.afterFlush(() => {
-      ts.tablesort = new Tablesort(el)
+      meteorTablesort.tablesort = new Tablesort(el)
     })
   }, 1)
-  if (ts.refreshFunc) {
+  if (meteorTablesort.refresh) {
     var parent = Template.instance() || Tracker
     parent.autorun((comp) => {
-      ts.comp = comp
-      refreshFunc()
+      meteorTablesort.comp = comp
+      meteorTablesort.refresh()
       if (comp.firstRun) return
       Meteor.setTimeout(() => {
         Tracker.afterFlush(() => {
-          ts.tablesort.refresh()
+          meteorTablesort.tablesort.refresh()
         })
       }, 1)
     })
   }
-  return ts
+  return meteorTablesort
 }

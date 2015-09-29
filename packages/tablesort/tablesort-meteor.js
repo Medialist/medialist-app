@@ -1,4 +1,4 @@
-MeteorTablesort = function (el, refreshFunc, tpl) {
+MeteorTablesort = function (el, refreshFunc) {
   var el = $(el)[0]
   var ts = { el, refreshFunc }
   Meteor.setTimeout(() => {

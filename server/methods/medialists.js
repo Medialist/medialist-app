@@ -17,7 +17,8 @@ Meteor.methods({
       name: user.profile.name
     }
     medialist.contacts = medialist.contacts || {}
-    medialist.slug = s.slugify(medialist.name)
+    medialist.slug = App.cleanSlug(medialist.name)
+    medialist.slug = App.uniqueSlug(medialist.name, Medialists)
 
     var client = Clients.findOne({ name: medialist.client.name })
     if (client) {

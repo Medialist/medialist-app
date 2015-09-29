@@ -32,10 +32,8 @@ Template.medialist.onCreated(function () {
 })
 
 Template.medialist.onRendered(function () {
-  var tpl = this
-  this.tablesort = MeteorTablesort('.medialist-table', {
-    collection: Contacts,
-    query: () => tpl.query.get()
+  this.tablesort = MeteorTablesort('.medialist-table', () => {
+    Contacts.find(this.query.get()).fetch()
   })
 })
 

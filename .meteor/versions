@@ -78,6 +78,7 @@ standard-minifiers@1.0.0
 tableflip:material-design-less@0.0.1
 tableflip:modal@0.0.1
 tableflip:slide-ins@0.0.1
+tableflip:tablesort@0.0.1
 tableflip:twitter@0.0.1
 templating@1.1.3
 templating-tools@1.0.0

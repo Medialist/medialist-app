@@ -18,12 +18,9 @@ Template.medialists.onCreated(function () {
 })
 
 Template.medialists.onRendered(function () {
-  var el = this.find('.medialist-table')
-  Meteor.setTimeout(function () {
-    Tracker.afterFlush(function () {
-     new Tablesort(el)
-    })
-  }, 1)
+  this.tablesort = MeteorTablesort('.medialist-table', () => {
+    Medialists.find(this.query.get()).fetch()
+  })
 })
 
 Template.medialists.helpers({

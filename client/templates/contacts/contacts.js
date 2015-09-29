@@ -25,12 +25,9 @@ Template.contacts.onCreated(function () {
 })
 
 Template.contacts.onRendered(function () {
-  var el = this.find('.medialist-table')
-  Meteor.setTimeout(function () {
-    Tracker.afterFlush(function () {
-     new Tablesort(el)
-    })
-  }, 1)
+  this.tablesort = MeteorTablesort('.medialist-table', () => {
+    Contacts.find(this.query.get()).fetch()
+  })
 })
 
 Template.contacts.helpers({

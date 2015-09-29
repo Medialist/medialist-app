@@ -123,6 +123,7 @@
       "Tablesort": true,
       "SlideIns": true,
       "Modal": true,
+      "MeteorTablesort": true,
       // Globals
       "App": true,
       "Schemas": true,

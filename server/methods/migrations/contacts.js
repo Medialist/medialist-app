@@ -15,6 +15,7 @@ Meteor.methods({
       })
       Contacts.update(contact._id, contact)
     })
+    return true
   }
 })
 

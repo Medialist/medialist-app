@@ -33,7 +33,8 @@ Meteor.methods({
       Contacts.update({ slug: contactSlug }, { $push: { medialists: medialist.slug } })
     })
 
-    return Medialists.insert(medialist)
+    Medialists.insert(medialist)
+    return medialist.slug
   }
 
 });

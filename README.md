@@ -74,6 +74,10 @@ $ nightwatch -c .meteor/nightwatch.json
   contacts: {
     'contactSlug': 'status'  
   }
+  client: {
+    name: 'Client A',
+    _id: '934jr20j23jf0kd1q3l'
+  }
 }
 ```
 
@@ -97,7 +101,10 @@ $ nightwatch -c .meteor/nightwatch.json
   roles: [
     {
       title: 'Contributor',
-      org: 'PR Public Relations',
+      org: {
+        name: 'PR Public Relations',
+        _id: 'mdsc8303jrnm82nr2i'
+      },
       email: 'jane.smith@pr.com',
       phones: [{
         number: '01234567890',

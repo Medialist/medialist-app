@@ -131,6 +131,7 @@ Template.contactPosts.onCreated(function () {
   this.postOpen = new ReactiveVar(false)
   var medialist = Medialists.findOne({ slug: FlowRouter.getParam('slug') })
   this.status = new ReactiveVar(medialist && medialist.contacts[Template.currentData().contact.slug])
+  // reset form and resubscribe to posts when the medialist or contact slug is changed
   this.autorun(() => {
     var data = Template.currentData()
     var medialist = data.medialist
@@ -138,6 +139,10 @@ Template.contactPosts.onCreated(function () {
     var limit = this.limit.get()
     var opts = { contact, limit }
     if (medialist) opts.medialist = medialist
+    this.limit = new ReactiveVar(20)
+    this.postOpen = new ReactiveVar(false)
+    var medialist = Medialists.findOne({ slug: FlowRouter.getParam('slug') })
+    this.status = new ReactiveVar(medialist && medialist.contacts[Template.currentData().contact.slug])
     Meteor.subscribe('posts', opts)
   })
 })
@@ -157,12 +162,29 @@ Template.contactPosts.helpers({
 })
 
 Template.contactPosts.events({
-  'click [data-field="post-text"]' (evt, tpl) {
+  'click .contenteditable-container' (evt, tpl) {
     tpl.postOpen.set(true)
     Tracker.afterFlush(() => {
-      tpl.$('[contenteditable=true]').focus()
+      tpl.$('[data-field="post-text"]').focus()
     })
   },
-  'click .signature' (evt, tpl) { tpl.$('[data-field="post-text"] [contenteditable=true]').focus() },
-  'click [data-action="set-status"]' (evt, tpl) { tpl.status.set(this) }
+  'click .signature' (evt, tpl) { tpl.$('[data-field="post-text"]').focus() },
+  'click [data-action="set-status"]' (evt, tpl) { tpl.status.set(this.valueOf()) },
+  'click [data-action="save-post"]' (evt, tpl) {
+    var status = tpl.status.get()
+    var medialist = FlowRouter.getParam('slug')
+    var contact = this.contact.slug
+    var message = tpl.$('[data-field="post-text"]').html()
+    if (!message) return
+    Meteor.call('posts/create', {
+      contactSlug: contact,
+      medialistSlug: medialist,
+      message: message,
+      status: status
+    }, function (err) {
+      if (err) return console.error(err)
+      tpl.$('[data-field="post-text"]').html('')
+      tpl.postOpen.set(false)
+    })
+  }
 })

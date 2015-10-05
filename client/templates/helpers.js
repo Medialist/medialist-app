@@ -40,6 +40,10 @@ var helpers = {
     var user = Meteor.user();
     if (!user || !user.services) return null;
     return user.services.twitter.profile_image_url_https;
+  },
+  youOrName: function(user) {
+    if (user && user._id === Meteor.userId()) return 'You'
+    return user && user.name
   }
 }
 

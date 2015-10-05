@@ -120,26 +120,36 @@ a.contact-menu-option {
   box-shadow: none;
 }
 
-.post-contact {
-
+.contenteditable-container {
+  height: 34px;
+  overflow-y: auto;
+  &.open {
+    height: 64px;
+  }
 }
 
 .placeholder {
-  color: @grey-400;
+  color: @grey-500;
 }
 
-.status-to-contact {
-  color: @grey-600 !important;
+.status, .btn.status {
+  font-weight: bold;
 }
-.status-contacted {
-  color: @light-blue-600 !important;
+.status.status-to-contact, .btn.status.status-to-contact {
+  color: @grey-600;
 }
-.status-not-interested {
-  color: @red-600 !important;
+.status.status-contacted, .btn.status.status-contacted {
+  color: @light-blue-600;
 }
-.status-hot-lead {
-  color: @orange-600 !important;
+.status.status-not-interested, .btn.status.status-not-interested {
+  color: @red-600;
 }
-.status-completed {
-  color: @green-600 !important;
+.status.status-hot-lead, .btn.status.status-hot-lead {
+  color: @orange-600;
+}
+.status.status-completed, .btn.status.status-completed {
+  color: @green-600;
+}
+.status .caret, .btn.status .caret {
+  color: @gray-dark;
 }

@@ -1,27 +1,30 @@
 <template name="displayPost">
-  <div class="panel panel-default display-post">
-    <div class="panel-body">
-      <div class="row">
-        <div class="col-xs-9">
-          <p class="display-post-details">
-            <a href="#">{{createdBy.name}}</a> logged <a href="#">{{contacts.[0].name}}</a> as '{{status}}' for <a href="/medialist/{{medialists.[0]}}">#{{medialists.[0]}}</a>
-          </p>
+  <div class="display-post">
+    <div class="row">
+      <div class="col-xs-2">
+        {{#if profileImage}}
+        <div class="media-left">
+          <img class="media-object img-rounded" src="{{profileImage}}" alt="{{currentUser.profile.name}} avatar">
         </div>
-        <div class="col-xs-3">
-          <p class="display-post-time-ago">
-            {{fromNow createdAt}}
-          </p>
-        </div>
+        {{/if}}
       </div>
-      {{#if message}}
-      <div class="row">
-        <div class="col-xs-12">
-          <p class="display-post-message">
-            {{message}}
-          </p>
-        </div>
+      <div class="col-xs-10">
+        <p class="display-post-details">
+          <a href="#">{{youOrName createdBy}}</a> logged feedback - {{> postSignature status=status medialist=slug}}
+        </p>
+        <p class="display-post-time-ago">
+          {{createdAt.fromNow}}
+        </p>
       </div>
-      {{/if}}
     </div>
+    {{#if message}}
+    <div class="row">
+      <div class="col-xs-12">
+        <p class="display-post-message">
+          {{message}}
+        </p>
+      </div>
+    </div>
+    {{/if}}
   </div>
 </template>

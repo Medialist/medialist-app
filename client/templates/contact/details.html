@@ -167,9 +167,9 @@
       <div class="col-xs-10">
         <form>
           <div class="form-group">
-            <div class="form-control" data-field="post-text">
+            <div class="form-control contenteditable-container {{#if instance.postOpen.get}}open{{/if}}">
               {{#if instance.postOpen.get}}
-                <span contenteditable=true tabindex=0></span>{{> postSignature status=instance.status.get}}
+                <span contenteditable=true tabindex=0 data-field="post-text"></span>&nbsp;-&nbsp;{{> postSignature status=instance.status.get medialist=slug}}
               {{else}}
                 <span class="placeholder">What did {{firstName contact.name}} think of #{{slug}}?</span>
               {{/if}}
@@ -182,15 +182,15 @@
       <hr>
       <div class="row">
         <div class="col-xs-12">
-          <button type="button" class="btn btn-sm btn-primary pull-right">Save</button>
+          <button type="button" class="btn btn-sm btn-primary pull-right" data-action="save-post">Save</button>
           <span class="pull-right">
-            <a data-target="#" class="btn btn-sm dropdown-toggle status-{{classify instance.status.get}}" data-toggle="dropdown">
+            <a data-target="#" class="btn btn-sm dropdown-toggle status status-{{classify instance.status.get}}" data-toggle="dropdown">
               {{instance.status.get}}
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
               {{#each statuses}}
-                <li><a href="#" data-action="set-status" class="status-{{classify this}}">{{this}}</a></li>
+                <li><a href="#" data-action="set-status" class="status status-{{classify this}}">{{this}}</a></li>
               {{/each}}
             </ul>
           </span>
@@ -201,13 +201,14 @@
   </div>
   {{#each posts}}
     {{> displayPost this}}
+    <hr>
   {{/each}}
 </template>
 
 <template name="postSignature">
-  <span class="signature" contenteditable=false><span contenteditable=false>
-  &nbsp;- <span class="status-{{classify status}}">{{status}}</span> for <a href="/medialists/{{slug}}">#{{slug}}</a>
-  </span></span>
+  <span class="signature">
+    <span class="status status-{{classify status}}">{{status}}</span> for <a href="/medialists/{{medialist}}">#{{medialist}}</a>
+  </span>
 </template>
 
 <template name="contactNeedToKnows">

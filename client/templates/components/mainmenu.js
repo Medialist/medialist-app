@@ -5,13 +5,7 @@ Template.mainmenu.events({
 })
 
 Template.mainmenu.helpers({
-  profileImage: function () {
-    var user = Meteor.user();
-    if (!user || !user.services) return null;
-    return user.services.twitter.profile_image_url_https;
-  },
   medialists: function () {
     return Medialists.find({}, {limit: 5, sort: {updatedAt: -1}}).fetch()
   }
 })
-

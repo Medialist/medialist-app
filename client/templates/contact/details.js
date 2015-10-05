@@ -96,10 +96,10 @@ Template.contactPosts.onCreated(function () {
     var limit = this.limit.get()
     var opts = { contact, limit }
     if (medialist) opts.medialist = medialist
-    this.limit = new ReactiveVar(20)
-    this.postOpen = new ReactiveVar(false)
+    this.limit.set(20)
+    this.postOpen.set(false)
     var medialist = Medialists.findOne({ slug: FlowRouter.getParam('slug') })
-    this.status = new ReactiveVar(medialist && medialist.contacts[Template.currentData().contact.slug])
+    this.status.set(medialist && medialist.contacts[Template.currentData().contact.slug])
     Meteor.subscribe('posts', opts)
   })
 })
@@ -140,7 +140,6 @@ Template.contactPosts.events({
       status: status
     }, function (err) {
       if (err) return console.error(err)
-      tpl.$('[data-field="post-text"]').html('')
       tpl.postOpen.set(false)
     })
   }
@@ -155,8 +154,8 @@ Template.contactNeedToKnows.onCreated(function () {
     var contact = data.contact.slug
     var limit = this.limit.get()
     var opts = { contact, limit }
-    this.limit = new ReactiveVar(20)
-    this.postOpen = new ReactiveVar(false)
+    this.limit.set(20)
+    this.postOpen.set(false)
     Meteor.subscribe('need-to-knows', opts)
   })
 })
@@ -190,7 +189,6 @@ Template.contactNeedToKnows.events({
       message: message,
     }, function (err) {
       if (err) return console.error(err)
-      tpl.$('[data-field="need-to-know-text"]').html('')
       tpl.postOpen.set(false)
     })
   }

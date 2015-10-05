@@ -120,12 +120,16 @@ a.contact-menu-option {
   box-shadow: none;
 }
 
-.contenteditable-container {
+.contenteditable-container, .form-control.contenteditable-container {
   height: 34px;
   overflow-y: auto;
   &.open {
     height: 64px;
   }
+  &::webkit-input-placeholder {
+    color: @grey-500;
+  }
+  resize: none;
 }
 
 .placeholder {

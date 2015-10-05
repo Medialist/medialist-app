@@ -20,3 +20,22 @@ Meteor.publish('posts', function (opts) {
 
   return Posts.find(query, options)
 })
+
+Meteor.publish('need-to-knows', function (opts) {
+  if (!this.userId) return this.ready()
+  check(opts, {
+    contact: String,
+    limit: Match.Optional(Number)
+  })
+
+  var query = {
+    'contacts.slug': opts.contact,
+    'needToKnow': true
+  }
+  var options = {
+    sort: { createdAt: -1 },
+    limit: opts.limit || 1
+  }
+
+  return Posts.find(query, options)
+})

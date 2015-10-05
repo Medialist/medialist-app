@@ -75,55 +75,12 @@ Template.contactActivity.helpers({
         break
     }
   }
-  // medialistSlug: function () {
-  //   return slideIn.medialistSlug.get()
-  // },
-  // medialistSlugPosts: function () {
-  //   return slideIn.medialistSlugPosts.get()
-  // },
-  // posts: function () {
-  //   var query = { 'contacts.slug': this.slug }
-  //   var medialist = slideIn.medialistSlugPosts.get()
-  //   if (medialist) {
-  //     query.medialists = medialist
-  //   }
-  //   return Posts.find(query, {
-  //     sort: { createdAt: -1 },
-  //     limit: 10
-  //   })
-  // }
 })
 
 Template.contactActivity.events({
   'click [data-option]': function (evt, tpl) {
     tpl.option.set(tpl.$(evt.currentTarget).data('option'))
   },
-  // 'click [data-medialist-slug-log]': function (evt, tpl) {
-  //   var medialist = tpl.$(evt.currentTarget).data('medialist-slug-log')
-  //   slideIn.medialistSlug.set(medialist)
-  // },
-  // 'click [data-medialist-slug-posts]': function (evt, tpl) {
-  //   var medialist = tpl.$(evt.currentTarget).data('medialist-slug-posts')
-  //   slideIn.medialistSlugPosts.set(medialist)
-  // },
-  // 'click [data-status]': function (evt, tpl) {
-  //   var status = tpl.$(evt.currentTarget).data('status')
-  //   var medialist = slideIn.medialistSlug.get()
-  //   var contact = tpl.data.slug
-  //   var message = tpl.$('[data-field="message"]').val()
-  //   if (!message) return
-  //   Meteor.call('posts/create', {
-  //     contactSlug: contact,
-  //     medialistSlug: medialist,
-  //     message: message,
-  //     status: status
-  //   }, function (err) {
-  //     if (err) return console.error(err)
-  //     tpl.$('[data-field="message"]').val('')
-  //     slideIn.option.set(null)
-  //     slideIn.medialistSlug.set(FlowRouter.getParam('slug'))
-  //   })
-  // }
 })
 
 Template.contactPosts.onCreated(function () {
@@ -184,6 +141,56 @@ Template.contactPosts.events({
     }, function (err) {
       if (err) return console.error(err)
       tpl.$('[data-field="post-text"]').html('')
+      tpl.postOpen.set(false)
+    })
+  }
+})
+
+Template.contactNeedToKnows.onCreated(function () {
+  this.limit = new ReactiveVar(20)
+  this.postOpen = new ReactiveVar(false)
+  // reset form and resubscribe to posts when the medialist or contact slug is changed
+  this.autorun(() => {
+    var data = Template.currentData()
+    var contact = data.contact.slug
+    var limit = this.limit.get()
+    var opts = { contact, limit }
+    this.limit = new ReactiveVar(20)
+    this.postOpen = new ReactiveVar(false)
+    Meteor.subscribe('need-to-knows', opts)
+  })
+})
+
+Template.contactNeedToKnows.helpers({
+  posts () {
+    var query = {
+      'contacts.slug': this.contact.slug,
+      'needToKnow': true
+    }
+    return Posts.find(query, {
+      limit: Template.instance().limit.get(),
+      sort: { createdAt: -1 }
+    })
+  }
+})
+
+Template.contactNeedToKnows.events({
+  'click .contenteditable-container' (evt, tpl) {
+    tpl.postOpen.set(true)
+    Tracker.afterFlush(() => {
+      tpl.$('[data-field="need-to-know-text"]').focus()
+    })
+  },
+  'click [data-action="save-need-to-know"]' (evt, tpl) {
+    var contact = this.contact.slug
+    var message = tpl.$('[data-field="need-to-know-text"]').html()
+    if (!message) return
+    Meteor.call('posts/createNeedToKnow', {
+      contactSlug: contact,
+      message: message,
+    }, function (err) {
+      if (err) return console.error(err)
+      tpl.$('[data-field="need-to-know-text"]').html('')
       tpl.postOpen.set(false)
     })
   }

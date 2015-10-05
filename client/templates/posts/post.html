@@ -9,20 +9,24 @@
         {{/if}}
       </div>
       <div class="col-xs-10">
-        <p class="display-post-details">
-          <a href="#">{{youOrName createdBy}}</a> logged feedback - {{> postSignature status=status medialist=slug}}
-        </p>
-        <p class="display-post-time-ago">
+        <div class="display-post-details">
+          {{#if needToKnow}}
+            <a href="#">{{youOrName createdBy}}</a> added a Need-to-know
+          {{else}}
+            <a href="#">{{youOrName createdBy}}</a> logged feedback - {{> postSignature status=status medialist=slug}}
+          {{/if}}
+        </div>
+        <div class="display-post-time-ago">
           {{createdAt.fromNow}}
-        </p>
+        </div>
       </div>
     </div>
     {{#if message}}
     <div class="row">
       <div class="col-xs-12">
-        <p class="display-post-message">
+        <div class="display-post-message">
           {{message}}
-        </p>
+        </div>
       </div>
     </div>
     {{/if}}

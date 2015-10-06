@@ -113,7 +113,7 @@
           <div class="form-group">
             <div class="form-control contenteditable-container {{#if instance.postOpen.get}}open{{/if}}">
               {{#if instance.postOpen.get}}
-                <span contenteditable=true tabindex=0 data-field="post-text"></span>&nbsp;-&nbsp;{{> postSignature status=instance.status.get medialist=slug}}
+                <span contenteditable=true tabindex=0 data-field="post-text"></span>&nbsp;-&nbsp;{{> postSignature status=instance.status.get medialist=routeSlug}}
               {{else}}
                 <span class="placeholder">What did {{firstName contact.name}} think of #{{routeSlug}}?</span>
               {{/if}}

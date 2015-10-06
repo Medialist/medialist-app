@@ -70,7 +70,7 @@ Meteor.methods({
       }],
       message: opts.message,
       medialists: [],
-      needToKnow: true
+      type: 'need to know'
     }
     check(post, Schemas.Posts)
 

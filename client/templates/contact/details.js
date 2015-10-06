@@ -45,7 +45,7 @@ Template.contactActivity.onRendered(function () {
 })
 
 Template.contactActivity.helpers({
-  subTemplate() {
+  feedbackTemplate() {
     var tpl = Template.instance()
     switch (tpl.option.get()) {
       case 'all':
@@ -164,7 +164,7 @@ Template.contactNeedToKnows.helpers({
   posts () {
     var query = {
       'contacts.slug': this.contact.slug,
-      'needToKnow': true
+      'type': 'need to know'
     }
     return Posts.find(query, {
       limit: Template.instance().limit.get(),

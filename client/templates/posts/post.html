@@ -11,7 +11,7 @@
       </div>
       <div class="col-xs-10">
         <div class="display-post-details">
-          {{#if needToKnow}}
+          {{#if equal type 'need to know'}}
             <a href="#">{{youOrName createdBy}}</a> added a Need-to-know{{#if ../showContact}} for {{contacts.[0].name}}{{/if}}
           {{else}}
             <a href="#">{{youOrName createdBy}}</a> logged feedback{{#if ../showContact}} for {{contacts.[0].name}}{{/if}} - {{> postSignature status=status medialist=medialists.[0]}}

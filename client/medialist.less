@@ -1,3 +1,4 @@
+@import (reference) "lib/custom.bootstrap.less";
 @import "lib/custom.bootstrap.import.less";
 @import "{tableflip:material-design-less}/less/material.less";
 @import "{tableflip:material-design-less}/less/material.less";
@@ -70,7 +71,7 @@ body {
   width:30%;
 }
 .col-checkbox {
- width:69px;  
+ width:69px;
 }
 
 th.sort-header::-moz-selection { background:transparent; }
@@ -103,4 +104,16 @@ table th.sort-down:hover:after {
 table th.sort-up:after {
   border-bottom:none;
   border-width:4px 4px 0;
+}
+
+.editable-text::after{
+  .glyphicon();
+  content:"\270f";
+  margin-left:15px;
+  opacity: 0;
+  transition: opacity 200ms linear;
+}
+
+.editable-text:hover::after{
+  opacity: 0.3;
 }

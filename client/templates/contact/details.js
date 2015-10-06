@@ -9,6 +9,9 @@ Template.contactSlideIn.onCreated(function () {
 })
 
 Template.contactSlideIn.helpers({
+  contactDetails: function () {
+    return Contacts.findOne({ slug: this.contact }, { transform: x => x })
+  },
   contactSection: function () {
     return slideIn.contactSection.get()
   }
@@ -21,6 +24,11 @@ Template.contactSlideIn.events({
   'click [data-section]': function (evt, tpl) {
     var section = tpl.$(evt.currentTarget).data('section')
     slideIn.contactSection.set(section)
+  },
+  'dblclick [data-action="toggle-phone-type"]': function () {
+    Meteor.call('contacts/togglePhoneType', this.slug, err => {
+      if (err) return console.error(err)
+    })
   }
 })
 

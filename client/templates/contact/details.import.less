@@ -8,6 +8,31 @@
   }
 }
 
+.form-control .editable-text {
+  height: 34px;
+  display: inline-block;
+  line-height: 34px;
+  min-width: 50%;
+  &.inline {
+    display: inline-block;
+  }
+}
+.wide-text-edit.inline {
+  display: inline-block;
+  width: 80%;
+}
+#contact-detail-screenName span::before{
+  content:"@";
+}
+#contact-detail-phone .glyphicon {
+  margin-right: 15px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+
 .contact-top-section {
   color:#fff;
   background: @grey-300;

@@ -1,5 +1,5 @@
 <template name="contactSlideIn">
-  {{#with contact}}
+  {{#with contactDetails}}
   <div class="contact-slide-in">
     <ul class="nav nav-pills nav-slide-in pull-left">
       <li role="presentation">
@@ -53,38 +53,31 @@
     <form>
       <div class="form-group">
         <label for="contact-detail-name">Name</label>
-        <p class="form-control" id="contact-detail-name">{{name}}</p>
+        <p class="form-control" id="contact-detail-title">{{> editableText collection="contacts" field="name" inputClass="form-control" eventType="dblclick" substitute="-"}}</p>
       </div>
-      {{#if roles.[0].title}}
       <div class="form-group">
         <label for="contact-detail-title">Title</label>
-        <p class="form-control" id="contact-detail-title">{{roles.[0].title}}</p>
+        <p class="form-control" id="contact-detail-title">{{> editableText collection="contacts" field="roles.0.title" inputClass="form-control" eventType="dblclick" substitute="-"}}</p>
       </div>
-      {{/if}}
-      {{#if roles.[0].org.name}}
       <div class="form-group">
         <label for="contact-detail-org">Organisation</label>
-        <p class="form-control" id="contact-detail-org">{{roles.[0].org.name}}</p>
+        <p class="form-control" id="contact-detail-org">{{> editableText collection="contacts" field="roles.0.org.name" inputClass="form-control" eventType="dblclick" substitute="-"}}</p>
       </div>
-      {{/if}}
       <div class="form-group">
         <label for="contact-detail-screenName">Twitter</label>
-        <p class="form-control" id="contact-detail-screenName"><a href="https://twitter.com/{{twitter.screenName}}" target="_blank">@{{twitter.screenName}}</a></p>
+        <p class="form-control" id="contact-detail-screenName">{{> editableText collection="contacts" field="twitter.screenName" inputClass="form-control" eventType="dblclick" substitute="-"}}</p>
       </div>
-      {{#if roles.[0].email}}
       <div class="form-group">
         <label for="contact-detail-email">Email</label>
-        <p class="form-control" id="contact-detail-email">{{roles.[0].email}}</p>
+        <p class="form-control" id="contact-detail-email">{{> editableText collection="contacts" field="roles.0.email" inputClass="form-control" eventType="dblclick" substitute="-"}}</p>
       </div>
-      {{/if}}
-      {{#if roles.[0].phones.[0]}}
       <div class="form-group">
         <label for="contact-detail-phone">Phone</label>
         <p class="form-control" id="contact-detail-phone">
-          <i class="glyphicon glyphicon-phone{{#if equal roles.[0].phones.[0].type 'landline'}}-alt{{/if}}"></i> {{roles.[0].phones.[0].number}}
-        </p>
+          <i class="glyphicon glyphicon-phone{{#if equal roles.[0].phones.[0].type 'landline'}}-alt{{/if}}" data-action="toggle-phone-type"></i>
+          {{> editableText collection="contacts" field="roles.0.phones.0.number" inputClass="form-control inline" class="inline" eventType="dblclick" substitute="-"}}
+          </p>
       </div>
-      {{/if}}
     </form>
   </div>
 </template>

@@ -93,7 +93,7 @@
   <div class="container-fluid contact-activity-log">
     <ul class="activity-menu text-center">
       <li role="presentation" class="{{#if equal instance.option.get 'all'}}active{{/if}}" data-option="all">All Activity</li>
-      <li role="presentation" class="{{#if equal instance.option.get 'medialist'}}active{{/if}}" data-option="medialist">#{{slug}}</li>
+      <li role="presentation" class="{{#if equal instance.option.get 'medialist'}}active{{/if}}" data-option="medialist">#{{routeSlug}}</li>
       <li role="presentation" class="{{#if equal instance.option.get 'needToKnow'}}active{{/if}}" data-option="needToKnow">Need-to-know</li>
     </ul>
 
@@ -115,7 +115,7 @@
               {{#if instance.postOpen.get}}
                 <span contenteditable=true tabindex=0 data-field="post-text"></span>&nbsp;-&nbsp;{{> postSignature status=instance.status.get medialist=slug}}
               {{else}}
-                <span class="placeholder">What did {{firstName contact.name}} think of #{{slug}}?</span>
+                <span class="placeholder">What did {{firstName contact.name}} think of #{{routeSlug}}?</span>
               {{/if}}
             </div>
           </div>
@@ -144,7 +144,7 @@
     <hr>
   </div>
   {{#each posts}}
-    {{> displayPost this}}
+    {{> displayPost post=this}}
     <hr>
   {{/each}}
 </template>
@@ -186,7 +186,7 @@
     <hr>
   </div>
   {{#each posts}}
-    {{> displayPost this}}
+    {{> displayPost post=this}}
     <hr>
   {{/each}}
 </template>

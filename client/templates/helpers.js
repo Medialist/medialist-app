@@ -28,7 +28,7 @@ var helpers = {
   instance: function() {
     return Template.instance()
   },
-  slug: function() {
+  routeSlug: function() {
     FlowRouter.watchPathChange()
     return FlowRouter.getParam('slug')
   },

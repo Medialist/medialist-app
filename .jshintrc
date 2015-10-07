@@ -120,6 +120,7 @@
       "s": false,
       "Twitter": false,
       "moment": false,
+      "EditableText": true,
       "Tablesort": true,
       "SlideIns": true,
       "Modal": true,

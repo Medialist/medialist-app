@@ -134,7 +134,7 @@ Template.medialistContactRow.events({
   'click [data-action="show-contact-slide-in"]': function (evt, tpl) {
     var $el = tpl.$(evt.target)
     if (!$el.parents('[data-no-sidebar]').length) {
-      SlideIns.show('right', 'contactSlideIn', { contact: this })
+      SlideIns.show('right', 'contactSlideIn', { contact: this.slug })
     }
   },
   'click [data-status]': function (evt, tpl) {

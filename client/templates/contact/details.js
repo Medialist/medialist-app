@@ -42,6 +42,11 @@ Template.contactActivity.onCreated(function () {
 
 Template.contactActivity.onRendered(function () {
   slideIn.medialistSlug.set(FlowRouter.getParam('slug') || this.data.medialists[0])
+  Meteor.setTimeout(() => Tracker.afterFlush(() => this.$('.contact-activity-log').perfectScrollbar()), 0)
+})
+
+Template.contactActivity.onDestroyed(function () {
+  this.$('.contact-activity-log').perfectScrollbar('destroy')
 })
 
 Template.contactActivity.helpers({

@@ -85,7 +85,6 @@ Template.contactActivity.events({
 
 
 Template.contactPosts.onCreated(function () {
-  window.tpl = this
   this.limit = new ReactiveVar(5)
   this.postOpen = new ReactiveVar(false)
   this.spinner = new ReactiveVar(false)

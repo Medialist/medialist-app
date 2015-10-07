@@ -147,6 +147,11 @@
     {{> displayPost post=this}}
     <hr>
   {{/each}}
+  {{#if instance.spinner.get}}
+    <div class="spinner-box">
+      {{> spinner}}
+    </div>
+  {{/if}}
 </template>
 
 <template name="postSignature">
@@ -189,6 +194,11 @@
     {{> displayPost post=this}}
     <hr>
   {{/each}}
+  {{#if Template.instance.spinner.get}}
+    <div class="spinner-box">
+      {{> spinner}}
+    </div>
+  {{/if}}
 </template>
 
 <template name="contactRelated">

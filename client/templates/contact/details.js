@@ -83,9 +83,12 @@ Template.contactActivity.events({
   },
 })
 
+
 Template.contactPosts.onCreated(function () {
+  window.tpl = this
   this.limit = new ReactiveVar(5)
   this.postOpen = new ReactiveVar(false)
+  this.spinner = new ReactiveVar(false)
   var medialist = Medialists.findOne({ slug: FlowRouter.getParam('slug') })
   this.status = new ReactiveVar(medialist && medialist.contacts[Template.currentData().contact.slug])
   // reset form when the medialist or contact slug is changed
@@ -105,7 +108,11 @@ Template.contactPosts.onCreated(function () {
     var limit = this.limit.get()
     var opts = { contact, limit }
     if (medialist) opts.medialist = medialist
-    Meteor.subscribe('posts', opts, () => $('.contact-activity-log').perfectScrollbar('update'))
+    this.spinner.set(true)
+    Meteor.subscribe('posts', opts, () => {
+      this.spinner.set(false)
+      Tracker.afterFlush(() => $('.contact-activity-log').perfectScrollbar('update'))
+    })
   })
 })
 
@@ -165,6 +172,7 @@ Template.contactPosts.events({
 Template.contactNeedToKnows.onCreated(function () {
   this.limit = new ReactiveVar(5)
   this.postOpen = new ReactiveVar(false)
+  this.spinner = new ReactiveVar(false)
   // reset form when contact slug is changed
   this.autorun(() => {
     Template.currentData()
@@ -177,7 +185,11 @@ Template.contactNeedToKnows.onCreated(function () {
     var contact = data.contact.slug
     var limit = this.limit.get()
     var opts = { contact, limit }
-    Meteor.subscribe('posts', opts, () => $('.contact-activity-log').perfectScrollbar('update'))
+    this.spinner.set(true)
+    Meteor.subscribe('posts', opts, () => {
+      this.spinner.set(false)
+      Tracker.afterFlush(() => $('.contact-activity-log').perfectScrollbar('update'))
+    })
   })
 })
 

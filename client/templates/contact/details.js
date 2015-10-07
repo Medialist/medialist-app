@@ -42,11 +42,6 @@ Template.contactActivity.onCreated(function () {
 
 Template.contactActivity.onRendered(function () {
   slideIn.medialistSlug.set(FlowRouter.getParam('slug') || this.data.medialists[0])
-  Meteor.setTimeout(() => Tracker.afterFlush(() => this.$('.contact-activity-log').perfectScrollbar()), 0)
-})
-
-Template.contactActivity.onDestroyed(function () {
-  this.$('.contact-activity-log').perfectScrollbar('destroy')
 })
 
 Template.contactActivity.helpers({
@@ -89,11 +84,20 @@ Template.contactActivity.events({
 })
 
 Template.contactPosts.onCreated(function () {
-  this.limit = new ReactiveVar(20)
+  this.limit = new ReactiveVar(5)
   this.postOpen = new ReactiveVar(false)
   var medialist = Medialists.findOne({ slug: FlowRouter.getParam('slug') })
   this.status = new ReactiveVar(medialist && medialist.contacts[Template.currentData().contact.slug])
-  // reset form and resubscribe to posts when the medialist or contact slug is changed
+  // reset form when the medialist or contact slug is changed
+  this.autorun(() => {
+    var data = Template.currentData()
+    var medialist = data.medialist
+    this.limit.set(5)
+    this.postOpen.set(false)
+    var medialist = Medialists.findOne({ slug: FlowRouter.getParam('slug') })
+    this.status.set(medialist && medialist.contacts[Template.currentData().contact.slug])
+  })
+  // resubscribe to posts when the parameters change
   this.autorun(() => {
     var data = Template.currentData()
     var medialist = data.medialist
@@ -101,12 +105,19 @@ Template.contactPosts.onCreated(function () {
     var limit = this.limit.get()
     var opts = { contact, limit }
     if (medialist) opts.medialist = medialist
-    this.limit.set(20)
-    this.postOpen.set(false)
-    var medialist = Medialists.findOne({ slug: FlowRouter.getParam('slug') })
-    this.status.set(medialist && medialist.contacts[Template.currentData().contact.slug])
-    Meteor.subscribe('posts', opts)
+    Meteor.subscribe('posts', opts, () => $('.contact-activity-log').perfectScrollbar('update'))
   })
+})
+
+Template.contactPosts.onRendered(function () {
+  Meteor.setTimeout(() => Tracker.afterFlush(() => $('.contact-activity-log').perfectScrollbar()), 1)
+  var incrementLimit = _.debounce(() => this.limit.set(this.limit.get() + 2, 500, true))
+  $(document).on('ps-y-reach-end', incrementLimit)
+})
+
+Template.contactPosts.onDestroyed(function () {
+  $('.contact-activity-log').perfectScrollbar('destroy')
+  $(document).off('ps-y-reach-end')
 })
 
 Template.contactPosts.helpers({
@@ -146,23 +157,39 @@ Template.contactPosts.events({
     }, function (err) {
       if (err) return console.error(err)
       tpl.postOpen.set(false)
+      $('.contact-activity-log').perfectScrollbar('update')
     })
   }
 })
 
 Template.contactNeedToKnows.onCreated(function () {
-  this.limit = new ReactiveVar(20)
+  this.limit = new ReactiveVar(5)
   this.postOpen = new ReactiveVar(false)
-  // reset form and resubscribe to posts when the medialist or contact slug is changed
+  // reset form when contact slug is changed
+  this.autorun(() => {
+    Template.currentData()
+    this.limit.set(5)
+    this.postOpen.set(false)
+  })
+  // resubscribe to posts when the parameters change
   this.autorun(() => {
     var data = Template.currentData()
     var contact = data.contact.slug
     var limit = this.limit.get()
     var opts = { contact, limit }
-    this.limit.set(20)
-    this.postOpen.set(false)
-    Meteor.subscribe('need-to-knows', opts)
+    Meteor.subscribe('posts', opts, () => $('.contact-activity-log').perfectScrollbar('update'))
   })
+})
+
+Template.contactNeedToKnows.onRendered(function () {
+  Meteor.setTimeout(() => Tracker.afterFlush(() => $('.contact-activity-log').perfectScrollbar()), 1)
+  var incrementLimit = _.debounce(() => this.limit.set(this.limit.get() + 2, 500, true))
+  $(document).on('ps-y-reach-end', incrementLimit)
+})
+
+Template.contactNeedToKnows.onDestroyed(function () {
+  $('.contact-activity-log').perfectScrollbar('destroy')
+  $(document).off('ps-y-reach-end')
 })
 
 Template.contactNeedToKnows.helpers({
@@ -195,6 +222,7 @@ Template.contactNeedToKnows.events({
     }, function (err) {
       if (err) return console.error(err)
       tpl.postOpen.set(false)
+      $('.contact-activity-log').perfectScrollbar('update')
     })
   }
 })

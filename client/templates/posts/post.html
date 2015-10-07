@@ -13,7 +13,11 @@
         <div class="display-post-details">
           {{#if equal type 'need to know'}}
             <a href="#">{{youOrName createdBy}}</a> added a Need-to-know{{#if ../showContact}} for {{contacts.[0].name}}{{/if}}
-          {{else}}
+          {{/if}}
+          {{#if equal type 'details changed'}}
+            <a href="#">{{youOrName createdBy}}</a> {{message}}
+          {{/if}}
+          {{#if equal type undefined}}
             <a href="#">{{youOrName createdBy}}</a> logged feedback{{#if ../showContact}} for {{contacts.[0].name}}{{/if}} - {{> postSignature status=status medialist=medialists.[0]}}
           {{/if}}
         </div>
@@ -22,15 +26,17 @@
         </div>
       </div>
     </div>
-    {{#if message}}
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="display-post-message">
-          {{message}}
+    {{#unless equal type 'details changed'}}
+      {{#if message}}
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="display-post-message">
+            {{message}}
+          </div>
         </div>
       </div>
-    </div>
-    {{/if}}
+      {{/if}}
+    {{/unless}}
   </div>
   {{/with}}
 </template>

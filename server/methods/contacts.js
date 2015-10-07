@@ -131,7 +131,6 @@ Meteor.methods({
       'roles.0.phones.0.type': newPhoneType
     }})
   }
-
 })
 
 function addTwitterDetailsToContact(err, user) {

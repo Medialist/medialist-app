@@ -132,6 +132,7 @@ $ nightwatch -c .meteor/nightwatch.json
     name: 'Jane Smith'
   }],
   medialists: ['medialist'],
-  status: 'status'
+  status: 'status',
+  type: 'need to know'
 }
 ```

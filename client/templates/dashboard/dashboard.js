@@ -4,7 +4,7 @@ Template.dashboard.onCreated(function () {
   Meteor.autorun(function () {
     var opts = {
       limit: 10,
-      type: { $ne: 'details changed' }
+      types: ['need-to-knows', 'medialists changed', 'feedback']
     }
     var slug = filterState.get()
     if (slug) {

@@ -105,7 +105,6 @@ Template.medialistContactRow.onCreated(function () {
     medialist: medialistTpl.slug.get(),
     contact: this.data.slug,
     message: true,
-    type: false,
     limit: 1
   }
   this.subscribe('posts', opts)
@@ -123,7 +122,7 @@ Template.medialistContactRow.helpers({
     return Posts.findOne({
       medialists: medialistTpl.slug.get(),
       'contacts.slug': this.slug,
-      type: { $exists: false }
+      type: 'feedback'
     }, {
       sort: { createdAt: -1 }
     })

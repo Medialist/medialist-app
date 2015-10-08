@@ -5,7 +5,7 @@ Meteor.publish('posts', function (opts) {
     medialist: Match.Optional(String),
     contact: Match.Optional(String),
     message: Match.Optional(Boolean),
-    type: Match.Optional(Match.OneOf(Boolean, String, { $ne: String })),
+    types: Match.Optional([String]),
     limit: Match.Optional(Number)
   })
 
@@ -13,8 +13,7 @@ Meteor.publish('posts', function (opts) {
   if (opts.medialistSlug) query.medialists = opts.medialist
   if (opts.contactSlug) query.contacts = { slug: opts.contact }
   if (opts.message) query.message = { $exists: true }
-  if (opts.type === false) query.type = { $exists: false }
-  if (opts.type) query.type = opts.type
+  if (opts.types) query.type = { $in: opts.types }
 
   var options = {
     sort: { createdAt: -1 },

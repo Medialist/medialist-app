@@ -31,6 +31,11 @@ Meteor.methods({
     _.each(_.keys(medialist.contacts), function (contactSlug) {
       if (!Contacts.find({slug: contactSlug}).count()) throw new Meteor.Error(`Contact # ${contactSlug} does not exist`)
       Contacts.update({ slug: contactSlug }, { $push: { medialists: medialist.slug } })
+      Posts.createMedialistChange({
+        contact: contactSlug,
+        medialistSlug: medialist.slug,
+        action: 'added'
+      })
     })
 
     Medialists.insert(medialist)

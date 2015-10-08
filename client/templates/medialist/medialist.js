@@ -121,7 +121,8 @@ Template.medialistContactRow.helpers({
   latestFeedback: function () {
     return Posts.findOne({
       medialists: medialistTpl.slug.get(),
-      'contacts.slug': this.slug
+      'contacts.slug': this.slug,
+      type: 'feedback'
     }, {
       sort: { createdAt: -1 }
     })

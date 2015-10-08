@@ -22,7 +22,3 @@ App.toggleReactiveObject = function (reactiveObject, key) {
   }
   reactiveObject.set(currObj)
 }
-
-App.escapeContentEditable = text => {
-  
-}

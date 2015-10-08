@@ -140,7 +140,7 @@ Template.medialistContactRow.events({
     if (!$el.parents('[data-no-sidebar]').length) {
       medialistTpl.selected.set(this.slug)
       FlowRouter.setQueryParams({ contact: this.slug })
-      SlideIns.show('right', 'contactSlideIn', { contact: this })
+      SlideIns.show('right', 'contactSlideIn', { contact: this.slug })
     }
   },
   'click [data-status]': function (evt, tpl) {

@@ -61,7 +61,7 @@
 </template>
 
 <template name="medialistContactRow">
-  <tr class="contact-row" data-contact="{{slug}}" data-action="show-contact-slide-in">
+  <tr class="contact-row {{#if equal slug selected}}selected{{/if}}" data-contact="{{slug}}" data-action="show-contact-slide-in">
     <td class="col-checkbox" data-no-sidebar>
       <div class="checkbox checkbox-default">
         <label>

@@ -6,6 +6,7 @@ Template.medialist.onCreated(function () {
   medialistTpl.checkSelect = new ReactiveVar({})
   medialistTpl.filterTerm = new ReactiveVar()
   medialistTpl.query = new ReactiveVar({})
+  medialistTpl.selected = new ReactiveVar()
   medialistTpl.autorun(() => {
     var filterTerm = medialistTpl.filterTerm.get()
     var query = { medialists: medialistTpl.slug.get() }
@@ -127,6 +128,9 @@ Template.medialistContactRow.helpers({
   },
   checked: function () {
     return this.slug in medialistTpl.checkSelect.get()
+  },
+  selected: function () {
+    return medialistTpl.selected.get()
   }
 })
 
@@ -134,6 +138,8 @@ Template.medialistContactRow.events({
   'click [data-action="show-contact-slide-in"]': function (evt, tpl) {
     var $el = tpl.$(evt.target)
     if (!$el.parents('[data-no-sidebar]').length) {
+      medialistTpl.selected.set(this.slug)
+      FlowRouter.setQueryParams({ contact: this.slug })
       SlideIns.show('right', 'contactSlideIn', { contact: this.slug })
     }
   },

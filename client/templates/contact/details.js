@@ -93,7 +93,7 @@ Template.contactActivity.events({
 
 
 Template.contactPosts.onCreated(function () {
-  this.limit = new ReactiveVar(5)
+  this.limit = new ReactiveVar(20)
   this.postOpen = new ReactiveVar(false)
   this.spinner = new ReactiveVar(false)
   var medialist = Medialists.findOne({ slug: FlowRouter.getParam('slug') })
@@ -102,7 +102,7 @@ Template.contactPosts.onCreated(function () {
   this.autorun(() => {
     var data = Template.currentData()
     var medialist = data.medialist
-    this.limit.set(5)
+    this.limit.set(20)
     this.postOpen.set(false)
     var medialist = Medialists.findOne({ slug: FlowRouter.getParam('slug') })
     this.status.set(medialist && medialist.contacts[Template.currentData().contact.slug])
@@ -124,8 +124,17 @@ Template.contactPosts.onCreated(function () {
 })
 
 Template.contactPosts.onRendered(function () {
+  var data = Template.currentData()
   Meteor.setTimeout(() => Tracker.afterFlush(() => $('.contact-activity-log').perfectScrollbar()), 1)
-  var incrementLimit = _.debounce(() => this.limit.set(this.limit.get() + 2, 500, true))
+  var incrementLimit = _.debounce(() => {
+    // check if there are going to be any more results coming
+    var query = { 'contacts.slug': data.contact.slug }
+    var limit = this.limit.get()
+    if (data.medialist) query.medialists = data.medialist
+    if (Posts.find(query, { reactive: false }).count() >= limit) {
+      this.limit.set(limit + 5)
+    }
+  }, 500, true)
   $(document).on('ps-y-reach-end', incrementLimit)
 })
 
@@ -177,13 +186,13 @@ Template.contactPosts.events({
 })
 
 Template.contactNeedToKnows.onCreated(function () {
-  this.limit = new ReactiveVar(5)
+  this.limit = new ReactiveVar(20)
   this.postOpen = new ReactiveVar(false)
   this.spinner = new ReactiveVar(false)
   // reset form when contact slug is changed
   this.autorun(() => {
     Template.currentData()
-    this.limit.set(5)
+    this.limit.set(20)
     this.postOpen.set(false)
   })
   // resubscribe to posts when the parameters change
@@ -201,8 +210,16 @@ Template.contactNeedToKnows.onCreated(function () {
 })
 
 Template.contactNeedToKnows.onRendered(function () {
+  var data = Template.currentData()
   Meteor.setTimeout(() => Tracker.afterFlush(() => $('.contact-activity-log').perfectScrollbar()), 1)
-  var incrementLimit = _.debounce(() => this.limit.set(this.limit.get() + 2, 500, true))
+  var incrementLimit = _.debounce(() => {
+    // check if there are going to be any more results coming
+    var query = { 'contacts.slug': data.contact.slug, type: 'need to know' }
+    var limit = this.limit.get()
+    if (Posts.find(query, { reactive: false }).count() >= limit) {
+      this.limit.set(limit + 5)
+    }
+  }, 500, true)
   $(document).on('ps-y-reach-end', incrementLimit)
 })
 

@@ -8,15 +8,9 @@
   }
 }
 
-.form-control .editable-text {
-  height: 34px;
-  display: block;
+.editable-text-container {
   position: relative;
-  line-height: 34px;
-  &.inline {
-    display: inline-block;
-    min-width: 50%;
-  }
+  display: block;
   &::after{
     .glyphicon();
     position: absolute;
@@ -33,6 +27,16 @@
     }
   }
 }
+
+.editable-text-container .editable-text {
+  height: 34px;
+  line-height: 34px;
+  &.inline {
+    display: inline-block;
+    min-width: 50%;
+  }
+}
+
 .wide-text-edit.inline {
   display: inline-block;
   width: 80%;

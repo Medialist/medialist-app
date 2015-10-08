@@ -91,12 +91,23 @@ Template.contactActivity.events({
   },
 })
 
+
 Template.contactPosts.onCreated(function () {
-  this.limit = new ReactiveVar(20)
+  this.limit = new ReactiveVar(Posts.feedLimit.initial)
   this.postOpen = new ReactiveVar(false)
+  this.spinner = new ReactiveVar(false)
   var medialist = Medialists.findOne({ slug: FlowRouter.getParam('slug') })
   this.status = new ReactiveVar(medialist && medialist.contacts[Template.currentData().contact.slug])
-  // reset form and resubscribe to posts when the medialist or contact slug is changed
+  // reset form when the medialist or contact slug is changed
+  this.autorun(() => {
+    var data = Template.currentData()
+    var medialist = data.medialist
+    this.limit.set(Posts.feedLimit.initial)
+    this.postOpen.set(false)
+    var medialist = Medialists.findOne({ slug: FlowRouter.getParam('slug') })
+    this.status.set(medialist && medialist.contacts[Template.currentData().contact.slug])
+  })
+  // resubscribe to posts when the parameters change
   this.autorun(() => {
     var data = Template.currentData()
     var medialist = data.medialist
@@ -104,12 +115,32 @@ Template.contactPosts.onCreated(function () {
     var limit = this.limit.get()
     var opts = { contact, limit, types: ['feedback', 'medialists changed', 'need-to-knows'] }
     if (medialist) opts.medialist = medialist
-    this.limit.set(20)
-    this.postOpen.set(false)
-    var medialist = Medialists.findOne({ slug: FlowRouter.getParam('slug') })
-    this.status.set(medialist && medialist.contacts[Template.currentData().contact.slug])
-    Meteor.subscribe('posts', opts)
+    this.spinner.set(true)
+    Meteor.subscribe('posts', opts, () => {
+      this.spinner.set(false)
+      Tracker.afterFlush(() => $('.contact-activity-log').perfectScrollbar('update'))
+    })
   })
+})
+
+Template.contactPosts.onRendered(function () {
+  var data = Template.currentData()
+  Meteor.setTimeout(() => Tracker.afterFlush(() => $('.contact-activity-log').perfectScrollbar()), 1)
+  var incrementLimit = _.debounce(() => {
+    // check if there are going to be any more results coming
+    var query = { 'contacts.slug': data.contact.slug }
+    var limit = this.limit.get()
+    if (data.medialist) query.medialists = data.medialist
+    if (Posts.find(query, { reactive: false }).count() >= limit) {
+      this.limit.set(limit + Posts.feedLimit.increment)
+    }
+  }, 500, true)
+  $(document).on('ps-y-reach-end', incrementLimit)
+})
+
+Template.contactPosts.onDestroyed(function () {
+  $('.contact-activity-log').perfectScrollbar('destroy')
+  $(document).off('ps-y-reach-end')
 })
 
 Template.contactPosts.helpers({
@@ -154,23 +185,52 @@ Template.contactPosts.events({
     }, function (err) {
       if (err) return console.error(err)
       tpl.postOpen.set(false)
+      $('.contact-activity-log').perfectScrollbar('update')
     })
   }
 })
 
 Template.contactNeedToKnows.onCreated(function () {
-  this.limit = new ReactiveVar(20)
+  this.limit = new ReactiveVar(Posts.feedLimit.initial)
   this.postOpen = new ReactiveVar(false)
-  // reset form and resubscribe to posts when the medialist or contact slug is changed
+  this.spinner = new ReactiveVar(false)
+  // reset form when contact slug is changed
+  this.autorun(() => {
+    Template.currentData()
+    this.limit.set(Posts.feedLimit.initial)
+    this.postOpen.set(false)
+  })
+  // resubscribe to posts when the parameters change
   this.autorun(() => {
     var data = Template.currentData()
     var contact = data.contact.slug
     var limit = this.limit.get()
     var opts = { contact, limit }
-    this.limit.set(20)
-    this.postOpen.set(false)
-    Meteor.subscribe('need-to-knows', opts)
+    this.spinner.set(true)
+    Meteor.subscribe('posts', opts, () => {
+      this.spinner.set(false)
+      Tracker.afterFlush(() => $('.contact-activity-log').perfectScrollbar('update'))
+    })
   })
+})
+
+Template.contactNeedToKnows.onRendered(function () {
+  var data = Template.currentData()
+  Meteor.setTimeout(() => Tracker.afterFlush(() => $('.contact-activity-log').perfectScrollbar()), 1)
+  var incrementLimit = _.debounce(() => {
+    // check if there are going to be any more results coming
+    var query = { 'contacts.slug': data.contact.slug, type: 'need to know' }
+    var limit = this.limit.get()
+    if (Posts.find(query, { reactive: false }).count() >= limit) {
+      this.limit.set(limit + Posts.feedLimit.increment)
+    }
+  }, 500, true)
+  $(document).on('ps-y-reach-end', incrementLimit)
+})
+
+Template.contactNeedToKnows.onDestroyed(function () {
+  $('.contact-activity-log').perfectScrollbar('destroy')
+  $(document).off('ps-y-reach-end')
 })
 
 Template.contactNeedToKnows.helpers({
@@ -206,6 +266,7 @@ Template.contactNeedToKnows.events({
     }, function (err) {
       if (err) return console.error(err)
       tpl.postOpen.set(false)
+      $('.contact-activity-log').perfectScrollbar('update')
     })
   }
 })

@@ -10,7 +10,11 @@ var helpers = {
   getMedialists: function (contact) {
     contact = contact || this
     var medialistSlugs = contact.medialists
-    return Medialists.find({slug: {$in: medialistSlugs}})
+    return Medialists.find({
+      slug: {
+        $in: medialistSlugs
+      }
+    })
   },
   statuses: function () {
     return _.values(Contacts.status)
@@ -20,6 +24,26 @@ var helpers = {
   },
   fromNow: function (date) {
     return date.fromNow()
+  },
+  instance: function() {
+    return Template.instance()
+  },
+  routeSlug: function () {
+    FlowRouter.watchPathChange()
+    return FlowRouter.getParam('slug')
+  },
+  firstName: function (fullName) {
+    var ind = fullName.indexOf(' ')
+    return ind > -1 ? fullName.substr(0, ind) : fullName
+  },
+  profileImage: function () {
+    var user = Meteor.user();
+    if (!user || !user.services) return null;
+    return user.services.twitter.profile_image_url_https;
+  },
+  youOrName: function (user) {
+    if (user && user._id === Meteor.userId()) return 'You'
+    return user && user.name
   }
 }
 

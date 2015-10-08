@@ -12,7 +12,8 @@
         </div>
         <div class="row">
           {{#each posts}}
-            {{> displayPost this}}
+            {{> displayPost post=this showContact=true}}
+            <hr>
           {{/each}}
         </div>
       </div>

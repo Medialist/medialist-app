@@ -46,6 +46,35 @@ Meteor.methods({
     })
     Medialists.update({ slug: opts.medialistSlug }, { $set: medialistUpdate })
     return Posts.insert(post)
+  },
+
+  'posts/createNeedToKnow': function (opts) {
+    if (!this.userId) throw new Meteor.Error('Only a logged in user can post feedback')
+    check(opts, {
+      contactSlug: String,
+      message: String,
+    })
+    var contact = Contacts.findOne({ slug: opts.contactSlug })
+    if (!contact) throw new Meteor.Error('Cannot find contact @' + opts.contactSlug)
+
+    var thisUser = Meteor.users.findOne(this.userId)
+    var post = {
+      createdBy: {
+        _id: this.userId,
+        name: thisUser.profile.name
+      },
+      createdAt: new Date(),
+      contacts: [{
+        slug: contact.slug,
+        name: contact.name
+      }],
+      message: opts.message,
+      medialists: [],
+      type: 'need to know'
+    }
+    check(post, Schemas.Posts)
+
+    return Posts.insert(post)
   }
 })
 

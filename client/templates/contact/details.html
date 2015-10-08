@@ -21,7 +21,7 @@
       <div class="container-fluid">
         <div class="media">
           <div class="media-left">
-            <img class="media-object" src="{{avatar}}" alt="{{name}} avatar">
+            <img class="media-object img-rounded" src="{{avatar}}" alt="{{name}} avatar">
           </div>
           <div class="media-body">
             <h4 class="media-heading">{{name}}</h4>
@@ -84,68 +84,104 @@
 
 <template name="contactActivity">
   <div class="container-fluid contact-activity-log">
-    <ul class="nav nav-pills">
-      <li role="presentation" class="{{#if equal option 'logFeedback'}}active{{/if}}"><a href="#" data-option="logFeedback">Log Feedback</a></li>
-      <li role="presentation" class="{{#if equal option 'logCoverage'}}active{{/if}}"><a href="#" data-option="logCoverage">Log coverage</a></li>
-      <li role="presentation" class="{{#if equal option 'addNeedToKnow'}}active{{/if}}"><a href="#" data-option="addNeedToKnow">Add need-to-know</a></li>
+    <ul class="activity-menu text-center">
+      <li role="presentation" class="{{#if equal instance.option.get 'all'}}active{{/if}}" data-option="all">All Activity</li>
+      <li role="presentation" class="{{#if equal instance.option.get 'medialist'}}active{{/if}}" data-option="medialist">#{{routeSlug}}</li>
+      <li role="presentation" class="{{#if equal instance.option.get 'needToKnow'}}active{{/if}}" data-option="needToKnow">Need-to-know</li>
     </ul>
-    {{#if equal option 'logFeedback'}}
-    <form>
-      <div class="medialist-select">
-        for
-        <div class="btn-group btn-flat">
-          <a data-target="#" class="btn btn-default btn-sm btn-flat dropdown-toggle" data-toggle="dropdown">
-            #{{medialistSlugLog}}
-            <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu">
-            {{#each getMedialists}}
-            <li><a href="#" data-medialist-slug-log="{{slug}}">#{{slug}}</a></li>
-            {{/each}}
-          </ul>
-        </div>
-      </div>
-      <div class="form-group">
-        <textarea class="form-control col-xs-12" rows="4" data-field="message"></textarea>
-      </div>
-      <div class="form-group" style="text-align:right">
-        <a class="btn btn-text btn-sm" aria-label="Close" data-option="">Cancel</a>
-        <div class="btn-group">
-            <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown">Save as</a>
-            <a href="#" data-target="#" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown"><i class="caret"></i></a>
-            <ul class="dropdown-menu">
-              {{#each statuses}}
-              <li><a href="#" data-status="{{this}}">{{this}}</a></li>
-              {{/each}}
-            </ul>
-        </div>
-      </div>
-    </form>
-    {{/if}}
+
+    {{> Template.dynamic template=feedbackTemplate.template data=feedbackTemplate.data}}
+
   </div>
-  <div class="container-fluid contact-activity-posts-select">
-    <div class="row clearfix">
-      <div class="col-xs-12">
-        <div class="btn-group btn-flat pull-right">
-          <a data-target="#" class="btn btn-default btn-sm btn-flat dropdown-toggle" data-toggle="dropdown">
-            {{#if medialistSlugPosts}}#{{medialistSlugPosts}}{{else}}All Medialists{{/if}}
-            <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-right">
-            <li><a href="#" data-medialist-slug-posts="">All Medialists</a></li>
-            {{#each getMedialists}}
-            <li><a href="#" data-medialist-slug-posts="{{slug}}">#{{slug}}</a></li>
-            {{/each}}
-          </ul>
-        </div>
+</template>
+
+<template name="contactPosts">
+  <div class="post-container">
+    <div class="row">
+      <div class="col-xs-2">
+        <img class="img-rounded" src={{profileImage}}>
+      </div>
+      <div class="col-xs-10">
+        <form>
+          <div class="form-group">
+            <div class="form-control contenteditable-container {{#if instance.postOpen.get}}open{{/if}}">
+              {{#if instance.postOpen.get}}
+                <span contenteditable=true tabindex=0 data-field="post-text"></span>&nbsp;-&nbsp;{{> postSignature status=instance.status.get medialist=routeSlug}}
+              {{else}}
+                <span class="placeholder">What did {{firstName contact.name}} think of #{{routeSlug}}?</span>
+              {{/if}}
+            </div>
+          </div>
+        </form>
       </div>
     </div>
+    {{#if instance.postOpen.get}}
+      <hr>
+      <div class="row">
+        <div class="col-xs-12">
+          <button type="button" class="btn btn-sm btn-primary pull-right" data-action="save-post">Save</button>
+          <span class="pull-right">
+            <a data-target="#" class="btn btn-sm dropdown-toggle status status-{{classify instance.status.get}}" data-toggle="dropdown">
+              {{instance.status.get}}
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              {{#each statuses}}
+                <li><a href="#" data-action="set-status" class="status status-{{classify this}}">{{this}}</a></li>
+              {{/each}}
+            </ul>
+          </span>
+        </div>
+      </div>
+    {{/if}}
+    <hr>
   </div>
-  <div class="container-fluid contact-activity-posts">
-    {{#each posts}}
-      {{> displayPost this}}
-    {{/each}}
+  {{#each posts}}
+    {{> displayPost post=this}}
+    <hr>
+  {{/each}}
+</template>
+
+<template name="postSignature">
+  <span class="signature">
+    <span class="status status-{{classify status}}">{{status}}</span> for <a href="/medialist/{{medialist}}">#{{medialist}}</a>
+  </span>
+</template>
+
+<template name="contactNeedToKnows">
+  <div class="post-container">
+    <div class="row">
+      <div class="col-xs-2">
+        <img class="img-rounded" src={{profileImage}}>
+      </div>
+      <div class="col-xs-10">
+        <form>
+          <div class="form-group">
+            <div class="form-control contenteditable-container {{#if instance.postOpen.get}}open{{/if}}">
+              {{#if instance.postOpen.get}}
+                <span contenteditable=true tabindex=0 data-field="need-to-know-text"></span>
+              {{else}}
+                <span class="placeholder">What is {{firstName contact.name}} writing about at the moment?</span>
+              {{/if}}
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    {{#if instance.postOpen.get}}
+      <hr>
+      <div class="row">
+        <div class="col-xs-12">
+          <button type="button" class="btn btn-sm btn-primary pull-right" data-action="save-need-to-know">Save</button>
+        </div>
+      </div>
+    {{/if}}
+    <hr>
   </div>
+  {{#each posts}}
+    {{> displayPost post=this}}
+    <hr>
+  {{/each}}
 </template>
 
 <template name="contactRelated">

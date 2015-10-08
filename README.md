@@ -91,6 +91,11 @@ $ nightwatch -c .meteor/nightwatch.json
     name: 'User Name'
   },
   createdAt: 'timestamp',
+  updatedBy: {
+    _id: 'userId',
+    name: 'User Name'
+  },
+  updatedAt: 'timestamp',
   medialists: ['medialistSlug'],
   name: 'Jane Smith',
   avatar: 'http://example.com/myImage.png',

@@ -93,7 +93,7 @@ Template.contactActivity.events({
 
 
 Template.contactPosts.onCreated(function () {
-  this.limit = new ReactiveVar(20)
+  this.limit = new ReactiveVar(Posts.feedLimit.initial)
   this.postOpen = new ReactiveVar(false)
   this.spinner = new ReactiveVar(false)
   var medialist = Medialists.findOne({ slug: FlowRouter.getParam('slug') })
@@ -102,7 +102,7 @@ Template.contactPosts.onCreated(function () {
   this.autorun(() => {
     var data = Template.currentData()
     var medialist = data.medialist
-    this.limit.set(20)
+    this.limit.set(Posts.feedLimit.initial)
     this.postOpen.set(false)
     var medialist = Medialists.findOne({ slug: FlowRouter.getParam('slug') })
     this.status.set(medialist && medialist.contacts[Template.currentData().contact.slug])
@@ -132,7 +132,7 @@ Template.contactPosts.onRendered(function () {
     var limit = this.limit.get()
     if (data.medialist) query.medialists = data.medialist
     if (Posts.find(query, { reactive: false }).count() >= limit) {
-      this.limit.set(limit + 5)
+      this.limit.set(limit + Posts.feedLimit.increment)
     }
   }, 500, true)
   $(document).on('ps-y-reach-end', incrementLimit)
@@ -186,13 +186,13 @@ Template.contactPosts.events({
 })
 
 Template.contactNeedToKnows.onCreated(function () {
-  this.limit = new ReactiveVar(20)
+  this.limit = new ReactiveVar(Posts.feedLimit.initial)
   this.postOpen = new ReactiveVar(false)
   this.spinner = new ReactiveVar(false)
   // reset form when contact slug is changed
   this.autorun(() => {
     Template.currentData()
-    this.limit.set(20)
+    this.limit.set(Posts.feedLimit.initial)
     this.postOpen.set(false)
   })
   // resubscribe to posts when the parameters change
@@ -217,7 +217,7 @@ Template.contactNeedToKnows.onRendered(function () {
     var query = { 'contacts.slug': data.contact.slug, type: 'need to know' }
     var limit = this.limit.get()
     if (Posts.find(query, { reactive: false }).count() >= limit) {
-      this.limit.set(limit + 5)
+      this.limit.set(limit + Posts.feedLimit.increment)
     }
   }, 500, true)
   $(document).on('ps-y-reach-end', incrementLimit)

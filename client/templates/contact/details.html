@@ -53,27 +53,27 @@
     <form>
       <div class="form-group">
         <label for="contact-detail-name">Name</label>
-        <p class="form-control" id="contact-detail-title">{{> editableText collection="contacts" field="name" inputClass="form-control" eventType="dblclick" substitute="-"}}</p>
+        <p class="editable-text-container" id="contact-detail-title">{{> editableText collection="contacts" field="name" inputClass="form-control" eventType="dblclick" substitute="-"}}</p>
       </div>
       <div class="form-group">
         <label for="contact-detail-title">Title</label>
-        <p class="form-control" id="contact-detail-title">{{> editableText collection="contacts" field="roles.0.title" inputClass="form-control" eventType="dblclick" substitute="-"}}</p>
+        <p class="editable-text-container" id="contact-detail-title">{{> editableText collection="contacts" field="roles.0.title" inputClass="form-control" eventType="dblclick" substitute="-"}}</p>
       </div>
       <div class="form-group">
         <label for="contact-detail-org">Organisation</label>
-        <p class="form-control" id="contact-detail-org">{{> editableText collection="contacts" field="roles.0.org.name" inputClass="form-control" eventType="dblclick" substitute="-"}}</p>
+        <p class="editable-text-container" id="contact-detail-org">{{> editableText collection="contacts" field="roles.0.org.name" inputClass="form-control" eventType="dblclick" substitute="-"}}</p>
       </div>
       <div class="form-group">
         <label for="contact-detail-screenName">Twitter</label>
-        <p class="form-control" id="contact-detail-screenName">{{> editableText collection="contacts" field="twitter.screenName" inputClass="form-control" eventType="dblclick" substitute="-"}}</p>
+        <p class="editable-text-container" id="contact-detail-screenName">{{> editableText collection="contacts" field="twitter.screenName" inputClass="form-control" eventType="dblclick" substitute="-"}}</p>
       </div>
       <div class="form-group">
         <label for="contact-detail-email">Email</label>
-        <p class="form-control" id="contact-detail-email">{{> editableText collection="contacts" field="roles.0.email" inputClass="form-control" eventType="dblclick" substitute="-"}}</p>
+        <p class="editable-text-container" id="contact-detail-email">{{> editableText collection="contacts" field="roles.0.email" inputClass="form-control" eventType="dblclick" substitute="-"}}</p>
       </div>
       <div class="form-group">
         <label for="contact-detail-phone">Phone</label>
-        <p class="form-control" id="contact-detail-phone">
+        <p class="editable-text-container" id="contact-detail-phone">
           <i class="glyphicon glyphicon-phone{{#if equal roles.[0].phones.[0].type 'landline'}}-alt{{/if}}" data-action="toggle-phone-type"></i>
           {{> editableText collection="contacts" field="roles.0.phones.0.number" inputClass="form-control inline" class="inline" eventType="dblclick" substitute="-"}}
           </p>

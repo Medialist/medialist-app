@@ -115,14 +115,14 @@ Template.contactPosts.onCreated(function () {
 Template.contactPosts.helpers({
   posts () {
     var medialist = this.medialist
-    var query = {
-      'contacts.slug': this.contact.slug,
-      'type': { $nin: [
+    var query = { 'contacts.slug': this.contact.slug }
+    if (medialist) {
+      query.medialists = medialist
+      query.type = { $nin: [
         'details changed',
         'need to know'
       ] }
     }
-    if (medialist) query.medialists = medialist
     return Posts.find(query, {
       limit: Template.instance().limit.get(),
       sort: { createdAt: -1 }

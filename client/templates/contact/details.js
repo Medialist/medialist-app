@@ -102,7 +102,7 @@ Template.contactPosts.onCreated(function () {
     var medialist = data.medialist
     var contact = data.contact.slug
     var limit = this.limit.get()
-    var opts = { contact, limit }
+    var opts = { contact, limit, type: { $not: 'details changed' } }
     if (medialist) opts.medialist = medialist
     this.limit.set(20)
     this.postOpen.set(false)
@@ -117,6 +117,10 @@ Template.contactPosts.helpers({
     var medialist = this.medialist
     var query = {
       'contacts.slug': this.contact.slug,
+      'type': { $nin: [
+        'details changed',
+        'need to know'
+      ] }
     }
     if (medialist) query.medialists = medialist
     return Posts.find(query, {
@@ -172,7 +176,10 @@ Template.contactNeedToKnows.helpers({
   posts () {
     var query = {
       'contacts.slug': this.contact.slug,
-      'type': 'need to know'
+      'type': { $in: [
+        'need to know',
+        'details changed'
+      ] }
     }
     return Posts.find(query, {
       limit: Template.instance().limit.get(),

@@ -104,7 +104,7 @@ Template.medialistContactRow.onCreated(function () {
     medialist: medialistTpl.slug.get(),
     contact: this.data.slug,
     message: true,
-    limit:1
+    limit: 1
   }
   this.subscribe('posts', opts)
 })

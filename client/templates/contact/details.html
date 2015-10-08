@@ -3,18 +3,18 @@
   <div class="contact-slide-in">
     <ul class="nav nav-pills nav-slide-in pull-left">
       <li role="presentation">
-        <a href="#" data-action="close-contact-slide-in"><i class="glyphicon glyphicon-chevron-right"></i></a>
+        <a data-action="close-contact-slide-in"><i class="glyphicon glyphicon-chevron-right"></i></a>
       </li>
     </ul>
     <ul class="nav nav-pills nav-slide-in pull-right">
       <li role="presentation">
-        <a href="#"><i class="glyphicon glyphicon-new-window"></i></a>
+        <a><i class="glyphicon glyphicon-new-window"></i></a>
       </li>
       <li role="presentation">
-        <a href="#"><i class="glyphicon glyphicon-star-empty"></i></a>
+        <a><i class="glyphicon glyphicon-star-empty"></i></a>
       </li>
       <li role="presentation">
-        <a href="#"><i class="glyphicon glyphicon-option-vertical"></i></a>
+        <a><i class="glyphicon glyphicon-option-vertical"></i></a>
       </li>
     </ul>
     <div class="contact-top-section">
@@ -30,13 +30,13 @@
         </div>
         <div class="contact-menu">
           <div class="row">
-            <a href="#" data-section="contactDetails" class="col-xs-4 contact-menu-option {{#if equal contactSection 'contactDetails'}}active{{/if}}">
+            <a data-section="contactDetails" class="col-xs-4 contact-menu-option {{#if equal contactSection 'contactDetails'}}active{{/if}}">
               Details
             </a>
-            <a href="#" data-section="contactActivity" class="col-xs-4 contact-menu-option {{#if equal contactSection 'contactActivity'}}active{{/if}}">
+            <a data-section="contactActivity" class="col-xs-4 contact-menu-option {{#if equal contactSection 'contactActivity'}}active{{/if}}">
               Activity
             </a>
-            <a href="#" data-section="contactRelated" class="col-xs-4 contact-menu-option {{#if equal contactSection 'contactRelated'}}active{{/if}}">
+            <a data-section="contactRelated" class="col-xs-4 contact-menu-option {{#if equal contactSection 'contactRelated'}}active{{/if}}">
               Related
             </a>
           </div>
@@ -127,7 +127,7 @@
             </a>
             <ul class="dropdown-menu">
               {{#each statuses}}
-                <li><a href="#" data-action="set-status" class="status status-{{classify this}}">{{this}}</a></li>
+                <li><a data-action="set-status" class="status status-{{classify this}}">{{this}}</a></li>
               {{/each}}
             </ul>
           </span>
@@ -140,6 +140,11 @@
     {{> displayPost post=this}}
     <hr>
   {{/each}}
+  {{#if instance.spinner.get}}
+    <div class="spinner-box">
+      {{> spinner}}
+    </div>
+  {{/if}}
 </template>
 
 <template name="postSignature">
@@ -182,6 +187,11 @@
     {{> displayPost post=this}}
     <hr>
   {{/each}}
+  {{#if instance.spinner.get}}
+    <div class="spinner-box">
+      {{> spinner}}
+    </div>
+  {{/if}}
 </template>
 
 <template name="contactRelated">

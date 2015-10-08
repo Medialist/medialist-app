@@ -9,8 +9,8 @@ Meteor.publish('posts', function (opts) {
   })
 
   var query = {}
-  if (opts.medialistSlug) query.medialists = opts.medialist
-  if (opts.contactSlug) query.contacts = {slug: opts.contact}
+  if (opts.medialist) query.medialists = opts.medialist
+  if (opts.contact) query['contacts.slug'] = opts.contact
   if (opts.message) query.message = { $exists: true }
 
   var options = {

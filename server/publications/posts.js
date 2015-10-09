@@ -33,7 +33,8 @@ Meteor.publish('need-to-knows', function (opts) {
     'contacts.slug': opts.contact,
     'type': { $in: [
       'need to know',
-      'details changed'
+      'details changed',
+      'medialists changed'
     ] }
   }
   var options = {

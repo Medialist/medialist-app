@@ -60,6 +60,11 @@ Meteor.methods({
       if (!contact) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
       set['contacts.' + contactSlug] = Contacts.status.toContact
       if (contact.medialists.indexOf(medialistSlug) === -1) Contacts.update({ slug: contactSlug }, { $push: { medialists: medialistSlug } })
+      Posts.createMedialistChange({
+        contact,
+        medialistSlug,
+        action: 'added'
+      })
     })
 
 	  App.medialistUpdated(medialistSlug, this.userId)
@@ -83,6 +88,11 @@ Meteor.methods({
       if (!contact) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
       unset['contacts.' + contactSlug] = true
       Contacts.update({ slug: contactSlug }, { $pull: { medialists: medialistSlug } })
+      Posts.createMedialistChange({
+        contact,
+        medialistSlug,
+        action: 'removed'
+      })
     })
 
     App.medialistUpdated(medialistSlug, this.userId)

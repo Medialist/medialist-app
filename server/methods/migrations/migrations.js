@@ -4,7 +4,7 @@ var MigrationVersions = [
   {
     number: 1,
     instructions () {
-      // Contacts migration
+      // Contacts migration to update roles.org with reference to org doc (which is added if required)
       Contacts.find().forEach(contact => {
         _.forEach(contact.roles, role => {
           if (typeof role.org !== 'string') return
@@ -25,7 +25,7 @@ var MigrationVersions = [
   {
     number: 2,
     instructions () {
-      // Contacts migration
+      // Contacts migration to update createdBy to object with _id and slug if it is just a slug string
       Contacts.find().forEach(contact => {
         if (typeof contact.createdBy !== 'string') return
         var newCreatedBy = { _id: contact.createdBy }
@@ -40,7 +40,7 @@ var MigrationVersions = [
   {
     number: 3,
     instructions () {
-      // Contacts migration
+      // Posts migration to update contacts info in post to be an object with slug and name if it is just a slug string
       Posts.find().forEach(post => {
         var newContacts = post.contacts.reduce((memo, contact) => {
           if (typeof contact !== 'string') {
@@ -64,7 +64,7 @@ var MigrationVersions = [
   {
     number: 4,
     instructions () {
-      // Posts migration
+      // Posts migration to add type: 'feedback' to any post with no type field
       Posts.find().forEach(post => {
         if (!post.type) {
           post.type = 'feedback'
@@ -75,31 +75,9 @@ var MigrationVersions = [
   },
 
   {
-    number: 5,
-    instructions () {
-      // Orgs migration
-      Contacts.find().forEach(contact => {
-        contact.roles.forEach(role => {
-          if (typeof role.org === 'string') {
-            var org = Orgs.findOne({ name: role.org })
-            var newRole = { name: role.org }
-            if (org) {
-             newRole._id = org._id
-            } else {
-             newRole._id = Orgs.insert({ name: role.org })
-            }
-            role.org = newRole
-            Contacts.update(contact._id, contact)
-          }
-        })
-      })
-    }
-  },
-
-  {
     number: 6,
     instructions () {
-      // Clients migration
+      // Clients migration to update medialist client to be an object with _id and name (added to Clients collection if required) where they are just a slug string
       Medialists.find().forEach(medialist => {
         if (typeof medialist.client === 'string') {
           var client = Clients.findOne({ name: medialist.client })

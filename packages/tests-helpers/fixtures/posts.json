@@ -10,7 +10,7 @@
     "name": "Contact One"
   }],
   "medialists": ["medialist1"],
-  "status": "contacted",
+  "status": "Contacted",
   "message": "test message",
   "type": "feedback"
 }, {
@@ -25,7 +25,7 @@
     "name": "Contact Two"
   }],
   "medialists": ["medialist1"],
-  "status": "not interested",
+  "status": "Not Interested",
   "type": "feedback"
 }, {
   "_id": "zaunaYqjfKMHhPjbx",
@@ -39,7 +39,7 @@
     "name": "Contact Three"
   }],
   "medialists": ["medialist1", "medialist2"],
-  "status": "contacted",
+  "status": "Contacted",
   "message": "also refers to #medialist1",
   "type": "feedback"
 }, {
@@ -54,7 +54,7 @@
     "name": "Contact Three"
   }],
   "medialists": ["medialist2"],
-  "status": "not interested",
+  "status": "Not Interested",
   "type": "feedback"
 }, {
   "_id": "3o8dHxiCqeQrKLhYk",
@@ -68,7 +68,7 @@
     "name": "Contact Four"
   }],
   "medialists": ["medialist2"],
-  "status": "contacted",
+  "status": "Contacted",
   "message": "A message lorem ipsum",
   "type": "feedback"
 }, {

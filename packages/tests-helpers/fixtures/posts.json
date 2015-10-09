@@ -10,7 +10,7 @@
     "name": "Contact One"
   }],
   "medialists": ["medialist1"],
-  "status": "contacted",
+  "status": "Contacted",
   "message": "test message"
 }, {
   "_id": "RzGDReQdZyR4ezXKE",
@@ -24,7 +24,7 @@
     "name": "Contact Two"
   }],
   "medialists": ["medialist1"],
-  "status": "not interested"
+  "status": "Not Interested"
 }, {
   "_id": "zaunaYqjfKMHhPjbx",
   "createdBy": {
@@ -37,7 +37,7 @@
     "name": "Contact Three"
   }],
   "medialists": ["medialist1", "medialist2"],
-  "status": "contacted",
+  "status": "Contacted",
   "message": "also refers to #medialist1"
 }, {
   "_id": "wL5f3F28zJugydb5G",
@@ -51,7 +51,7 @@
     "name": "Contact Three"
   }],
   "medialists": ["medialist2"],
-  "status": "not interested"
+  "status": "Not Interested"
 }, {
   "_id": "3o8dHxiCqeQrKLhYk",
   "createdBy": {
@@ -64,7 +64,7 @@
     "name": "Contact Four"
   }],
   "medialists": ["medialist2"],
-  "status": "contacted",
+  "status": "Contacted",
   "message": "A message lorem ipsum"
 }, {
   "_id": "FprdigDYgDBrKrKHj",

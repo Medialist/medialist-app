@@ -4,7 +4,7 @@
   "purpose": "A Medialist",
   "client": {
     "name": "Client A",
-    "_id": "CLIENTA"
+    "_id": "CLientAXXXXXXXXXX"
   },
   "createdAt": "2015-08-25T15:28:42.381Z",
   "createdBy": {
@@ -30,7 +30,7 @@
   "purpose": "Another Medialist",
   "client": {
     "name": "Client A",
-    "_id": "CLIENTA"
+    "_id": "CLientAXXXXXXXXXX"
   },
   "createdAt": "2015-08-26T12:15:00.252Z",
   "createdBy": {
@@ -56,7 +56,7 @@
   "purpose": "The Third Medialist",
   "client": {
     "name": "Client B",
-    "_id": "CLIENTB"
+    "_id": "CLientBXXXXXXXXXX"
   },
   "createdAt": "2015-08-26T13:12:07.829Z",
   "createdBy": {
@@ -82,7 +82,7 @@
   "purpose": "Final Medialist",
   "client": {
     "name": "Client B",
-    "_id": "CLIENTB"
+    "_id": "CLientBXXXXXXXXXX"
   },
   "createdAt": "2015-08-26T14:03:12.017Z",
   "createdBy": {

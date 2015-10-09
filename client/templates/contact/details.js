@@ -113,7 +113,7 @@ Template.contactPosts.onCreated(function () {
     var medialist = data.medialist
     var contact = data.contact.slug
     var limit = this.limit.get()
-    var opts = { contact, limit }
+    var opts = { contact, limit, types: ['feedback', 'medialists changed', 'need-to-knows'] }
     if (medialist) opts.medialist = medialist
     this.spinner.set(true)
     Meteor.subscribe('posts', opts, () => {
@@ -146,10 +146,15 @@ Template.contactPosts.onDestroyed(function () {
 Template.contactPosts.helpers({
   posts () {
     var medialist = this.medialist
-    var query = {
-      'contacts.slug': this.contact.slug,
+    var query = { 'contacts.slug': this.contact.slug }
+    if (medialist) {
+      query.medialists = medialist
+      query.type = { $in: [
+        'feedback',
+        'need to know',
+        'medialists changed'
+      ] }
     }
-    if (medialist) query.medialists = medialist
     return Posts.find(query, {
       limit: Template.instance().limit.get(),
       sort: { createdAt: -1 }
@@ -170,7 +175,7 @@ Template.contactPosts.events({
     var status = tpl.status.get()
     var medialist = FlowRouter.getParam('slug')
     var contact = this.contact.slug
-    var message = _.escape(tpl.$('[data-field="post-text"]').html().replace(/<br>/g, '\n\r'))
+    var message = tpl.$('[data-field="post-text"]').html().replace(/<br>/g, '\n\r')
     if (!message) return
     Meteor.call('posts/create', {
       contactSlug: contact,
@@ -232,7 +237,10 @@ Template.contactNeedToKnows.helpers({
   posts () {
     var query = {
       'contacts.slug': this.contact.slug,
-      'type': 'need to know'
+      'type': { $in: [
+        'need to know',
+        'details changed'
+      ] }
     }
     return Posts.find(query, {
       limit: Template.instance().limit.get(),
@@ -250,7 +258,7 @@ Template.contactNeedToKnows.events({
   },
   'click [data-action="save-need-to-know"]' (evt, tpl) {
     var contact = this.contact.slug
-    var message = _.escape(tpl.$('[data-field="need-to-know-text"]').html().replace(/<br>/g, '\n\r'))
+    var message = tpl.$('[data-field="need-to-know-text"]').html().replace(/<br>/g, '\n\r')
     if (!message) return
     Meteor.call('posts/createNeedToKnow', {
       contactSlug: contact,

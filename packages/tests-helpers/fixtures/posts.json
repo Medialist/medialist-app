@@ -11,7 +11,8 @@
   }],
   "medialists": ["medialist1"],
   "status": "Contacted",
-  "message": "test message"
+  "message": "test message",
+  "type": "feedback"
 }, {
   "_id": "RzGDReQdZyR4ezXKE",
   "createdBy": {
@@ -24,7 +25,8 @@
     "name": "Contact Two"
   }],
   "medialists": ["medialist1"],
-  "status": "Not Interested"
+  "status": "Not Interested",
+  "type": "feedback"
 }, {
   "_id": "zaunaYqjfKMHhPjbx",
   "createdBy": {
@@ -38,7 +40,8 @@
   }],
   "medialists": ["medialist1", "medialist2"],
   "status": "Contacted",
-  "message": "also refers to #medialist1"
+  "message": "also refers to #medialist1",
+  "type": "feedback"
 }, {
   "_id": "wL5f3F28zJugydb5G",
   "createdBy": {
@@ -51,7 +54,8 @@
     "name": "Contact Three"
   }],
   "medialists": ["medialist2"],
-  "status": "Not Interested"
+  "status": "Not Interested",
+  "type": "feedback"
 }, {
   "_id": "3o8dHxiCqeQrKLhYk",
   "createdBy": {
@@ -65,7 +69,8 @@
   }],
   "medialists": ["medialist2"],
   "status": "Contacted",
-  "message": "A message lorem ipsum"
+  "message": "A message lorem ipsum",
+  "type": "feedback"
 }, {
   "_id": "FprdigDYgDBrKrKHj",
   "createdBy": {
@@ -78,5 +83,6 @@
     "name": "Contact Six"
   }],
   "medialists": ["medialist2"],
-  "status": "Not Interested"
+  "status": "Not Interested",
+  "type": "feedback"
 }]

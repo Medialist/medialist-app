@@ -23,7 +23,7 @@ var helpers = {
     return s.slugify(string)
   },
   fromNow: function (date) {
-    return date.fromNow()
+    return moment(date).fromNow()
   },
   instance: function() {
     return Template.instance()
@@ -32,10 +32,7 @@ var helpers = {
     FlowRouter.watchPathChange()
     return FlowRouter.getParam('slug')
   },
-  firstName: function (fullName) {
-    var ind = fullName.indexOf(' ')
-    return ind > -1 ? fullName.substr(0, ind) : fullName
-  },
+  firstName: App.firstName,
   profileImage: function () {
     var user = Meteor.user();
     if (!user || !user.services) return null;

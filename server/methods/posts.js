@@ -36,7 +36,8 @@ Meteor.methods({
         }
       }),
       medialists: medialists,
-      status: opts.status
+      status: opts.status,
+      type: 'feedback'
     }
     if (opts.message) post.message = opts.message
     check(post, Schemas.Posts)

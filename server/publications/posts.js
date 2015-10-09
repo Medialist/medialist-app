@@ -5,6 +5,7 @@ Meteor.publish('posts', function (opts) {
     medialist: Match.Optional(String),
     contact: Match.Optional(String),
     message: Match.Optional(Boolean),
+    types: Match.Optional([String]),
     limit: Match.Optional(Number)
   })
 
@@ -30,7 +31,10 @@ Meteor.publish('need-to-knows', function (opts) {
 
   var query = {
     'contacts.slug': opts.contact,
-    'type': 'need to know'
+    'type': { $in: [
+      'need to know',
+      'details changed'
+    ] }
   }
   var options = {
     sort: { createdAt: -1 },

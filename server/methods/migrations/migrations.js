@@ -75,7 +75,7 @@ var MigrationVersions = [
   },
 
   {
-    number: 6,
+    number: 5,
     instructions () {
       // Clients migration to update medialist client to be an object with _id and name (added to Clients collection if required) where they are just a slug string
       Medialists.find().forEach(medialist => {

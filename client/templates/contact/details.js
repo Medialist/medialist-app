@@ -113,7 +113,7 @@ Template.contactPosts.onCreated(function () {
     var medialist = data.medialist
     var contact = data.contact.slug
     var limit = this.limit.get()
-    var opts = { contact, limit }
+    var opts = { contact, limit, types: ['feedback', 'medialists changed', 'need-to-knows'] }
     if (medialist) opts.medialist = medialist
     this.spinner.set(true)
     Meteor.subscribe('posts', opts, () => {
@@ -146,10 +146,15 @@ Template.contactPosts.onDestroyed(function () {
 Template.contactPosts.helpers({
   posts () {
     var medialist = this.medialist
-    var query = {
-      'contacts.slug': this.contact.slug,
+    var query = { 'contacts.slug': this.contact.slug }
+    if (medialist) {
+      query.medialists = medialist
+      query.type = { $in: [
+        'feedback',
+        'need to know',
+        'medialists changed'
+      ] }
     }
-    if (medialist) query.medialists = medialist
     return Posts.find(query, {
       limit: Template.instance().limit.get(),
       sort: { createdAt: -1 }
@@ -232,7 +237,10 @@ Template.contactNeedToKnows.helpers({
   posts () {
     var query = {
       'contacts.slug': this.contact.slug,
-      'type': 'need to know'
+      'type': { $in: [
+        'need to know',
+        'details changed'
+      ] }
     }
     return Posts.find(query, {
       limit: Template.instance().limit.get(),

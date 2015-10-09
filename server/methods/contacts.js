@@ -15,6 +15,8 @@ Meteor.methods({
       _id: user._id,
       name: user.profile.name
     }
+    contact.updatedAt = contact.createdAt
+    contact.updatedBy = contact.createdBy
     contact.twitter = {}
     if (contact.screenName) {
       contact.twitter.screenName = contact.screenName
@@ -94,6 +96,7 @@ Meteor.methods({
   'contacts/addRole': function (contactSlug, role) {
     if (!this.userId) throw new Meteor.Error('Only a logged in user can add roles to a contact')
     check(contactSlug, String)
+    var user = Meteor.users.findOne(this.userId)
     if (!Contacts.find({slug: contactSlug}).count()) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
 
     var org = Orgs.findOne({ name: role.org.name })
@@ -103,14 +106,19 @@ Meteor.methods({
      role.org._id = Orgs.insert({ name: role.org.name })
     }
     check(role, Schemas.Roles)
-    return Contacts.update({ slug: contactSlug }, {$push: {
+    return Contacts.update({ slug: contactSlug }, { $push: {
       roles: role
+    }, $set: {
+      'updatedBy._id': user._id,
+      'updatedBy.name': user.profile.name,
+      'updatedAt': new Date()
     }})
   },
 
   'contacts/togglePhoneType': function (contactSlug) {
     if (!this.userId) throw new Meteor.Error('Only a logged in user can add roles to a contact')
     check(contactSlug, String)
+    var user = Meteor.users.findOne(this.userId)
     var contact = Contacts.findOne({ slug: contactSlug })
     if (!contact) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
 
@@ -128,10 +136,12 @@ Meteor.methods({
     var newPhoneType = Contacts.phoneTypes[(phoneTypeInd + 1) % Contacts.phoneTypes.length]
 
     return Contacts.update({ slug: contactSlug }, {$set: {
-      'roles.0.phones.0.type': newPhoneType
+      'roles.0.phones.0.type': newPhoneType,
+      'updatedBy._id': user._id,
+      'updatedBy.name': user.profile.name,
+      'updatedAt': new Date()
     }})
   }
-
 })
 
 function addTwitterDetailsToContact(err, user) {

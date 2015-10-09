@@ -91,6 +91,11 @@ $ nightwatch -c .meteor/nightwatch.json
     name: 'User Name'
   },
   createdAt: 'timestamp',
+  updatedBy: {
+    _id: 'userId',
+    name: 'User Name'
+  },
+  updatedAt: 'timestamp',
   medialists: ['medialistSlug'],
   name: 'Jane Smith',
   avatar: 'http://example.com/myImage.png',
@@ -132,6 +137,7 @@ $ nightwatch -c .meteor/nightwatch.json
     name: 'Jane Smith'
   }],
   medialists: ['medialist'],
-  status: 'status'
+  status: 'status',
+  type: 'need to know'
 }
 ```

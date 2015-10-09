@@ -117,11 +117,17 @@ a.contact-menu-option {
 }
 
 .activity-menu {
+  overflow-x: visible;
+  white-space: nowrap;
   font-size: 0;
   margin: 15px 0 25px;
   padding: 0;
 }
 .activity-menu li {
+  max-width: 10em;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  vertical-align: top;
   display: inline-block;
   border-style: solid;
   border-color: @brand-primary;

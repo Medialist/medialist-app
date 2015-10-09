@@ -41,7 +41,8 @@ var helpers = {
   youOrName: function (user) {
     if (user && user._id === Meteor.userId()) return 'You'
     return user && user.name
-  }
+  },
+  or: (x, y) => x || y
 }
 
 _.each(helpers, function (helper, name) {

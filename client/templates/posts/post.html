@@ -17,6 +17,9 @@
           {{#if equal type 'details changed'}}
             <a href="#">{{youOrName createdBy}}</a> {{message}}
           {{/if}}
+          {{#if equal type 'medialists changed'}}
+            <a href="#">{{youOrName createdBy}}</a> {{message}}
+          {{/if}}
           {{#if equal type 'feedback'}}
             <a href="#">{{youOrName createdBy}}</a> logged feedback{{#if ../showContact}} for {{contacts.[0].name}}{{/if}} - {{> postSignature status=status medialist=medialists.[0]}}
           {{/if}}
@@ -26,7 +29,7 @@
         </div>
       </div>
     </div>
-    {{#unless equal type 'details changed'}}
+    {{#if or (equal type 'feedback') (equal type 'need to know')}}
       {{#if message}}
       <div class="row">
         <div class="col-xs-12">
@@ -36,7 +39,7 @@
         </div>
       </div>
       {{/if}}
-    {{/unless}}
+    {{/if}}
   </div>
   {{/with}}
 </template>

@@ -114,7 +114,40 @@ var MigrationVersions = [
         }
       })
     }
+  },
+
+  {
+    number: 7,
+    instructions () {
+      // Posts migration to add createdBy avatars
+      Posts.find().forEach(post => {
+        if (!post.createdBy.avatar) {
+          var user = Meteor.users.findOne(post.createdBy._id)
+          post.createdBy.avatar = user.services.twitter.profile_image_url_https
+          Posts.update(post._id, post)
+        }
+      })
+    }
+  },
+
+  {
+    number: 8,
+    instructions () {
+      // Posts migration to add contacts avatars
+      Posts.find().forEach(post => {
+        var newContacts = post.contacts.map(contact => {
+          if (!contact.avatar) {
+            var thisContact = Contacts.findOne({ slug: contact.slug })
+            if (thisContact) contact.avatar = thisContact.avatar
+          }
+          return contact
+        })
+        post.contacts = newContacts
+        Posts.update(post._id, post)
+      })
+    }
   }
+
 ]
 
 Meteor.methods({

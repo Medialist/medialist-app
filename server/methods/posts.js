@@ -23,14 +23,16 @@ Meteor.methods({
     var post = {
       createdBy: {
         _id: this.userId,
-        name: thisUser.profile.name
+        name: thisUser.profile.name,
+        avatar: thisUser.services.twitter.profile_image_url_https
       },
       createdAt: new Date(),
       contacts: _.map(contacts, function (contactSlug) {
         var contact = Contacts.findOne({ slug: contactSlug })
         return {
           slug: contactSlug,
-          name: contact.name
+          name: contact.name,
+          avatar: contact.avatar
         }
       }),
       medialists: medialists,
@@ -61,12 +63,15 @@ Meteor.methods({
     var post = {
       createdBy: {
         _id: this.userId,
-        name: thisUser.profile.name
+        name: thisUser.profile.name,
+        avatar: thisUser.services.twitter.profile_image_url_https
+
       },
       createdAt: new Date(),
       contacts: [{
         slug: contact.slug,
-        name: contact.name
+        name: contact.name,
+        avatar: contact.avatar
       }],
       message: opts.message,
       medialists: [],

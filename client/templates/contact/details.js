@@ -175,7 +175,7 @@ Template.contactPosts.events({
     var status = tpl.status.get()
     var medialist = FlowRouter.getParam('slug')
     var contact = this.contact.slug
-    var message = tpl.$('[data-field="post-text"]').html().replace(/<br>/g, '\n\r')
+    var message = App.cleanFeedback(tpl.$('[data-field="post-text"]').html())
     if (!message) return
     Meteor.call('posts/create', {
       contactSlug: contact,
@@ -258,7 +258,7 @@ Template.contactNeedToKnows.events({
   },
   'click [data-action="save-need-to-know"]' (evt, tpl) {
     var contact = this.contact.slug
-    var message = tpl.$('[data-field="need-to-know-text"]').html().replace(/<br>/g, '\n\r')
+    var message = App.cleanFeedback(tpl.$('[data-field="need-to-know-text"]').html())
     if (!message) return
     Meteor.call('posts/createNeedToKnow', {
       contactSlug: contact,

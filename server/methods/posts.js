@@ -39,7 +39,7 @@ Meteor.methods({
       status: opts.status,
       type: 'feedback'
     }
-    if (opts.message) post.message = opts.message
+    if (opts.message) post.message = App.cleanFeedback(opts.message)
     check(post, Schemas.Posts)
 
     var medialistUpdate = {}

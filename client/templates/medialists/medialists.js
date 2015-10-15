@@ -9,7 +9,8 @@ Template.medialists.onCreated(function () {
       var filterRegExp = new RegExp(filterTerm, 'gi')
       query.$or = [
         { 'name': filterRegExp },
-        { 'purpose': filterRegExp }
+        { 'purpose': filterRegExp },
+        { 'client.name': filterRegExp }
       ]
     }
     this.query.set(query)

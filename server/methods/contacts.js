@@ -13,7 +13,8 @@ Meteor.methods({
     contact.createdAt = new Date()
     contact.createdBy = {
       _id: user._id,
-      name: user.profile.name
+      name: user.profile.name,
+      avatar: user.services.twitter.profile_image_url_https
     }
     contact.updatedAt = contact.createdAt
     contact.updatedBy = contact.createdBy
@@ -121,6 +122,7 @@ Meteor.methods({
     }, $set: {
       'updatedBy._id': user._id,
       'updatedBy.name': user.profile.name,
+      'updatedBy.avatar': user.services.twitter.profile_image_url_https,
       'updatedAt': new Date()
     }})
   },
@@ -149,6 +151,7 @@ Meteor.methods({
       'roles.0.phones.0.type': newPhoneType,
       'updatedBy._id': user._id,
       'updatedBy.name': user.profile.name,
+      'updatedBy.avatar': user.services.twitter.profile_image_url_https,
       'updatedAt': new Date()
     }})
   }

@@ -49,7 +49,7 @@
       <td class="col-client">{{client.name}}</td>
       <td class="col-campaign"><a href="/medialist/{{slug}}">#{{slug}}</a></td>
       <td class="col-purpose">{{purpose}}</td>
-      <td class="col-updated-on" data-sort="{{updatedAt.valueOf}}">{{updatedAt.fromNow}}</td>
+      <td class="col-updated-on" data-sort="{{updatedAt.valueOf}}">{{fromNow updatedAt}}</td>
       <td class="col-updated-by">{{updatedBy.name}}</td>
     </tr>
   {{/each}}

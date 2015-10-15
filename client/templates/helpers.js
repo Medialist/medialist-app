@@ -23,7 +23,7 @@ var helpers = {
     return s.slugify(string)
   },
   fromNow: function (date) {
-    return moment(date).fromNow()
+    return moment(Math.min(date, new Date() - 1)).fromNow()
   },
   instance: function() {
     return Template.instance()

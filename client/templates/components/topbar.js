@@ -4,6 +4,9 @@ Template.topbar.helpers({
   },
   active: function (name) {
     return FlowRouter.getRouteName() === name ? 'active' : ''
+  },
+  isActive: function (name) {
+    return FlowRouter.getRouteName() === name
   }
 })
 

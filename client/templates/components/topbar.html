@@ -18,6 +18,14 @@
         <li class="{{active 'dashboard'}}"><a href="/dashboard">Activity</a></li>
         <li class="{{active 'contacts'}}"><a href="/contacts">Contacts</a></li>
         <li class="{{active 'medialists'}}"><a href="/medialists">Medialists</a></li>
+        {{#if isActive 'medialist'}}
+        <li>
+          <p class="navbar-text">
+            <span class="glyphicon glyphicon-menu-right"></span>
+          </p>
+        </li>
+        <li class="active"><a href="#">{{breadcrumbs.[1].text}}</a></li>
+        {{/if}}
       </ul>
     </div>
   </div>

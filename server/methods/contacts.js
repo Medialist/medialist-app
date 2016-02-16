@@ -142,21 +142,14 @@ Meteor.methods({
     var contact = Contacts.findOne({ slug: contactSlug })
     if (!contact) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
 
-    if (!contact.roles.length) return Contacts.update({ slug: contactSlug }, {$push: {
-      roles: {
-        phones: [{
-          type: Contacts.phoneTypes[1]
-        }]
-      }
+    if (!contact.phones || !contact.phones.length) return Contacts.update({ slug: contactSlug }, {$push: {
+      phones: { type: Contacts.phoneTypes[1] }
     }})
-    if (!contact.roles[0].phones || !contact.roles[0].phones.length) return Contacts.update({ slug: contactSlug }, {$push: {
-      'roles.0.phones': { type: Contacts.phoneTypes[1] }
-    }})
-    var phoneTypeInd = Contacts.phoneTypes.indexOf(contact.roles[0].phones[0].type)
+    var phoneTypeInd = Contacts.phoneTypes.indexOf(contact.phones[0].type)
     var newPhoneType = Contacts.phoneTypes[(phoneTypeInd + 1) % Contacts.phoneTypes.length]
 
     return Contacts.update({ slug: contactSlug }, {$set: {
-      'roles.0.phones.0.type': newPhoneType,
+      'phones.0.type': newPhoneType,
       'updatedBy._id': user._id,
       'updatedBy.name': user.profile.name,
       'updatedBy.avatar': user.services.twitter.profile_image_url_https,

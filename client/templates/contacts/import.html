@@ -1,0 +1,89 @@
+<template name="contactsImport">
+  <div class="contacts-import">
+    <div class="medialist-toolbar">
+      <div class="container-fluid">
+        <div class="navbar-form navbar-right" >
+          <div class="form-group">
+            <div class="checkbox checkbox-default">
+              <label>
+                <input type="checkbox" checked data-action="toggle-csv-header"/>
+                <span class="checkbox-material">
+                  <span class="check"></span>
+                </span>
+                First row is column heading labels
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{#if hasFile}}
+      {{> contactsImportPreview parsing=instance.parsing rows=instance.rows header=instance.header}}
+    {{else}}
+      {{> contactsImportChoose file=instance.file}}
+    {{/if}}
+  </div>
+</template>
+
+<template name="contactsImportChoose">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="drop-target">
+          <div>
+            <h1>Drag and Drop CSV file here</h1>
+            <p>- or -</p>
+            <input type="file" accept="text/csv">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="contactsImportPreview">
+  {{#if parsing.get}}
+    {{> spinner}}
+  {{else}}
+    <table class="medialist-table table table-responsive">
+      <thead>
+        <tr>
+          <th class="no-sort col-checkbox">
+            <div class="checkbox checkbox-default">
+              <label>
+                <input type="checkbox"/>
+                <span class="checkbox-material" data-checkbox-all>
+                  <span class="check"></span>
+                </span>
+              </label>
+            </div>
+          </th>
+          {{#each columns rows.get}}
+            <th data-key={{key}}>{{label}}</th>
+          {{/each}}
+        </tr>
+      </thead>
+      <tbody>
+        {{#each rows.get}}
+          {{#unless skipRow this ../rows.get ../header.get}}
+            <tr>
+              <td class="col-checkbox">
+                <div class="checkbox checkbox-default">
+                  <label>
+                    <input type="checkbox">
+                    <span class="checkbox-material" data-checkbox>
+                      <span class="check"></span>
+                    </span>
+                  </label>
+                </div>
+              </td>
+              {{#each this}}
+                <td>{{this}}</td>
+              {{/each}}
+            </tr>
+          {{/unless}}
+        {{/each}}
+      </tbody>
+    </table>
+  {{/if}}
+</template>

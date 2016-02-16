@@ -1,10 +1,20 @@
 Meteor.methods({
 
-  'contacts/create': function (contact, medialistSlug) {
+  'contacts/create': function (details, medialistSlug) {
     if (!this.userId) throw new Meteor.Error('Only a logged in user can create a contact')
     var user = Meteor.users.findOne(this.userId)
+    var contact = {
+      name: details.name,
+      bio: details.bio,
+      primaryOutlets: '',
+      sectors: '',
+      jobTitle: '',
+      languages: ['English'],
+      emails: [],
+      phones: []
+    }
 
-    check(contact, Object)
+    check(details, Object)
     if (medialistSlug) {
       check(medialistSlug, String)
       if (!Medialists.find({slug: medialistSlug}).count()) throw new Meteor.Error('Medialist #' + medialistSlug + ' does not exist')
@@ -18,17 +28,18 @@ Meteor.methods({
     }
     contact.updatedAt = contact.createdAt
     contact.updatedBy = contact.createdBy
-    contact.twitter = {}
-    if (contact.screenName) {
-      contact.twitter.screenName = contact.screenName
-      delete contact.screenName
+    contact.socials = []
+    if (details.screenName) {
+      contact.socials.push({
+        label: 'twitter',
+        value: details.screenName
+      })
     }
     // return if a matching twitter handle already exists
-    var existingContact = contact.twitter.screenName && Contacts.findOne({ 'twitter.screenName': contact.twitter.screenName }, { transform: contact => contact })
+    var existingContact = details.screenName && Contacts.findOne({ 'socials.label': 'twitter', 'socials.value': details.screenName }, { transform: null })
     if (existingContact) return existingContact
-    contact.roles = []
     contact.avatar = '/images/avatar.svg'
-    contact.slug = contact.twitter.screenName || App.cleanSlug(contact.name)
+    contact.slug = details.screenName || App.cleanSlug(details.name)
     contact.slug = App.uniqueSlug(contact.slug, Contacts)
     contact.medialists = []
     if (medialistSlug) contact.medialists.push(medialistSlug)
@@ -42,8 +53,8 @@ Meteor.methods({
       App.medialistUpdated(medialistSlug, this.userId)
     }
 
-    if (contact.twitter.screenName) {
-      TwitterClient.grabUserByScreenName(contact.twitter.screenName, addTwitterDetailsToContact.bind(contact))
+    if (details.screenName) {
+      TwitterClient.grabUserByScreenName(details.screenName, addTwitterDetailsToContact.bind(contact))
     }
     return contact
   },

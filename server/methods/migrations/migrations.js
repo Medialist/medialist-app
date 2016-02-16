@@ -5,7 +5,7 @@ var MigrationVersions = [
     number: 1,
     instructions () {
       // Contacts migration to update roles.org with reference to org doc (which is added if required)
-      Contacts.find().forEach(contact => {
+      Contacts.find({}, { transform: null }).forEach(contact => {
         _.forEach(contact.roles, role => {
           if (typeof role.org !== 'string') return
           var orgName = role.org
@@ -26,7 +26,7 @@ var MigrationVersions = [
     number: 2,
     instructions () {
       // Contacts migration to update createdBy to object with _id and slug if it is just a slug string
-      Contacts.find().forEach(contact => {
+      Contacts.find({}, { transform: null }).forEach(contact => {
         if (typeof contact.createdBy !== 'string') return
         var newCreatedBy = { _id: contact.createdBy }
         var user = Meteor.users.findOne(contact.createdBy)
@@ -41,7 +41,7 @@ var MigrationVersions = [
     number: 3,
     instructions () {
       // Posts migration to update contacts info in post to be an object with slug and name if it is just a slug string
-      Posts.find().forEach(post => {
+      Posts.find({}, { transform: null }).forEach(post => {
         var newContacts = post.contacts.reduce((memo, contact) => {
           if (typeof contact !== 'string') {
             memo.push(contact)
@@ -65,7 +65,7 @@ var MigrationVersions = [
     number: 4,
     instructions () {
       // Posts migration to add type: 'feedback' to any post with no type field
-      Posts.find().forEach(post => {
+      Posts.find({}, { transform: null }).forEach(post => {
         if (!post.type) {
           post.type = 'feedback'
           Posts.update(post._id, post)
@@ -78,7 +78,7 @@ var MigrationVersions = [
     number: 5,
     instructions () {
       // Clients migration to update medialist client to be an object with _id and name (added to Clients collection if required) where they are just a slug string
-      Medialists.find().forEach(medialist => {
+      Medialists.find({}, { transform: null }).forEach(medialist => {
         if (typeof medialist.client === 'string') {
           var client = Clients.findOne({ name: medialist.client })
           var newClient = { name: medialist.client }
@@ -98,7 +98,7 @@ var MigrationVersions = [
     number: 7,
     instructions () {
       // Posts migration to add createdBy avatars
-      Posts.find().forEach(post => {
+      Posts.find({}, { transform: null }).forEach(post => {
         if (!post.createdBy.avatar) {
           var user = Meteor.users.findOne(post.createdBy._id)
           post.createdBy.avatar = user.services.twitter.profile_image_url_https
@@ -112,7 +112,7 @@ var MigrationVersions = [
     number: 8,
     instructions () {
       // Posts migration to add contacts avatars
-      Posts.find().forEach(post => {
+      Posts.find({}, { transform: null }).forEach(post => {
         var newContacts = post.contacts.map(contact => {
           if (!contact.avatar) {
             var thisContact = Contacts.findOne({ slug: contact.slug })
@@ -124,8 +124,60 @@ var MigrationVersions = [
         Posts.update(post._id, post)
       })
     }
-  }
+  },
 
+  {
+    number: 9,
+    instructions () {
+      // Replaces contact details based on new schema
+      Contacts.find({}, { transform: null }).forEach(contact => {
+        // Check contact has not already been transformed
+        if (contact.socials) return
+        var newContact = _.extend({}, contact, {
+          emails: contact.roles.reduce((emails, role) => {
+            if (role.email) emails.push({
+              label: role.org.name,
+              value: role.email
+            })
+            return emails
+          }, []),
+          phones: contact.roles.reduce((phones, role) => {
+            return phones.concat(role.phones.map(phone => {
+              return {
+                label: phone.type,
+                value: phone.number
+              }
+            }))
+          }, []),
+          socials: [{
+            label: 'twitter',
+            value: contact.twitter.screenName,
+            id: contact.twitter.id
+          }],
+          primaryOutlets: contact.roles.reduce((outletString, role) => {
+            return `${outletString}, ${role.org.name}`
+          }, ''),
+          jobTitle: contact.roles.reduce((titleString, role) => {
+            return `${titleString}, ${role.title}`
+          }, ''),
+          sectors: '',
+          languages: ['English'],
+        })
+        if (!newContact.updatedAt) {
+          newContact.updatedAt = newContact.createdAt
+          newContact.updatedBy = newContact.createdBy
+        }
+        if (!newContact.updatedBy.avatar) newContact.updatedBy.avatar = ''
+        if (!newContact.createdBy.avatar) newContact.createdBy.avatar = ''
+        delete newContact.twitter
+        delete newContact.roles
+
+        console.log(newContact)
+        check(_.omit(newContact, '_id'), Schemas.Contacts)
+        Contacts.update(contact._id, newContact)
+      })
+    }
+  }
 ]
 
 Meteor.methods({

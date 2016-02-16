@@ -16,19 +16,21 @@ Template.contactsImport.onCreated(function () {
 
     tpl.parsing.set(true)
 
-    Papa.parse(file, {
-    	complete: function (results) {
-        tpl.parsing.set(false)
+    Meteor.setTimeout(() => {
+      Papa.parse(file, {
+        skipEmptyLines: true,
+      	complete: function (results) {
+          tpl.parsing.set(false)
 
-        // TODO: snackbar.js
-    		if (results.errors && results.errors.length) {
-          return console.error(results.errors)
-        }
+          // TODO: snackbar.js
+      		if (results.errors && results.errors.length) {
+            return console.error(results.errors)
+          }
 
-        console.log(results)
-        tpl.rows.set(results.data)
-    	}
-    })
+          tpl.rows.set(results.data)
+      	}
+      })
+    }, 100)
   }
 })
 

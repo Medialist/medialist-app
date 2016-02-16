@@ -4,14 +4,14 @@
       <div class="container-fluid">
         {{#if hasFile}}
           {{#if instance.parsing.get}}
-            <a href="#" class="btn btn-primary" disabled>Import selected contacts</a>
+            <a href="#" class="btn btn-primary" disabled>Import contacts</a>
             <a href="#" class="btn btn-danger" disabled>Cancel</a>
           {{else}}
-            <a href="#" class="btn btn-primary" data-action="upload">Import selected contacts</a>
+            <a href="#" class="btn btn-primary" data-action="import">Import contacts</a>
             <a href="#" class="btn btn-danger" data-action="cancel">Cancel</a>
           {{/if}}
         {{else}}
-          <a href="#" class="btn btn-primary" disabled>Import selected contacts</a>
+          <a href="#" class="btn btn-primary" disabled>Import contacts</a>
           <a href="#" class="btn btn-danger" disabled>Cancel</a>
         {{/if}}
         <div class="navbar-form navbar-right" >
@@ -60,16 +60,7 @@
     <table class="medialist-table table table-responsive">
       <thead>
         <tr>
-          <th class="no-sort col-checkbox">
-            <div class="checkbox checkbox-default">
-              <label>
-                <input type="checkbox" checked/>
-                <span class="checkbox-material" data-checkbox-all>
-                  <span class="check"></span>
-                </span>
-              </label>
-            </div>
-          </th>
+          <th></th>
           {{#each columns rows.get}}
             <th data-key={{key}}>{{label}}</th>
           {{/each}}
@@ -79,16 +70,7 @@
         {{#each rows.get}}
           {{#unless skipRow this ../rows.get ../header.get}}
             <tr>
-              <td class="col-checkbox">
-                <div class="checkbox checkbox-default">
-                  <label>
-                    <input type="checkbox" checked>
-                    <span class="checkbox-material" data-checkbox>
-                      <span class="check"></span>
-                    </span>
-                  </label>
-                </div>
-              </td>
+              <td></td>
               {{#each this}}
                 <td>{{this}}</td>
               {{/each}}

@@ -44,7 +44,6 @@ Meteor.methods({
     contact.medialists = []
     if (medialistSlug) contact.medialists.push(medialistSlug)
     check(contact, Schemas.Contacts)
-    console.log('add contact', contact)
     Contacts.insert(contact)
 
     if (medialistSlug) {
@@ -118,7 +117,6 @@ Meteor.methods({
 
   'contacts/addDetails': function (contactSlug, details) {
     if (!this.userId) throw new Meteor.Error('Only a logged in user can add roles to a contact')
-    console.log(details)
     check(contactSlug, String)
     var user = Meteor.users.findOne(this.userId)
     if (!Contacts.find({slug: contactSlug}).count()) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
@@ -128,7 +126,6 @@ Meteor.methods({
       Orgs.insert({ name: details.primaryOutlets })
     }
     check(details, Schemas.ContactDetails)
-    console.log('add details', details)
     _.extend(details, {
       'updatedBy._id': user._id,
       'updatedBy.name': user.profile.name,

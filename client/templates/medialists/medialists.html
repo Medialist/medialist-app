@@ -1,15 +1,15 @@
 <template name="medialists">
 <div class="medialist-toolbar">
   <div class="container-fluid">
-    {{#if checkSelectKeys}}
-    <button class="btn btn-link">{{pluralize 'medialist' checkSelectKeys.length}}</button>
-    {{else}}
-    <a href="#" class="btn btn-primary" data-action="create-medialist">Add Medialist</a>
-    {{/if}}
+    <div class="navbar-form navbar-left">
+      {{#if checkSelectKeys}}
+      <button class="btn btn-link">{{pluralize 'medialist' checkSelectKeys.length}}</button>
+      {{else}}
+      <a href="#" class="btn btn-primary btn-raised" data-action="create-medialist">Add Medialist</a>
+      {{/if}}
+    </div>
     <div class="navbar-form navbar-right" role="filter">
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Filter" data-field="filter-term" value="{{filterTerm}}">
-      </div>
+      <input type="text" class="form-control" placeholder="Filter" data-field="filter-term" value="{{filterTerm}}">
     </div>
   </div>
 </div>

@@ -1,40 +1,4 @@
-/*
-
-To get this list of colors inject jQuery at http://www.google.com/design/spec/style/color.html#color-color-palette
-
-Then, run this script to get the list.
-
-
-(function() {
-  var colors = {}, main = {};
-  $(".color-group").each(function() {
-    var color = $(this).find(".name").text().trim().toLowerCase().replace(" ", "-");
-    colors[color] = {};
-
-    $(this).find(".color").not(".main-color").each(function() {
-      var shade = $(this).find(".shade").text().trim(),
-          hex   = $(this).find(".hex").text().trim();
-
-      colors[color][shade] = hex;
-    });
-    main[color] = color + "-" + $(this).find(".main-color .shade").text().trim();
-
-  });
-  var LESS = "";
-  $.each(colors, function(name, shades) {
-    LESS += "\n\n";
-    $.each(shades, function(shade, hex) {
-      LESS += "@" + name + "-" + shade + ": " + hex + ";\n";
-    });
-    if (main[name]) {
-      LESS += "@" + name + ": " + main[name] + ";\n";
-    }
-  });
-  console.log(LESS);
-})();
-
-
-*/
+/* material design colour from https://github.com/FezVrasta/bootstrap-material-design */
 @red-50: #ffebee;
 @red-100: #ffcdd2;
 @red-200: #ef9a9a;
@@ -329,7 +293,7 @@ Then, run this script to get the list.
 @grey-200: #eeeeee;
 @grey-300: #e0e0e0;
 @grey-400: #bdbdbd;
-@grey-500: #9e9e9e;
+@grey-500: #9e9e9e;  @rgb-grey-500: "158, 158, 158";
 @grey-600: #757575;
 @grey-700: #616161;
 @grey-800: #424242;
@@ -358,6 +322,5 @@ Then, run this script to get the list.
 @blue-grey: @blue-grey-500;
 
 
-@black: #000000;
-@white: #ffffff;
-@inverse: @indigo;
+@black: #000000; @rgb-black: "0,0,0";
+@white: #ffffff; @rgb-white: "255,255,255";

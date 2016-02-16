@@ -4,22 +4,21 @@
   "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tincidunt dui ut orci commodo commodo. Donec eu urna ac orci sollicitudin viverra. Duis et dolor libero. Donec sodales sodales dui eleifend ullamcorper. Nulla leo elit, pellentesque quis sollicitudin vel, vestibulum dictum elit. Quisque diam nisi, pellentesque in pulvinar nec, dignissim nec dolor. Praesent auctor lorem sed justo rutrum, ut pulvinar quam vestibulum. Morbi efficitur suscipit lectus, non mattis neque tempus nec.",
   "createdAt": "2015-08-27T12:19:05.641Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
-  "twitter": {
-    "screenName": "dean",
+  "socials": [{
+    "type": "twitter",
+    "value": "dean",
     "id": "7257012"
-  },
-  "roles": [{
-    "org": {
-      "name": "22222222222222222",
-      "_id": "22222222222222222"
-    },
-    "title": "CEO",
-    "email": "email@organisation.com",
-    "phones": [{
-      "number": "01234567890",
-      "type": "mobile"
-    }]
   }],
+    "primaryOutlets": "22222222222222222",
+    "jobTitle": "CEO",
+    "emails": [{
+      "value": "email@organisation.com",
+      "type": "primary"
+    }],
+    "phones": [{
+      "value": "01234567890",
+      "type": "mobile"
+      }],
   "avatar": "https://pbs.twimg.com/profile_images/2797131481/9a6e16c27b338ecaaf985f249b3d2645_normal.jpeg",
   "slug": "contactone",
   "medialists": [
@@ -32,10 +31,11 @@
   "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tincidunt dui ut orci commodo commodo. Donec eu urna ac orci sollicitudin viverra. Duis et dolor libero. Donec sodales sodales dui eleifend ullamcorper. Nulla leo elit, pellentesque quis sollicitudin vel, vestibulum dictum elit. Quisque diam nisi, pellentesque in pulvinar nec, dignissim nec dolor. Praesent auctor lorem sed justo rutrum, ut pulvinar quam vestibulum. Morbi efficitur suscipit lectus, non mattis neque tempus nec.",
   "createdAt": "2015-08-27T18:07:03.191Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
-  "twitter": {
-    "screenName": "johan",
+  "socials": [{
+    "type": "twitter",
+    "value": "johan",
     "id": "5574"
-  },
+  }],
   "roles": [],
   "avatar": "https://pbs.twimg.com/profile_images/14180842/j_myrberger_normal.jpg",
   "slug": "contacttwo",
@@ -47,10 +47,11 @@
   "name": "Contact Three",
   "createdAt": "2015-08-28T06:39:28.697Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
-  "twitter": {
-    "screenName": "barbora",
+  "socials": [{
+    "type": "twitter",
+    "value": "barbora",
     "id": "46573487"
-  },
+  }],
   "roles": [],
   "avatar": "https://abs.twimg.com/sticky/default_profile_images/default_profile_2_normal.png",
   "slug": "contactthree",
@@ -63,18 +64,14 @@
   "name": "Contact Four",
   "createdAt": "2015-08-28T06:44:42.477Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
-  "twitter": {
-    "screenName": "trevor",
+  "socials": [{
+    "type": "twitter",
+    "value": "trevor",
     "id": "34893"
-  },
-  "roles": [{
-    "org": {
-      "name": "33333333333333333",
-      "_id": "33333333333333333"
-    },
-    "title": "Test contact",
-    "phones": []
   }],
+    "primaryOutlets": "33333333333333333",
+    "jobTitle": "Test contact",
+    "phones": [],
   "avatar": "https://pbs.twimg.com/profile_images/1530477889/884a5ce43adb4b21b7dae38488d51534_normal.jpg",
   "slug": "contactfour",
   "medialists": [
@@ -87,10 +84,11 @@
   "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tincidunt dui ut orci commodo commodo. Donec eu urna ac orci sollicitudin viverra. Duis et dolor libero. Donec sodales sodales dui eleifend ullamcorper. Nulla leo elit, pellentesque quis sollicitudin vel, vestibulum dictum elit. Quisque diam nisi, pellentesque in pulvinar nec, dignissim nec dolor. Praesent auctor lorem sed justo rutrum, ut pulvinar quam vestibulum. Morbi efficitur suscipit lectus, non mattis neque tempus nec.",
   "createdAt": "2015-08-28T13:18:19.398Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
-  "twitter": {
-    "screenName": "malcolm",
+  "socials": [{
+    "type": "twitter",
+    "value": "malcolm",
     "id": "87997650"
-  },
+  }],
   "roles": [],
   "avatar": "https://pbs.twimg.com/profile_images/2776114982/9154b69d5b979ecbae8eaa5f7bbcd34f_normal.jpeg",
   "slug": "contactfive",
@@ -104,10 +102,11 @@
   "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tincidunt dui ut orci commodo commodo. Donec eu urna ac orci sollicitudin viverra. Duis et dolor libero. Donec sodales sodales dui eleifend ullamcorper. Nulla leo elit, pellentesque quis sollicitudin vel, vestibulum dictum elit. Quisque diam nisi, pellentesque in pulvinar nec, dignissim nec dolor. Praesent auctor lorem sed justo rutrum, ut pulvinar quam vestibulum. Morbi efficitur suscipit lectus, non mattis neque tempus nec.",
   "createdAt": "2015-08-28T15:27:13.208Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
-  "twitter": {
-    "screenName": "arnold",
+  "socials": [{
+    "type": "twitter",
+    "value": "arnold",
     "id": "7221"
-  },
+  }],
   "roles": [],
   "avatar": "https://pbs.twimg.com/profile_images/1880208035/164_21258363192_647538192_398945_620_n_normal.jpg",
   "slug": "contactsix",
@@ -121,10 +120,11 @@
   "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tincidunt dui ut orci commodo commodo. Donec eu urna ac orci sollicitudin viverra. Duis et dolor libero. Donec sodales sodales dui eleifend ullamcorper. Nulla leo elit, pellentesque quis sollicitudin vel, vestibulum dictum elit. Quisque diam nisi, pellentesque in pulvinar nec, dignissim nec dolor. Praesent auctor lorem sed justo rutrum, ut pulvinar quam vestibulum. Morbi efficitur suscipit lectus, non mattis neque tempus nec.",
   "createdAt": "2015-08-28T15:27:32.378Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
-  "twitter": {
-    "screenName": "pierre",
+  "socials": [{
+    "type": "twitter",
+    "value": "pierre",
     "id": "749963"
-  },
+  }],
   "roles": [],
   "avatar": "https://pbs.twimg.com/profile_images/860459345/PierreCB2_normal.jpg",
   "slug": "contactseven",
@@ -138,10 +138,11 @@
   "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tincidunt dui ut orci commodo commodo. Donec eu urna ac orci sollicitudin viverra. Duis et dolor libero. Donec sodales sodales dui eleifend ullamcorper. Nulla leo elit, pellentesque quis sollicitudin vel, vestibulum dictum elit. Quisque diam nisi, pellentesque in pulvinar nec, dignissim nec dolor. Praesent auctor lorem sed justo rutrum, ut pulvinar quam vestibulum. Morbi efficitur suscipit lectus, non mattis neque tempus nec.",
   "createdAt": "2015-08-27T12:03:27.374Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
-  "twitter": {
-    "screenName": "bob",
+  "socials": [{
+    "type": "twitter",
+    "value": "bob",
     "id": "344"
-  },
+  }],
   "roles": [],
   "avatar": "https://pbs.twimg.com/profile_images/452258135927828481/o8sRBUcj_normal.jpeg",
   "slug": "contacteight",
@@ -153,10 +154,11 @@
   "name": "Contact Nine",
   "createdAt": "2015-08-27T12:05:39.876Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
-  "twitter": {
-    "screenName": "alan",
+  "socials": [{
+    "type": "twitter",
+    "value": "alan",
     "id": "14268267"
-  },
+  }],
   "roles": [],
   "avatar": "https://pbs.twimg.com/profile_images/572222279498661888/MyL-sMG2_normal.jpeg",
   "slug": "contactnine",
@@ -169,22 +171,21 @@
   "name": "Contact Ten",
   "createdAt": "2015-08-27T12:07:38.352Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
-  "twitter": {
-    "screenName": "gary",
+  "socials": [{
+    "type": "twitter",
+    "value": "gary",
     "id": "365"
-  },
-  "roles": [{
-    "org": {
-      "name": "44444444444444444",
-      "_id": "44444444444444444"
-    },
-    "title": "Tester",
-    "email": "contact@nightwatch.com",
-    "phones": [{
-      "number": "0111111111",
-      "type": "landline"
-    }]
   }],
+    "primaryOutlets": "44444444444444444",
+    "jobTitle": "Tester",
+    "emails": [{
+      "value": "contact@nightwatch.com",
+      "type": "primary"
+    }],
+    "phones": [{
+      "value": "0111111111",
+      "type": "landline"
+      }],
   "avatar": "https://pbs.twimg.com/profile_images/753367931/IMG_0487_normal.jpg",
   "slug": "contactten",
   "medialists": [
@@ -196,10 +197,11 @@
   "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tincidunt dui ut orci commodo commodo. Donec eu urna ac orci sollicitudin viverra. Duis et dolor libero. Donec sodales sodales dui eleifend ullamcorper. Nulla leo elit, pellentesque quis sollicitudin vel, vestibulum dictum elit. Quisque diam nisi, pellentesque in pulvinar nec, dignissim nec dolor. Praesent auctor lorem sed justo rutrum, ut pulvinar quam vestibulum. Morbi efficitur suscipit lectus, non mattis neque tempus nec.",
   "createdAt": "2015-08-27T12:08:52.515Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
-  "twitter": {
-    "screenName": "peter",
+  "socials": [{
+    "type": "twitter",
+    "value": "peter",
     "id": "544"
-  },
+  }],
   "roles": [],
   "avatar": "https://pbs.twimg.com/profile_images/1793006481/headshot_peter_normal.jpg",
   "slug": "contacteleven",
@@ -211,18 +213,14 @@
   "name": "Contact Twelve",
   "createdAt": "2015-08-27T12:11:05.365Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
-  "twitter": {
-    "screenName": "phil",
+  "socials": [{
+    "type": "twitter",
+    "value": "phil",
     "id": "209"
-  },
-  "roles": [{
-    "org": {
-      "name": "55555555555555555",
-      "_id": "55555555555555555"
-    },
-    "title": "Straw Man",
-    "phones": []
   }],
+    "primaryOutlets": "55555555555555555",
+    "jobTitle": "Straw Man",
+    "phones": [],
   "avatar": "https://pbs.twimg.com/profile_images/62173767/Photo_4_normal.jpg",
   "slug": "contacttwelve",
   "medialists": [
@@ -234,10 +232,11 @@
   "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tincidunt dui ut orci commodo commodo. Donec eu urna ac orci sollicitudin viverra. Duis et dolor libero. Donec sodales sodales dui eleifend ullamcorper. Nulla leo elit, pellentesque quis sollicitudin vel, vestibulum dictum elit. Quisque diam nisi, pellentesque in pulvinar nec, dignissim nec dolor. Praesent auctor lorem sed justo rutrum, ut pulvinar quam vestibulum. Morbi efficitur suscipit lectus, non mattis neque tempus nec.",
   "createdAt": "2015-08-27T13:17:18.497Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
-  "twitter": {
-    "screenName": "clifforda",
+  "socials": [{
+    "type": "twitter",
+    "value": "clifforda",
     "id": "19133911"
-  },
+  }],
   "roles": [],
   "avatar": "https://pbs.twimg.com/profile_images/90153873/IMG-0001_normal.jpg",
   "slug": "contactthirteen",
@@ -250,22 +249,21 @@
   "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tincidunt dui ut orci commodo commodo. Donec eu urna ac orci sollicitudin viverra. Duis et dolor libero. Donec sodales sodales dui eleifend ullamcorper. Nulla leo elit, pellentesque quis sollicitudin vel, vestibulum dictum elit. Quisque diam nisi, pellentesque in pulvinar nec, dignissim nec dolor. Praesent auctor lorem sed justo rutrum, ut pulvinar quam vestibulum. Morbi efficitur suscipit lectus, non mattis neque tempus nec.",
   "createdAt": "2015-08-27T16:03:48.159Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
-  "twitter": {
-    "screenName": "richsilvo",
+  "socials": [{
+    "type": "twitter",
+    "value": "richsilvo",
     "id": "271419228"
-  },
-  "roles": [{
-    "org": {
-      "name": "66666666666666666",
-      "_id": "66666666666666666"
-    },
-    "title": "Developer",
-    "email": "fake@email.com",
-    "phones": [{
-      "number": "07777112233",
-      "type": "mobile"
-    }]
   }],
+    "primaryOutlets": "66666666666666666",
+    "jobTitle": "Developer",
+    "emails": [{
+      "value": "fake@email.com",
+      "type": "primary"
+    }],
+    "phones": [{
+      "value": "07777112233",
+      "type": "mobile"
+      }],
   "avatar": "https://pbs.twimg.com/profile_images/532142893419360258/fNiaIU9V_normal.jpeg",
   "slug": "contactfourteen",
   "medialists": [

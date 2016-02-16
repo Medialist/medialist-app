@@ -14,9 +14,9 @@ module.exports = {
 
   after : function(client) {
     console.log('Closing down...')
-    client
-      .clearDB()
-      .end()
+    // client
+    //   .clearDB()
+    //   .end()
   },
 
   'Login and show menu': function (client) {
@@ -92,8 +92,10 @@ module.exports = {
     client
       .pause(1000)
       .click('.modal-body .btn-primary')
-      .waitForElementVisible('#contact-role-org', timeout)
+      .waitForElementVisible('#contact-primary-outlets', timeout)
       .click('[data-dismiss="modal"]')
+      .pause(500)
+      .click('.medialist-table th:nth-of-type(3)')
 
       client
         .expect.element('tbody .contact-row:last-child .col-name').text.to.equal('Twitter').before(timeout)
@@ -105,8 +107,6 @@ module.exports = {
       .click('[data-action="toggle-mainmenu"]')
       .waitForElementVisible('[href="/medialist/medialist1"]', timeout)
       .click('[href="/medialist/medialist1"]')
-      .pause(100)
-      .click('[data-action="toggle-mainmenu"]')
       .waitForElementNotVisible('.mainmenu-user', timeout)
       .click('[data-contact="contactone"] .col-name')
       .waitForElementVisible('.contact-slide-in', timeout)

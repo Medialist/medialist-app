@@ -44,6 +44,7 @@ Meteor.methods({
     contact.medialists = []
     if (medialistSlug) contact.medialists.push(medialistSlug)
     check(contact, Schemas.Contacts)
+    console.log('add contact', contact)
     Contacts.insert(contact)
 
     if (medialistSlug) {
@@ -115,27 +116,26 @@ Meteor.methods({
     })
   },
 
-  'contacts/addRole': function (contactSlug, role) {
+  'contacts/addDetails': function (contactSlug, details) {
     if (!this.userId) throw new Meteor.Error('Only a logged in user can add roles to a contact')
+    console.log(details)
     check(contactSlug, String)
     var user = Meteor.users.findOne(this.userId)
     if (!Contacts.find({slug: contactSlug}).count()) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
 
-    var org = Orgs.findOne({ name: role.org.name })
-    if (org) {
-     role.org._id = org._id
-    } else {
-     role.org._id = Orgs.insert({ name: role.org.name })
+    var org = Orgs.findOne({ name: details.primaryOutlets })
+    if (!org) {
+      Orgs.insert({ name: details.primaryOutlets })
     }
-    check(role, Schemas.Roles)
-    return Contacts.update({ slug: contactSlug }, { $push: {
-      roles: role
-    }, $set: {
+    check(details, Schemas.ContactDetails)
+    console.log('add details', details)
+    _.extend(details, {
       'updatedBy._id': user._id,
       'updatedBy.name': user.profile.name,
       'updatedBy.avatar': user.services.twitter.profile_image_url_https,
       'updatedAt': new Date()
-    }})
+    })
+    return Contacts.update({ slug: contactSlug }, { $set: details })
   },
 
   'contacts/togglePhoneType': function (contactSlug) {
@@ -170,10 +170,10 @@ Meteor.methods({
 
 function addTwitterDetailsToContact(err, user) {
   if (err || !user) return console.log('Couldn\'t get Twitter info for ' + this.name)
-  Contacts.update(this, {
+  Contacts.update({ slug: this.slug, 'socials.label': 'twitter' }, {
     $set: {
       avatar: user.profile_image_url_https,
-      'twitter.id': user.id_str
+      'socials.$.id': user.id_str
     }
   })
 }

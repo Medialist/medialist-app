@@ -1,12 +1,12 @@
-var roleValidator = Schemas.Roles.namedContext('roles')
+var detailsValidator = Schemas.ContactDetails.namedContext('details')
 
-Template.editContactRoles.onCreated(function () {
+Template.addContactDetails.onCreated(function () {
   this.subscribe('contact', this.data.slug)
   this.phoneType = new ReactiveVar('mobile')
   this.validationError = new ReactiveVar()
 })
 
-Template.editContactRoles.onRendered(function () {
+Template.addContactDetails.onRendered(function () {
   $('.typeahead').typeahead({
     source: (query, cb) => {
       Meteor.call('orgs/search', query, (err, res) => {
@@ -18,7 +18,7 @@ Template.editContactRoles.onRendered(function () {
   })
 })
 
-Template.editContactRoles.helpers({
+Template.addContactDetails.helpers({
   contact: function () {
     return Contacts.findOne({slug: this.slug})
   },
@@ -30,7 +30,7 @@ Template.editContactRoles.helpers({
   }
 })
 
-Template.editContactRoles.events({
+Template.addContactDetails.events({
   'click [data-action=toggle-phone-type]': function (evt, tpl) {
     if (tpl.phoneType.get() === 'mobile') {
       tpl.phoneType.set('landline')
@@ -41,35 +41,38 @@ Template.editContactRoles.events({
   'submit': function (evt, tpl) {
     evt.preventDefault()
 
-    var fields = ['title', 'email']
-    var role = fields.reduce(function (role, field) {
-      var value = tpl.$('#contact-role-' + field).val()
-      if (value) role[field] = value
-      return role
-    }, {})
-    role.org = {
-      name: tpl.$('#contact-role-org').val(),
-      _id: Random.id()
+    var details = {
+      jobTitle: tpl.$('#contact-job-title').val(),
+      primaryOutlets: tpl.$('#contact-primary-outlets').val()
     }
-    var number = tpl.$('#contact-role-number').val()
+    var number = tpl.$('#contact-number').val()
     if (number) {
-      role.phones = [{
-        number: number,
-        type: tpl.phoneType.get()
+      details.phones = [{
+        value: number,
+        label: tpl.phoneType.get()
       }]
     } else {
-      role.phones = []
+      details.phones = []
+    }
+    var email = tpl.$('#contact-email').val()
+    if (email) {
+      details.emails = [{
+        value: email,
+        label: 'primary'
+      }]
+    } else {
+      details.emails = []
     }
 
-    if (!role.org && !role.title) {
+    if (!details.org && !details.jobTitle) {
       return Modal.hide()
     }
 
-    if (!roleValidator.validate(role)) {
-      return tpl.validationError.set(roleValidator.keyErrorMessage(roleValidator.invalidKeys()[0].name))
+    if (!detailsValidator.validate(details)) {
+      return tpl.validationError.set(detailsValidator.keyErrorMessage(detailsValidator.invalidKeys()[0].name))
     }
 
-    Meteor.call('contacts/addRole', tpl.data.slug, role, function (err) {
+    Meteor.call('contacts/addDetails', tpl.data.slug, details, function (err) {
       if (err) return console.error(err)
       Modal.hide()
     })

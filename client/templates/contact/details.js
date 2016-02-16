@@ -9,7 +9,7 @@ Template.contactSlideIn.onCreated(function () {
 
 Template.contactSlideIn.helpers({
   contactDetails: function () {
-    return Contacts.findOne({ slug: this.contact }, { transform: x => x })
+    return Contacts.findOne({ slug: this.contact }, { transform: null })
   },
   contactSection: function () {
     return slideIn.contactSection.get()

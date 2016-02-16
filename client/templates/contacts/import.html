@@ -2,9 +2,21 @@
   <div class="contacts-import">
     <div class="medialist-toolbar">
       <div class="container-fluid">
+        {{#if hasFile}}
+          {{#if instance.parsing.get}}
+            <a href="#" class="btn btn-primary" disabled>Import selected contacts</a>
+            <a href="#" class="btn btn-danger" disabled>Cancel</a>
+          {{else}}
+            <a href="#" class="btn btn-primary" data-action="upload">Import selected contacts</a>
+            <a href="#" class="btn btn-danger" data-action="cancel">Cancel</a>
+          {{/if}}
+        {{else}}
+          <a href="#" class="btn btn-primary" disabled>Import selected contacts</a>
+          <a href="#" class="btn btn-danger" disabled>Cancel</a>
+        {{/if}}
         <div class="navbar-form navbar-right" >
           <div class="form-group">
-            <div class="checkbox checkbox-default">
+            <div class="checkbox checkbox-default checkbox-toggle-csv-header">
               <label>
                 <input type="checkbox" checked data-action="toggle-csv-header"/>
                 <span class="checkbox-material">
@@ -51,7 +63,7 @@
           <th class="no-sort col-checkbox">
             <div class="checkbox checkbox-default">
               <label>
-                <input type="checkbox"/>
+                <input type="checkbox" checked/>
                 <span class="checkbox-material" data-checkbox-all>
                   <span class="check"></span>
                 </span>
@@ -70,7 +82,7 @@
               <td class="col-checkbox">
                 <div class="checkbox checkbox-default">
                   <label>
-                    <input type="checkbox">
+                    <input type="checkbox" checked>
                     <span class="checkbox-material" data-checkbox>
                       <span class="check"></span>
                     </span>

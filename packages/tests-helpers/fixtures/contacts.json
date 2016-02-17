@@ -10,7 +10,7 @@
     "id": "7257012"
   }],
     "primaryOutlets": "22222222222222222",
-    "jobTitle": "CEO",
+    "jobTitles": "CEO",
     "emails": [{
       "value": "email@organisation.com",
       "type": "primary"
@@ -70,7 +70,7 @@
     "id": "34893"
   }],
     "primaryOutlets": "33333333333333333",
-    "jobTitle": "Test contact",
+    "jobTitles": "Test contact",
     "phones": [],
   "avatar": "https://pbs.twimg.com/profile_images/1530477889/884a5ce43adb4b21b7dae38488d51534_normal.jpg",
   "slug": "contactfour",
@@ -177,7 +177,7 @@
     "id": "365"
   }],
     "primaryOutlets": "44444444444444444",
-    "jobTitle": "Tester",
+    "jobTitles": "Tester",
     "emails": [{
       "value": "contact@nightwatch.com",
       "type": "primary"
@@ -219,7 +219,7 @@
     "id": "209"
   }],
     "primaryOutlets": "55555555555555555",
-    "jobTitle": "Straw Man",
+    "jobTitles": "Straw Man",
     "phones": [],
   "avatar": "https://pbs.twimg.com/profile_images/62173767/Photo_4_normal.jpg",
   "slug": "contacttwelve",
@@ -255,7 +255,7 @@
     "id": "271419228"
   }],
     "primaryOutlets": "66666666666666666",
-    "jobTitle": "Developer",
+    "jobTitles": "Developer",
     "emails": [{
       "value": "fake@email.com",
       "type": "primary"

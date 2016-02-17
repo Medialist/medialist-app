@@ -42,7 +42,7 @@ Template.addContactDetails.events({
     evt.preventDefault()
 
     var details = {
-      jobTitle: tpl.$('#contact-job-title').val(),
+      jobTitles: tpl.$('#contact-job-title').val(),
       primaryOutlets: tpl.$('#contact-primary-outlets').val()
     }
     var number = tpl.$('#contact-number').val()
@@ -64,7 +64,7 @@ Template.addContactDetails.events({
       details.emails = []
     }
 
-    if (!details.org && !details.jobTitle) {
+    if (!details.org && !details.jobTitles) {
       return Modal.hide()
     }
 

@@ -157,7 +157,7 @@ var MigrationVersions = [
           primaryOutlets: contact.roles.reduce((outletString, role) => {
             return `${outletString}, ${role.org.name}`
           }, ''),
-          jobTitle: contact.roles.reduce((titleString, role) => {
+          jobTitles: contact.roles.reduce((titleString, role) => {
             return `${titleString}, ${role.title}`
           }, ''),
           sectors: '',

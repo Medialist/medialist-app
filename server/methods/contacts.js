@@ -8,7 +8,7 @@ Meteor.methods({
       bio: details.bio,
       primaryOutlets: '',
       sectors: '',
-      jobTitle: '',
+      jobTitles: '',
       languages: ['English'],
       emails: [],
       phones: []

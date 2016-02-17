@@ -58,7 +58,7 @@ Template.medialist.events({
     Modal.show('addContact')
   },
   'click [data-checkbox-all]': function (evt, tpl) {
-    var checked = !tpl.$(evt.currentTarget).prev('input').prop('checked')
+    var checked = tpl.$(evt.currentTarget).find('input').prop('checked')
     if (checked) {
       medialistTpl.checkSelect.set(_.reduce(Contacts.find(tpl.query.get()).fetch(), function (newCheckSelect, contact) {
         newCheckSelect[contact.slug] = true

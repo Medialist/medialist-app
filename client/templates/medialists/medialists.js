@@ -48,7 +48,8 @@ Template.medialists.events({
     Template.instance().filterTerm.set(filterTerm)
   },
   'click [data-checkbox-all]': function (evt, tpl) {
-    var checked = !tpl.$(evt.currentTarget).prev('input').prop('checked')
+    console.log('checkbox-all', evt.currentTarget)
+    var checked = tpl.$(evt.currentTarget).find('input').prop('checked')
     if (checked) {
       tpl.checkSelect.set(_.reduce(Medialists.find(tpl.query.get()).fetch(), function (newCheckSelect, contact) {
         newCheckSelect[contact.slug] = true
@@ -59,6 +60,7 @@ Template.medialists.events({
     }
   },
   'click [data-checkbox]': function (evt, tpl) {
+    console.log('check', this.slug)
     App.toggleReactiveObject(tpl.checkSelect, this.slug)
   }
 })

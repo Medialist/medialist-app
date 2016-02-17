@@ -51,7 +51,7 @@ Template.contacts.events({
     Template.instance().filterTerm.set(filterTerm)
   },
   'click [data-checkbox-all]': function (evt, tpl) {
-    var checked = !tpl.$(evt.currentTarget).prev('input').prop('checked')
+    var checked = tpl.$(evt.currentTarget).find('input').prop('checked')
     if (checked) {
       var query = tpl.query.get()
       tpl.checkSelect.set(_.reduce(Contacts.find(query).fetch(), function (newCheckSelect, contact) {

@@ -16,6 +16,7 @@
 @border-radius-small:       0px;
 @navbar-default-link-active-color: @navbar-default-link-color;
 @navbar-default-link-active-bg: @navbar-default-bg;
+@table-bg-hover: lighten(@brand-primary, 40%);
 
 .btn-underline {
   border-bottom: solid 2px @brand-primary;
@@ -43,6 +44,16 @@ body {
 }
 .medialist-toolbar {
   background: @grey-200;
+}
+
+.medialist-table tbody .checkbox {
+  opacity:0;
+  transition: opacity 300ms ease-in-out;
+}
+.medialist-table tbody tr:hover .checkbox,
+.medialist-table tbody tr.selected .checkbox,
+.medialist-table tbody tr.checked-row .checkbox {
+  opacity:1;
 }
 .medialist-table thead {
   background: @grey-50;

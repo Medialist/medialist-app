@@ -169,6 +169,11 @@ Template.contactPosts.events({
       tpl.$('[data-field="post-text"]').focus()
     })
   },
+  'paste [contenteditable=true]' (evt) {
+    evt.preventDefault()
+    var text = evt.originalEvent.clipboardData.getData('text/plain')
+    $(evt.currentTarget).html(text)
+  },
   'click .signature' (evt, tpl) { tpl.$('[data-field="post-text"]').focus() },
   'click [data-action="set-status"]' (evt, tpl) { tpl.status.set(this.valueOf()) },
   'click [data-action="save-post"]' (evt, tpl) {

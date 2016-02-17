@@ -5,7 +5,7 @@
   "createdAt": "2015-08-27T12:19:05.641Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
   "socials": [{
-    "type": "twitter",
+    "label": "twitter",
     "value": "dean",
     "id": "7257012"
   }],
@@ -13,11 +13,11 @@
     "jobTitles": "CEO",
     "emails": [{
       "value": "email@organisation.com",
-      "type": "primary"
+      "label": "primary"
     }],
     "phones": [{
       "value": "01234567890",
-      "type": "mobile"
+      "label": "mobile"
       }],
   "avatar": "https://pbs.twimg.com/profile_images/2797131481/9a6e16c27b338ecaaf985f249b3d2645_normal.jpeg",
   "slug": "contactone",
@@ -32,7 +32,7 @@
   "createdAt": "2015-08-27T18:07:03.191Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
   "socials": [{
-    "type": "twitter",
+    "label": "twitter",
     "value": "johan",
     "id": "5574"
   }],
@@ -48,7 +48,7 @@
   "createdAt": "2015-08-28T06:39:28.697Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
   "socials": [{
-    "type": "twitter",
+    "label": "twitter",
     "value": "barbora",
     "id": "46573487"
   }],
@@ -65,7 +65,7 @@
   "createdAt": "2015-08-28T06:44:42.477Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
   "socials": [{
-    "type": "twitter",
+    "label": "twitter",
     "value": "trevor",
     "id": "34893"
   }],
@@ -85,7 +85,7 @@
   "createdAt": "2015-08-28T13:18:19.398Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
   "socials": [{
-    "type": "twitter",
+    "label": "twitter",
     "value": "malcolm",
     "id": "87997650"
   }],
@@ -103,7 +103,7 @@
   "createdAt": "2015-08-28T15:27:13.208Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
   "socials": [{
-    "type": "twitter",
+    "label": "twitter",
     "value": "arnold",
     "id": "7221"
   }],
@@ -121,7 +121,7 @@
   "createdAt": "2015-08-28T15:27:32.378Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
   "socials": [{
-    "type": "twitter",
+    "label": "twitter",
     "value": "pierre",
     "id": "749963"
   }],
@@ -139,7 +139,7 @@
   "createdAt": "2015-08-27T12:03:27.374Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
   "socials": [{
-    "type": "twitter",
+    "label": "twitter",
     "value": "bob",
     "id": "344"
   }],
@@ -155,7 +155,7 @@
   "createdAt": "2015-08-27T12:05:39.876Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
   "socials": [{
-    "type": "twitter",
+    "label": "twitter",
     "value": "alan",
     "id": "14268267"
   }],
@@ -172,7 +172,7 @@
   "createdAt": "2015-08-27T12:07:38.352Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
   "socials": [{
-    "type": "twitter",
+    "label": "twitter",
     "value": "gary",
     "id": "365"
   }],
@@ -180,11 +180,11 @@
     "jobTitles": "Tester",
     "emails": [{
       "value": "contact@nightwatch.com",
-      "type": "primary"
+      "label": "primary"
     }],
     "phones": [{
       "value": "0111111111",
-      "type": "landline"
+      "label": "landline"
       }],
   "avatar": "https://pbs.twimg.com/profile_images/753367931/IMG_0487_normal.jpg",
   "slug": "contactten",
@@ -198,7 +198,7 @@
   "createdAt": "2015-08-27T12:08:52.515Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
   "socials": [{
-    "type": "twitter",
+    "label": "twitter",
     "value": "peter",
     "id": "544"
   }],
@@ -214,7 +214,7 @@
   "createdAt": "2015-08-27T12:11:05.365Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
   "socials": [{
-    "type": "twitter",
+    "label": "twitter",
     "value": "phil",
     "id": "209"
   }],
@@ -233,7 +233,7 @@
   "createdAt": "2015-08-27T13:17:18.497Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
   "socials": [{
-    "type": "twitter",
+    "label": "twitter",
     "value": "clifforda",
     "id": "19133911"
   }],
@@ -250,7 +250,7 @@
   "createdAt": "2015-08-27T16:03:48.159Z",
   "createdBy": "dNemSrYhw8hdFjxaK",
   "socials": [{
-    "type": "twitter",
+    "label": "twitter",
     "value": "richsilvo",
     "id": "271419228"
   }],
@@ -258,11 +258,11 @@
     "jobTitles": "Developer",
     "emails": [{
       "value": "fake@email.com",
-      "type": "primary"
+      "label": "primary"
     }],
     "phones": [{
       "value": "07777112233",
-      "type": "mobile"
+      "label": "mobile"
       }],
   "avatar": "https://pbs.twimg.com/profile_images/532142893419360258/fNiaIU9V_normal.jpeg",
   "slug": "contactfourteen",

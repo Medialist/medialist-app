@@ -143,13 +143,13 @@ Meteor.methods({
     if (!contact) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
 
     if (!contact.phones || !contact.phones.length) return Contacts.update({ slug: contactSlug }, {$push: {
-      phones: { type: Contacts.phoneTypes[1] }
+      phones: { label: Contacts.phoneTypes[1] }
     }})
-    var phoneTypeInd = Contacts.phoneTypes.indexOf(contact.phones[0].type)
+    var phoneTypeInd = Contacts.phoneTypes.indexOf(contact.phones[0].label)
     var newPhoneType = Contacts.phoneTypes[(phoneTypeInd + 1) % Contacts.phoneTypes.length]
 
     return Contacts.update({ slug: contactSlug }, {$set: {
-      'phones.0.type': newPhoneType,
+      'phones.0.label': newPhoneType,
       'updatedBy._id': user._id,
       'updatedBy.name': user.profile.name,
       'updatedBy.avatar': user.services.twitter.profile_image_url_https,

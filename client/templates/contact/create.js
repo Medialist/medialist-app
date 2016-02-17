@@ -19,7 +19,7 @@ Template.createContact.onCreated(function () {
   }, 1000, true)
 })
 
-Template.editContactRoles.onDestroyed(function () {
+Template.addContactDetails.onDestroyed(function () {
   queryingTwitter.set(false)
 })
 
@@ -56,7 +56,7 @@ Template.createContact.events({
 
     Meteor.call('contacts/create', contact, tpl.data.medialist, function (err, contact) {
       if (err) return console.error(err)
-      Modal.show('editContactRoles', {slug: contact.slug})
+      Modal.show('addContactDetails', {slug: contact.slug})
     })
   }
 })

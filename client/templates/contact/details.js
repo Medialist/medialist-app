@@ -9,7 +9,7 @@ Template.contactSlideIn.onCreated(function () {
 
 Template.contactSlideIn.helpers({
   contactDetails: function () {
-    return Contacts.findOne({ slug: this.contact }, { transform: x => x })
+    return Contacts.findOne({ slug: this.contact }, { transform: null })
   },
   contactSection: function () {
     return slideIn.contactSection.get()
@@ -168,6 +168,11 @@ Template.contactPosts.events({
     Tracker.afterFlush(() => {
       tpl.$('[data-field="post-text"]').focus()
     })
+  },
+  'paste [contenteditable=true]' (evt) {
+    evt.preventDefault()
+    var text = evt.originalEvent.clipboardData.getData('text/plain')
+    $(evt.currentTarget).html(text)
   },
   'click .signature' (evt, tpl) { tpl.$('[data-field="post-text"]').focus() },
   'click [data-action="set-status"]' (evt, tpl) { tpl.status.set(this.valueOf()) },

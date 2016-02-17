@@ -1,4 +1,3 @@
-
 Template.addContact.onCreated(function () {
   this.name = new ReactiveVar('')
   this.autorun(() => {

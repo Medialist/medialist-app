@@ -30,7 +30,7 @@
     </th>
     <th></th>
     <th>Name</th>
-    <th class="hidden-xs sort-default">Organisation</th>
+    <th class="hidden-xs sort-default">Media outlet</th>
     <th class="hidden-xs">Title</th>
     <th class="no-sort hidden-xs col-wide">Medialists</th>
   </tr>
@@ -73,10 +73,10 @@
       {{name}}
     </td>
     <td class="col-org hidden-xs">
-      {{roles.[0].org.name}}
+      {{primaryOutlets}}
     </td>
     <td class="col-org hidden-xs">
-      {{roles.[0].title}}
+      {{jobTitles}}
     </td>
     <td class="hidden-xs col-feedback">
       <h4>

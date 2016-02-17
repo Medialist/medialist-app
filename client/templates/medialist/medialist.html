@@ -5,18 +5,18 @@
 </div>
 <div class="medialist-toolbar">
   <div class="container-fluid">
-    {{#if checkSelectKeys}}
-    <button class="btn btn-link">{{pluralize 'contact' checkSelectKeys.length}}</button>
-    <a href="#" class="btn btn-success" data-action="create-new-medialist">Create Medialist</a>
-    <a href="#" class="btn btn-success" data-action="add-to-existing-medialist">Add to existing</a>
-    <a href="#" class="btn btn-danger" data-action="remove-from-medialist">Remove</a>
-    {{else}}
-    <a href="#" class="btn btn-primary" data-action="add-new">Add Contact</a>
-    {{/if}}
+    <div class="navbar-form navbar-left">
+      {{#if checkSelectKeys}}
+      <button class="btn btn-link">{{pluralize 'contact' checkSelectKeys.length}}</button>
+      <a href="#" class="btn btn-success" data-action="create-new-medialist">Create Medialist</a>
+      <a href="#" class="btn btn-success" data-action="add-to-existing-medialist">Add to existing</a>
+      <a href="#" class="btn btn-danger" data-action="remove-from-medialist">Remove</a>
+      {{else}}
+      <a href="#" class="btn btn-primary btn-raised" data-action="add-new">Add Contact</a>
+      {{/if}}
+    </div>
     <div class="navbar-form navbar-right" role="filter">
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Filter" data-field="filter-term" value="{{filterTerm}}">
-      </div>
+      <input type="text" class="form-control" placeholder="Filter" data-field="filter-term" value="{{filterTerm}}">
     </div>
   </div>
 </div>

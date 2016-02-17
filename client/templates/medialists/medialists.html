@@ -35,7 +35,7 @@
   </thead>
   <tbody>
     {{#each medialists}}
-    <tr class="contact-row" data-medialist="{{slug}}" data-action="show-contact-details">
+    <tr class="document-row green {{#if equal slug instance.selected.get}}selected{{/if}}" data-medialist="{{slug}}" data-action="show-medialist-details">
       <td class="col-checkbox">
         <div class="checkbox checkbox-default">
           <label>

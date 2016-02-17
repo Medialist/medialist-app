@@ -37,7 +37,7 @@ module.exports = {
     client
       .expect.element('.medialist-purpose p').text.to.equal('A Medialist')
     client
-      .expect.element('.contact-row').to.be.present
+      .expect.element('.document-row').to.be.present
   },
 
   'Create Medialist': function (client) {
@@ -65,7 +65,7 @@ module.exports = {
           .click('.modal-body .media:nth-of-type(2) [data-action="add-contact"]')
           .click('[data-dismiss="modal"]')
         client
-          .expect.element('.contact-row').to.be.present.before(timeout)
+          .expect.element('.document-row').to.be.present.before(timeout)
         client
           .expect.element('.col-name').text.to.equal(name.value).before(timeout)
       })
@@ -96,7 +96,7 @@ module.exports = {
       .click('[data-dismiss="modal"]')
 
       client
-        .expect.element('tbody .contact-row:last-child .col-name').text.to.equal('Twitter').before(timeout)
+        .expect.element('tbody .document-row:last-child .col-name').text.to.equal('Twitter').before(timeout)
   },
 
   'Show existing contact details': function (client) {

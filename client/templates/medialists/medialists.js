@@ -2,6 +2,7 @@ Template.medialists.onCreated(function () {
   this.filterTerm = new ReactiveVar()
   this.checkSelect = new ReactiveVar({})
   this.query = new ReactiveVar({})
+  this.selected = new ReactiveVar()
   this.autorun(() => {
     var filterTerm = Template.instance().filterTerm.get()
     var query = {}
@@ -60,5 +61,10 @@ Template.medialists.events({
   },
   'click [data-checkbox]': function (evt, tpl) {
     App.toggleReactiveObject(tpl.checkSelect, this.slug)
-  }
+  },
+  'click [data-action="show-medialist-details"]': function (evt, tpl) {
+    tpl.selected.set(this.slug)
+    FlowRouter.setQueryParams({ medialist: this.slug })
+    SlideIns.show('right', 'medialistSlideIn', { medialist: this.slug })
+  },
 })

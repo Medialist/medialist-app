@@ -8,6 +8,7 @@ Template.contactsImport.onCreated(function () {
   tpl.parsing = new ReactiveVar(false)
   tpl.header = new ReactiveVar(true)
   tpl.columns = new ReactiveVar()
+  tpl.importing = new ReactiveVar(false)
 
   tpl.autorun(parseCsv)
 
@@ -42,6 +43,8 @@ Template.contactsImport.onCreated(function () {
 
 Template.contactsImport.helpers({
   hasFile: () => !!Template.instance().file.get(),
+  isParsing: () => !!Template.instance().parsing.get(),
+  isImporting: () => !!Template.instance().importing.get(),
 
   rowsMessage: () => {
     var file = Template.instance().file.get()
@@ -60,6 +63,8 @@ Template.contactsImport.events({
   },
 
   'click [data-action="import"]': (e, tpl) => {
+    tpl.importing.set(true)
+
     var rows = tpl.rows.get()
 
     if (tpl.header.get()) {
@@ -68,10 +73,11 @@ Template.contactsImport.events({
 
     var contacts = ContactsImport.createContacts(tpl.columns.get(), rows)
 
-    return console.log(contacts)
-
     Meteor.call('contacts/import', contacts, err => {
-
+      tpl.importing.set(false)
+      // TODO: snackbar
+      if (err) return console.error('Failed to import contacts', err)
+      FlowRouter.go('/contacts')
     })
   },
 

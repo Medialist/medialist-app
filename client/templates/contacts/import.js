@@ -73,10 +73,18 @@ Template.contactsImport.events({
 
     var contacts = ContactsImport.createContacts(tpl.columns.get(), rows)
 
-    Meteor.call('contacts/import', contacts, err => {
+    Meteor.call('contacts/import', contacts, (err, res) => {
       tpl.importing.set(false)
       // TODO: snackbar
       if (err) return console.error('Failed to import contacts', err)
+
+      // TODO: snackbar
+      if (res.updated) {
+        alert(`${res.created} contacts created, ${res.updated} contacts updated`)
+      } else {
+        alert(`${res.created} contacts created`)
+      }
+
       FlowRouter.go('/contacts')
     })
   },

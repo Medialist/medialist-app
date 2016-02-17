@@ -3,6 +3,8 @@ Meteor.methods({
     if (!this.userId) throw new Meteor.Error('Only a logged in user can import contacts')
     this.unblock()
 
+    var user = Meteor.users.findOne(this.userId)
+
     check(contacts, [{
       emails: Match.Optional([{label: String, value: String}]),
       socials: Match.Optional([{label: String, value: String}]),
@@ -19,30 +21,59 @@ Meteor.methods({
 
     console.log(`Importing ${contacts.length} contacts`)
 
+    var results = {created: 0, updated: 0}
+
     contacts.forEach(contactData => {
       if (contactData.emails && contactData.emails.length) {
         var emails = contactData.emails.map(e => e.value)
         var contact = Contacts.findOne({'emails.value': {$in: emails}})
 
         if (contact) {
-          mergeContact(contactData, contact)
+          mergeContact(contactData, contact, user)
+          results.updated++
         } else {
-          createContact(contactData)
+          createContact(contactData, user)
+          results.created++
         }
       } else {
-        createContact(contactData)
+        createContact(contactData, user)
+        results.created++
       }
     })
+
+    return results
   }
 })
 
-function createContact (data) {
+function createContact (data, user) {
   console.log(`Creating contact ${data.name}`)
+
+  data.name = data.name || 'Unknown'
+  data.emails = data.emails || []
+  data.socials = data.socials || []
+  data.phones = data.phones || []
   data.importedData = [{data: data.importedData, importedAt: new Date()}]
+
+  data.avatar = '/images/avatar.svg' // TODO: From twitter?
+  data.slug = App.cleanSlug(data.name)
+  data.slug = App.uniqueSlug(data.slug, Contacts)
+  data.medialists = []
+
+  data.createdAt = new Date()
+  data.createdBy = {
+    _id: user._id,
+    name: user.profile.name,
+    avatar: user.services.twitter.profile_image_url_https
+  }
+  data.updatedAt = data.createdAt
+  data.updatedBy = data.createdBy
+
+  check(data, Schemas.Contacts)
+
   return Contacts.insert(data)
 }
 
-function mergeContact (data, contact) {
+function mergeContact (data, contact, user) {
   console.log(`Merging contact ${data.name}`)
 
   ;['emails', 'socials', 'phones'].forEach(key => {
@@ -64,9 +95,24 @@ function mergeContact (data, contact) {
   })
 
   contact.importedData = contact.importedData || []
-  contact.importedData.push({data: data.importedData, importedAt: new Date()})
+  contact.importedData.unshift({data: data.importedData, importedAt: new Date()})
 
-  return Contacts.update({_id: contact._id}, {$set: data})
+  // TODO: Remove?
+  contact.createdAt = moment(contact.createdAt).toDate()
+
+  contact.updatedAt = new Date()
+  contact.updatedBy = {
+    _id: user._id,
+    name: user.profile.name,
+    avatar: user.services.twitter.profile_image_url_https
+  }
+
+  var id = contact._id
+  delete contact._id
+
+  check(contact, Schemas.Contacts)
+
+  return Contacts.update({_id: id}, {$set: data})
 }
 
 function mergeLabelValueLists (oldList, newList) {

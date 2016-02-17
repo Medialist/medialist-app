@@ -7,7 +7,6 @@
 kadira:flow-router
 kadira:blaze-layout
 less
-nemo64:bootstrap
 accounts-twitter
 service-configuration
 fortawesome:fontawesome
@@ -35,9 +34,9 @@ random
 ejson
 spacebars
 check
-tableflip:material-design-less
 ecmascript
 es5-shim
 tableflip:tablesort
 babrahams:editable-text
 djedi:sanitize-html
+huttonr:bootstrap3

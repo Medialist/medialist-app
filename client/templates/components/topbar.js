@@ -1,6 +1,12 @@
 Template.topbar.helpers({
   breadcrumbs: function () {
     return App.breadcrumbs.get()
+  },
+  active: function (name) {
+    return FlowRouter.getRouteName() === name ? 'active' : ''
+  },
+  isActive: function (name) {
+    return FlowRouter.getRouteName() === name
   }
 })
 

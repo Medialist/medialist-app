@@ -1,10 +1,20 @@
 Meteor.methods({
 
-  'contacts/create': function (contact, medialistSlug) {
+  'contacts/create': function (details, medialistSlug) {
     if (!this.userId) throw new Meteor.Error('Only a logged in user can create a contact')
     var user = Meteor.users.findOne(this.userId)
+    var contact = {
+      name: details.name,
+      bio: details.bio,
+      primaryOutlets: '',
+      sectors: '',
+      jobTitles: '',
+      languages: ['English'],
+      emails: [],
+      phones: []
+    }
 
-    check(contact, Object)
+    check(details, Object)
     if (medialistSlug) {
       check(medialistSlug, String)
       if (!Medialists.find({slug: medialistSlug}).count()) throw new Meteor.Error('Medialist #' + medialistSlug + ' does not exist')
@@ -18,17 +28,18 @@ Meteor.methods({
     }
     contact.updatedAt = contact.createdAt
     contact.updatedBy = contact.createdBy
-    contact.twitter = {}
-    if (contact.screenName) {
-      contact.twitter.screenName = contact.screenName
-      delete contact.screenName
+    contact.socials = []
+    if (details.screenName) {
+      contact.socials.push({
+        label: 'twitter',
+        value: details.screenName
+      })
     }
     // return if a matching twitter handle already exists
-    var existingContact = contact.twitter.screenName && Contacts.findOne({ 'twitter.screenName': contact.twitter.screenName }, { transform: contact => contact })
+    var existingContact = details.screenName && Contacts.findOne({ 'socials.label': 'twitter', 'socials.value': details.screenName }, { transform: null })
     if (existingContact) return existingContact
-    contact.roles = []
     contact.avatar = '/images/avatar.svg'
-    contact.slug = contact.twitter.screenName || App.cleanSlug(contact.name)
+    contact.slug = details.screenName || App.cleanSlug(details.name)
     contact.slug = App.uniqueSlug(contact.slug, Contacts)
     contact.medialists = []
     if (medialistSlug) contact.medialists.push(medialistSlug)
@@ -42,8 +53,8 @@ Meteor.methods({
       App.medialistUpdated(medialistSlug, this.userId)
     }
 
-    if (contact.twitter.screenName) {
-      TwitterClient.grabUserByScreenName(contact.twitter.screenName, addTwitterDetailsToContact.bind(contact))
+    if (details.screenName) {
+      TwitterClient.grabUserByScreenName(details.screenName, addTwitterDetailsToContact.bind(contact))
     }
     return contact
   },
@@ -104,27 +115,24 @@ Meteor.methods({
     })
   },
 
-  'contacts/addRole': function (contactSlug, role) {
+  'contacts/addDetails': function (contactSlug, details) {
     if (!this.userId) throw new Meteor.Error('Only a logged in user can add roles to a contact')
     check(contactSlug, String)
     var user = Meteor.users.findOne(this.userId)
     if (!Contacts.find({slug: contactSlug}).count()) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
 
-    var org = Orgs.findOne({ name: role.org.name })
-    if (org) {
-     role.org._id = org._id
-    } else {
-     role.org._id = Orgs.insert({ name: role.org.name })
+    var org = Orgs.findOne({ name: details.primaryOutlets })
+    if (!org) {
+      Orgs.insert({ name: details.primaryOutlets })
     }
-    check(role, Schemas.Roles)
-    return Contacts.update({ slug: contactSlug }, { $push: {
-      roles: role
-    }, $set: {
+    check(details, Schemas.ContactDetails)
+    _.extend(details, {
       'updatedBy._id': user._id,
       'updatedBy.name': user.profile.name,
       'updatedBy.avatar': user.services.twitter.profile_image_url_https,
       'updatedAt': new Date()
-    }})
+    })
+    return Contacts.update({ slug: contactSlug }, { $set: details })
   },
 
   'contacts/togglePhoneType': function (contactSlug) {
@@ -134,21 +142,14 @@ Meteor.methods({
     var contact = Contacts.findOne({ slug: contactSlug })
     if (!contact) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
 
-    if (!contact.roles.length) return Contacts.update({ slug: contactSlug }, {$push: {
-      roles: {
-        phones: [{
-          type: Contacts.phoneTypes[1]
-        }]
-      }
+    if (!contact.phones || !contact.phones.length) return Contacts.update({ slug: contactSlug }, {$push: {
+      phones: { label: Contacts.phoneTypes[1] }
     }})
-    if (!contact.roles[0].phones || !contact.roles[0].phones.length) return Contacts.update({ slug: contactSlug }, {$push: {
-      'roles.0.phones': { type: Contacts.phoneTypes[1] }
-    }})
-    var phoneTypeInd = Contacts.phoneTypes.indexOf(contact.roles[0].phones[0].type)
+    var phoneTypeInd = Contacts.phoneTypes.indexOf(contact.phones[0].label)
     var newPhoneType = Contacts.phoneTypes[(phoneTypeInd + 1) % Contacts.phoneTypes.length]
 
     return Contacts.update({ slug: contactSlug }, {$set: {
-      'roles.0.phones.0.type': newPhoneType,
+      'phones.0.label': newPhoneType,
       'updatedBy._id': user._id,
       'updatedBy.name': user.profile.name,
       'updatedBy.avatar': user.services.twitter.profile_image_url_https,
@@ -159,10 +160,10 @@ Meteor.methods({
 
 function addTwitterDetailsToContact(err, user) {
   if (err || !user) return console.log('Couldn\'t get Twitter info for ' + this.name)
-  Contacts.update(this, {
+  Contacts.update({ slug: this.slug, 'socials.label': 'twitter' }, {
     $set: {
       avatar: user.profile_image_url_https,
-      'twitter.id': user.id_str
+      'socials.$.id': user.id_str
     }
   })
 }

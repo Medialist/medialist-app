@@ -15,7 +15,8 @@ Meteor.publish('contacts', function (opts) {
 
   var options = {
     sort: { createdAt: -1 },
-    limit: opts.limit || App.contactSuggestions
+    limit: opts.limit || App.contactSuggestions,
+    fields: { importedData: 0 }
   }
 
   return Contacts.find(query, options)
@@ -24,5 +25,5 @@ Meteor.publish('contacts', function (opts) {
 Meteor.publish('contact', function (slug) {
   if (!this.userId) return this.ready()
   check(slug, String)
-  return Contacts.find({slug: slug})
+  return Contacts.find({ slug }, { fields: { importedData: 0 } })
 })

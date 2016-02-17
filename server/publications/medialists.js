@@ -7,11 +7,11 @@ Meteor.publish('medialist', function (slug) {
   if (!this.userId) return []
   return [
     Medialists.find({ slug: slug }),
-    Contacts.find({ medialists: slug })
+    Contacts.find({ medialists: slug }, { fields: { importedData: 0 } })
   ]
 })
 
 Meteor.publish('medialist-favourites', function () {
   if (!this.userId) return []
-  return Medialists.find({}, {limit:7, sort: [['createdAt', 'desc']]})
+  return Medialists.find({}, { limit:7, sort: [['createdAt', 'desc']] })
 })

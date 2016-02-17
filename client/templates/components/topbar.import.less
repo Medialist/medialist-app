@@ -6,6 +6,9 @@
     text-align:center;
     min-width:112px;
     border-bottom: solid 2px transparent;
+    &:focus {
+      outline:none;
+    }
   }
   .navbar-nav .navbar-text {
     margin-left:0;
@@ -15,8 +18,12 @@
     }
   }
 }
-
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
-  border-color: @brand-primary;
   font-weight:bold;
+}
+
+@media (min-width: @screen-sm-min) {
+  .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    border-color: @brand-primary;
+  }
 }

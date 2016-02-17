@@ -66,7 +66,7 @@ function mergeContact (data, contact) {
   contact.importedData = contact.importedData || []
   contact.importedData.push({data: data.importedData, importedAt: new Date()})
 
-  return Contacts.update({_id: data._id}, {$set: data})
+  return Contacts.update({_id: contact._id}, {$set: data})
 }
 
 function mergeLabelValueLists (oldList, newList) {

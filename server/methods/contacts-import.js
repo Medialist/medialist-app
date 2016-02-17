@@ -75,7 +75,7 @@ function mergeLabelValueLists (oldList, newList) {
 
   var newItems = newList.reduce((list, newItem) => {
     var newValue = newItem.value.toLowerCase()
-    var exists = oldList.some(oldItem => oldItem.value.toLowerCase() === newValue))
+    var exists = oldList.some(oldItem => oldItem.value.toLowerCase() === newValue)
     return exists ? list : list.concat(newItem)
   }, [])
 

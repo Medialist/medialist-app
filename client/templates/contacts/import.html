@@ -2,18 +2,21 @@
   <div class="contacts-import">
     <div class="medialist-toolbar">
       <div class="container-fluid">
-        {{#if hasFile}}
-          {{#if instance.parsing.get}}
+        <div class="navbar-form navbar-left">
+          {{#if hasFile}}
+            {{#if instance.parsing.get}}
+              <a href="#" class="btn btn-primary" disabled>Import contacts</a>
+              <a href="#" class="btn btn-danger" disabled>Cancel</a>
+            {{else}}
+              <a href="#" class="btn btn-primary" data-action="import">Import contacts</a>
+              <a href="#" class="btn btn-danger" data-action="cancel">Cancel</a>
+            {{/if}}
+          {{else}}
             <a href="#" class="btn btn-primary" disabled>Import contacts</a>
             <a href="#" class="btn btn-danger" disabled>Cancel</a>
-          {{else}}
-            <a href="#" class="btn btn-primary" data-action="import">Import contacts</a>
-            <a href="#" class="btn btn-danger" data-action="cancel">Cancel</a>
           {{/if}}
-        {{else}}
-          <a href="#" class="btn btn-primary" disabled>Import contacts</a>
-          <a href="#" class="btn btn-danger" disabled>Cancel</a>
-        {{/if}}
+          <span class="label label-default label-rows">{{rowsMessage}}</span>
+        </div>
         <div class="navbar-form navbar-right" >
           <div class="form-group">
             <div class="checkbox checkbox-default checkbox-toggle-csv-header">
@@ -30,7 +33,7 @@
       </div>
     </div>
     {{#if hasFile}}
-      {{> contactsImportPreview parsing=instance.parsing rows=instance.rows header=instance.header}}
+      {{> contactsImportPreview parsing=instance.parsing rows=instance.rows columns=instance.columns header=instance.header}}
     {{else}}
       {{> contactsImportChoose file=instance.file}}
     {{/if}}
@@ -44,7 +47,7 @@
         <div class="drop-target">
           <div>
             <h1>Drag and Drop CSV file here</h1>
-            <p>- or -</p>
+            <p>&ndash; or &ndash;</p>
             <input type="file" accept="text/csv">
           </div>
         </div>
@@ -61,13 +64,33 @@
       <thead>
         <tr>
           <th></th>
-          {{#each columns rows.get}}
-            <th data-key={{key}}>{{label}}</th>
+          {{#each columns.get}}
+            <th>
+              <div class="dropdown">
+                <a class="btn btn-link" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  {{label}}
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  {{#let colIndex=@index}}
+                    {{#each fields}}
+                      {{#if equal ../key key}}
+                        <li class="active"><a href="#">{{label}}</a></li>
+                      {{else}}
+                        <li><a href="#" data-action="change-field" data-key="{{key}}" data-index="{{colIndex}}">{{label}}</a></li>
+                      {{/if}}
+                    {{/each}}
+                  {{/let}}
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#" data-action="change-field" data-key="" data-index="{{@index}}">Ignore</a></li>
+                </ul>
+              </div>
+            </th>
           {{/each}}
         </tr>
       </thead>
       <tbody>
-        {{#each rows.get}}
+        {{#each limitRows rows.get}}
           {{#unless skipRow this ../rows.get ../header.get}}
             <tr>
               <td></td>

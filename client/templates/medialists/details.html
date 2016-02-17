@@ -65,5 +65,16 @@
 </template>
 
 <template name="medialistActivity">
-
+  <div class="spacer"></div>
+  <div class="container-fluid info-activity-log">
+    {{#each posts}}
+      {{> displayPost post=this}}
+      <hr>
+    {{/each}}
+    {{#if instance.spinner.get}}
+      <div class="spinner-box">
+        {{> spinner}}
+      </div>
+    {{/if}}
+  </div>
 </template>

@@ -91,15 +91,13 @@
       </tr>
     </thead>
     <tbody>
-      {{#each limitRows rows.get}}
-        {{#unless skipRow this ../rows.get ../header.get}}
-          <tr>
-            <td></td>
-            {{#each this}}
-              <td>{{this}}</td>
-            {{/each}}
-          </tr>
-        {{/unless}}
+      {{#each limitRows rows.get header.get}}
+        <tr>
+          <td></td>
+          {{#each this}}
+            <td>{{this}}</td>
+          {{/each}}
+        </tr>
       {{/each}}
     </tbody>
   </table>

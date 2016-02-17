@@ -49,11 +49,18 @@ Template.contactsImport.helpers({
   rowsMessage: () => {
     var file = Template.instance().file.get()
     var parsing = Template.instance().parsing.get()
-    var rows = Template.instance().rows.get()
 
     if (!file || parsing) return ''
-    if (rows.length < ROWS_LIMIT) return `${rows.length} contacts`
-    return `Showing ${ROWS_LIMIT} of ${rows.length} contacts`
+
+    var header = Template.instance().header.get()
+    var rows = Template.instance().rows.get()
+    var total = rows.length
+
+    if (header) total--
+    if (total < 0) total = 0
+
+    if (total < ROWS_LIMIT) return `${total} contacts`
+    return `Showing ${ROWS_LIMIT} of ${total} contacts`
   }
 })
 
@@ -113,12 +120,9 @@ Template.contactsImportChoose.onDestroyed(function () {
 })
 
 Template.contactsImportPreview.helpers({
-  limitRows: rows => rows.slice(0, ROWS_LIMIT),
+  limitRows: (rows, header) => rows.slice(header ? 1 : 0, ROWS_LIMIT),
 
-  // Skip the first row if it is the header row
-  skipRow: (row, rows, header) => header && rows[0] === row,
-
-  // Generate all the possible fields from the fields in ImportSchemaDetectors
+  // Generate all the possible fields from the fields in ContactsImport.schemaDetectors
   fields: (() => {
     var fields = ContactsImport.schemaDetectors.map(d => d.field).sort((a, b) => {
       if (a.label < b.label) return -1

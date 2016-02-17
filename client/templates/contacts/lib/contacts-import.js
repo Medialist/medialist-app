@@ -73,7 +73,7 @@ ContactsImport = {
       test: value => value === 'sectors'
     },
     {
-      field: {key: 'jobTitle', label: 'Job Title(s)'},
+      field: {key: 'jobTitles', label: 'Job Title(s)'},
       test: value => value === 'job title'
     },
     {
@@ -164,11 +164,10 @@ ContactsImport = {
     var contacts = rows.map(row => {
       var contact = cols.reduce((contact, col, i) => {
         var key = col.key
-        var value = row[i]
+        if (!key) return contact // Empty keys are ignore
 
+        var value = (row[i] ? `${row[i]}` : '').trim()
         if (!value) return contact
-
-        value = `${value}`.trim()
 
         if (KeyHandlers[key]) {
           KeyHandlers[key](contact, value)
@@ -213,7 +212,7 @@ ContactsImport = {
       delete contact.notes
       delete contact.salutation
 
-      contact.importData = {columns: cols.map(c => c.key || 'ignore'), row: row}
+      contact.importedData = {columns: cols.map(c => c.key || ''), row: row}
 
       return contact
     })

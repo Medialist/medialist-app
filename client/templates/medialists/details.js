@@ -14,6 +14,9 @@ Template.medialistSlideIn.events({
     var section = tpl.$(evt.currentTarget).data('section')
     tpl.section.set(section)
   },
+  'click [data-action="close-medialist-slide-in"]': function () {
+    SlideIns.hide('right')
+  }
 })
 
 Template.medialistActivity.onCreated(function () {

@@ -14,9 +14,9 @@ module.exports = {
 
   after : function(client) {
     console.log('Closing down...')
-    // client
-    //   .clearDB()
-    //   .end()
+    client
+      .clearDB()
+      .end()
   },
 
   'Login and show menu': function (client) {
@@ -127,12 +127,13 @@ module.exports = {
   'Add feedback to contact': function (client) {
     client
       .pause(1000)
-      .click('[data-option="logFeedback"]')
-      .waitForElementVisible('[data-field="message"]', timeout)
-      .setValue('[data-field="message"]', 'test message involving @contactthree and #medialist2')
-      .click('.contact-activity-log .form-group [data-toggle="dropdown"]')
-      .waitForElementVisible('.contact-activity-log [data-status="Hot Lead"]', timeout)
-      .click('.contact-activity-log [data-status="Hot Lead"]')
+      .click('.contenteditable-container')
+      .waitForElementVisible('.status', timeout)
+      .setValue('[data-field="post-text"]', 'test message involving @contactthree and #medialist2')
+      .click('.post-container [data-toggle="dropdown"]')
+      .waitForElementVisible('[data-action="set-status"].status-hot-lead', timeout)
+      .click('[data-action="set-status"].status-hot-lead')
+      .click('[data-action="save-post"]')
       .click('[data-action="close-contact-slide-in"]')
       .pause(1000)
 
@@ -148,8 +149,6 @@ module.exports = {
       .click('[data-action="toggle-mainmenu"]')
       .waitForElementVisible('.mainmenu-favourites [href="/medialist/medialist2"]', timeout)
       .click('.mainmenu-favourites [href="/medialist/medialist2"]')
-      .pause(100)
-      .click('[data-action="toggle-mainmenu"]')
       .waitForElementNotVisible('.mainmenu-user', timeout)
 
       client
@@ -176,8 +175,6 @@ module.exports = {
       .waitForElementVisible('.mainmenu [href="/medialists"]', timeout)
       .click('.mainmenu [href="/medialists"]')
       .waitForElementPresent('.col-campaign', timeout)
-      .click('[data-action="toggle-mainmenu"]')
-      .waitForElementNotVisible('.mainmenu [href="/medialists"]', timeout)
 
     client
       .expect.element('[data-medialist="medialist2"] .col-updated-on').text.to.equal('a few seconds ago').before(timeout)

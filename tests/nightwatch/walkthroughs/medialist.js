@@ -33,7 +33,7 @@ module.exports = {
       .click('[data-action="toggle-mainmenu"]')
       .pause(1000)
     client
-      .expect.element('.medialist-breadcrumbs li:last-child a').text.to.equal('#medialist1').before(timeout)
+      .expect.element('.mainmenu-favourites li:last-child a').text.to.equal('#medialist1').before(timeout)
     client
       .expect.element('.medialist-purpose p').text.to.equal('A Medialist')
     client
@@ -45,15 +45,24 @@ module.exports = {
     var medialistPurpose = 'Test Medialist Purpose'
     var medialistClient = 'Test Client'
     client
+      .click('[href="/medialists"]')
+      .waitForElementNotPresent('.mainmenu.open', timeout)
+      .pause(500)
       .click('[data-action="create-medialist"]')
       .waitForElementVisible('.modal-body', timeout)
       .setValue('#medialist-name', medialistName)
       .setValue('#medialist-client', medialistClient)
       .setValue('#medialist-purpose', medialistPurpose)
       .submitForm('#addMedialist')
-      .pause(1000)
+      .pause(500)
     client
-      .expect.element('.medialist-breadcrumbs li:last-child a').text.to.equal('#' + medialistName).before(timeout)
+      .click('[data-action="toggle-mainmenu"]')
+      .pause(500)
+      .expect.element('.mainmenu-favourites [href="/medialist/' + medialistName + '"]').text.to.equal('#' + medialistName).before(timeout)
+    client
+      .click('[data-action="hide-mainmenu"]')
+      .waitForElementNotPresent('.mainmenu.open', timeout)
+      .pause(500)
   },
 
   'Add Contact': function (client) {

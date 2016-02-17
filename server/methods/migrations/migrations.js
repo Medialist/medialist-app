@@ -154,12 +154,8 @@ var MigrationVersions = [
             value: contact.twitter.screenName,
             id: contact.twitter.id
           }],
-          primaryOutlets: contact.roles.reduce((outletString, role) => {
-            return `${outletString}, ${role.org.name}`
-          }, ''),
-          jobTitles: contact.roles.reduce((titleString, role) => {
-            return `${titleString}, ${role.title}`
-          }, ''),
+          primaryOutlets: contact.roles.map( r => r.org.name ).join(', '),
+          jobTitles: contact.roles.map( r => r.title ).join(', '),
           sectors: '',
           languages: ['English'],
         })
@@ -172,7 +168,6 @@ var MigrationVersions = [
         delete newContact.twitter
         delete newContact.roles
 
-        console.log(newContact)
         check(_.omit(newContact, '_id'), Schemas.Contacts)
         Contacts.update(contact._id, newContact)
       })

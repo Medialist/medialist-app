@@ -112,7 +112,7 @@ function mergeContact (data, contact, user) {
 
   check(contact, Schemas.Contacts)
 
-  return Contacts.update({_id: id}, {$set: data})
+  return Contacts.update({_id: id}, {$set: contact})
 }
 
 function mergeLabelValueLists (oldList, newList) {

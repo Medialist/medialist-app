@@ -7,8 +7,8 @@ Template.addContact.onCreated(function () {
 
 Template.addContact.helpers({
   contacts: function () {
-    if (this.ignoreExisting) return []
     var regex = new RegExp(Template.instance().name.get(), 'gi')
+    if (this.ignoreExisting) return []
     var query = {
       name: {
         $regex: regex,
@@ -41,9 +41,17 @@ Template.addContact.events({
 });
 
 Template.contactRow.helpers({
-  status: function () {
-    var medialist = Medialists.findOne(FlowRouter.getParam('slug'))
-    return medialist && medialist.contacts[this.slug]
+  inCurrentMedialist: function () {
+    FlowRouter.watchPathChange()
+    var medialistSlug = FlowRouter.getParam('slug')
+    return this.medialists.indexOf(medialistSlug) > -1
+  },
+  contactLink: function () {
+    FlowRouter.watchPathChange()
+    var medialistSlug = FlowRouter.getParam('slug')
+    if (this.medialists.indexOf(medialistSlug) > -1) {
+
+    }
   }
 })
 
@@ -52,5 +60,13 @@ Template.contactRow.events({
     Meteor.call('contacts/addToMedialist', this.slug, FlowRouter.getParam('slug'), function (err) {
       if (err) console.error(err)
     })
+  },
+  'click [data-action="view-contact"]': function () {
+    var medialistSlug = FlowRouter.getParam('slug')
+    if (this.medialists.indexOf(medialistSlug) > -1) {
+      return SlideIns.show('')
+    }
+    FlowRouter.go('contacts')
+    SlideIns.show('')
   }
 })

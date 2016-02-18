@@ -15,16 +15,13 @@
     </div>
   </div>
 </div>
-<table class="medialist-table table table-responsive">
+<table class="medialist-table table table-responsive table-hover">
   <thead>
   <tr>
     <th class="no-sort col-checkbox">
       <div class="checkbox checkbox-default">
         <label>
-          <input type="checkbox"/>
-          <span class="checkbox-material" data-checkbox-all>
-            <span class="check"></span>
-          </span>
+          <input type="checkbox" data-checkbox-all />
         </label>
       </div>
     </th>
@@ -53,14 +50,11 @@
 </template>
 
 <template name="allContactsRow">
-  <tr class="contact-row" data-contact="{{slug}}" data-action="show-contact-slide-in">
+  <tr class="contact-row {{#if checked}}checked-row{{/if}}" data-contact="{{slug}}" data-action="show-contact-slide-in">
     <td class="col-checkbox">
       <div class="checkbox checkbox-default">
         <label>
-          <input type="checkbox" checked={{checked}} />
-          <span class="checkbox-material" data-checkbox>
-            <span class="check"></span>
-          </span>
+          <input type="checkbox" checked={{checked}} data-checkbox />
         </label>
       </div>
     </td>

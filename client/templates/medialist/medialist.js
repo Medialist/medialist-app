@@ -27,7 +27,7 @@ Template.medialist.onCreated(function () {
   })
   medialistTpl.autorun(() => {
     medialistTpl.checkSelect.set({})
-    $('[data-checkbox-all]').prev('input').prop('checked', false)
+    $('[data-checkbox-all]').prop('checked', false)
     medialistTpl.subscribe('medialist', medialistTpl.slug.get())
   })
 })
@@ -58,7 +58,7 @@ Template.medialist.events({
     Modal.show('addContact')
   },
   'click [data-checkbox-all]': function (evt, tpl) {
-    var checked = !tpl.$(evt.currentTarget).prev('input').prop('checked')
+    var checked = tpl.$(evt.currentTarget).prop('checked')
     if (checked) {
       medialistTpl.checkSelect.set(_.reduce(Contacts.find(tpl.query.get()).fetch(), function (newCheckSelect, contact) {
         newCheckSelect[contact.slug] = true
@@ -68,8 +68,9 @@ Template.medialist.events({
       medialistTpl.checkSelect.set({})
     }
   },
-  'click [data-checkbox]': function () {
+  'click [data-checkbox]': function (evt, tpl) {
     App.toggleReactiveObject(medialistTpl.checkSelect, this.slug)
+    if(!$(evt.currentTarget).prop('checked')) $('[data-checkbox-all]').prop('checked', false)
   },
   'click [data-action="create-new-medialist"]': function () {
     var contactSlugs = _.keys(medialistTpl.checkSelect.get())

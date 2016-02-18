@@ -13,10 +13,11 @@
 @brand-primary-light: lighten(@brand-primary, 40%);
 
 // boostrap overrides
+@navbar-height: 68px;
+@border-radius-base:  0px;
+@border-radius-large: 2px;
+@border-radius-small: 0px;
 @body-bg: @grey-50;
-@border-radius-base:        0px;
-@border-radius-large:       2px;
-@border-radius-small:       0px;
 @navbar-default-link-active-color: @navbar-default-link-color;
 @navbar-default-link-active-bg: @navbar-default-bg;
 @table-bg-hover: @brand-primary-light;
@@ -83,21 +84,20 @@ body {
 
 .slide-in {
   bottom:0;
-  height: calc(~"100% - 62px");
+  height: calc(~"100% - " @navbar-height);
+  z-index:2000;
 
   .nav-slide-in a {
     color: #fff;
   }
-
-  .container-fluid {
-    padding-left:10px;
-    padding-right:10px;
-  }
 }
 .slide-in.left {
   background: #fff;
+  box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.2);
 }
-
+.slide-in.right {
+  box-shadow:-1px 1px 1px 0px rgba(0,0,0,0.2);
+}
 .modal-dialog{
   max-height: 90vh;
   overflow-y: auto;
@@ -140,4 +140,9 @@ table th.sort-down:hover:after {
 table th.sort-up:after {
   border-bottom:none;
   border-width:4px 4px 0;
+}
+.bg-primary {
+  h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    color:white;
+  }
 }

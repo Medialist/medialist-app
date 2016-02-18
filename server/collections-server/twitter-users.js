@@ -15,7 +15,8 @@ function updateContact (id, fields) {
   var query = {}
   if (fields.profile_image_url_https) query.avatar = fields.profile_image_url_https
   if (fields.description) query.bio = fields.description
-  if (fields.screen_name) query.twitter = { screen_name: fields.screen_name }
+  if (fields.screen_name) query['socials.$.value'] = fields.screen_name
   if (Object.keys(query).length < 1) return
-  Contacts.update({ 'twitter.id': id }, { $set: query })
+  // TODO: migrate id to twitterId https://github.com/Medialist/medialist-app/issues/253
+  Contacts.update({ 'socials.id': id }, { $set: query })
 }

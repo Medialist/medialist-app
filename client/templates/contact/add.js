@@ -1,21 +1,28 @@
 Template.addContact.onCreated(function () {
   this.name = new ReactiveVar('')
   this.autorun(() => {
-    this.subscribe('contacts', { name: this.name.get() })
+    this.subscribe('contacts', { regex: this.name.get() })
   })
 })
 
 Template.addContact.helpers({
   contacts: function () {
-    var regex = new RegExp(Template.instance().name.get(), 'gi')
+    var nameString = Template.instance().name.get()
+    if (!nameString) return []
+    var regex = new RegExp(nameString, 'gi')
     if (this.ignoreExisting) return []
     var query = {
-      name: {
-        $regex: regex,
-        $options: 'i'
-      }
+      $or: [
+        { name: regex },
+        { jobTitles: regex },
+        { primaryOutlets: regex },
+        { otherOutlets: regex }
+      ]
     }
     return Contacts.find(query, { limit: App.contactSuggestions })
+  },
+  medialistSlug: function () {
+    return FlowRouter.getParam('slug')
   },
   name: function () {
     return Template.instance().name.get()

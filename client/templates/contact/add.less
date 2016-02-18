@@ -1,13 +1,51 @@
+.modal-content.add-contact {
+  padding: 30px;
+
+  form, .subheader {
+    margin: 40px 0;
+  }
+}
+
 .placeholder-avatar {
   margin: 5px 0;
   font-size: 40px;
   height: 40px;
 }
 
-.contact-row .media-right {
-  white-space: nowrap;
+.contact-row {
+  min-height: 40px;
+  margin-bottom: 30px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .media-left {
+    padding-right: 20px;
+  }
+
+  .media-body {
+    font-size: 14px;
+    line-height: 1.3;
+    .media-heading {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 0;
+    }
+  }
+
+  .media-right {
+    white-space: nowrap;
+
+    .btn {
+      color: #888;
+      font-size: 20px;
+      line-height: 24px;
+      margin-left: 15px;
+    }
+  }
 }
 
 .btn.btn-non-button {
   cursor: default;
+  box-shadow: none;
 }

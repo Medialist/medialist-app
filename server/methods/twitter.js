@@ -14,7 +14,6 @@ Meteor.methods({
 
   // The client is just letting us know there is some work to do, they don't care about the response.
   'twitter/updateAvatar': function (twitterId) {
-    console.log('twitter/updateAvatar', twitterId, typeof twitterId)
     if (!this.userId) throw new Meteor.Error('Only logged in users can request twitter updates')
     check(twitterId, String)
     // Can we still see their avatar?

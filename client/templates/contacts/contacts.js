@@ -88,3 +88,13 @@ Template.allContactsRow.helpers({
     return this.slug in allContactsTpl.checkSelect.get()
   }
 })
+
+Template.allContactsRow.events({
+  'click [data-action="show-contact-slide-in"]': function (evt, tpl) {
+    var $el = tpl.$(evt.target)
+    if (!$el.parents('[data-no-sidebar]').length) {
+      FlowRouter.setQueryParams({ contact: this.slug })
+      SlideIns.show('right', 'contactSlideIn', { contact: this.slug, noMedialist: true })
+    }
+  }
+})

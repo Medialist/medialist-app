@@ -13,8 +13,18 @@
   tbody > tr > td {
     vertical-align: middle;
   }
-  .contact-row.selected {
+  .document-row.selected {
     background-color: #51adf6;
+    &.green {
+      color: #fff;
+      background-color: #54AD59;
+      a, a:visited {
+        color: darken(#0D87E9, 20%);
+      }
+      a:hover, a:active, a:focus {
+        color: darken(#0D87E9, 15%);
+      }
+    }
   }
 }
 .col-checkbox {

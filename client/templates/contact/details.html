@@ -87,20 +87,82 @@
 
 <template name="contactActivity">
   <div class="container-fluid contact-activity-log">
-    <ul class="activity-menu text-center">
-      <li role="presentation" class="{{#if equal instance.option.get 'all'}}active{{/if}}" data-option="all">All Activity</li>
-      <li role="presentation" class="{{#if equal instance.option.get 'medialist'}}active{{/if}}" data-option="medialist">#{{routeSlug}}</li>
-      <li role="presentation" class="{{#if equal instance.option.get 'needToKnow'}}active{{/if}}" data-option="needToKnow">Need-to-know</li>
-    </ul>
+
+    {{> logFeedback}}
+
+    <div class="btn-group btn-group-justified activity-menu" role="group">
+      <a role="button" class="btn btn-default {{#if equal instance.option.get 'all'}}active{{/if}}" data-option="all">All Activity</a>
+      <a role="button" class="btn btn-default {{#if equal instance.option.get 'medialist'}}active{{/if}}" data-option="medialist">#{{routeSlug}}</a>
+    </div>
 
     {{> Template.dynamic template=feedbackTemplate.template data=feedbackTemplate.data}}
+  </div>
+</template>
 
+<template name="logFeedback">
+  <div class="panel panel-sm panel-feedback bg-primary-light">
+    <div class="panel-body">
+      <div class="media media-feedback">
+        <!-- <div class="media-left">
+          <img width="36" height="36 " class="img-rounded media-object" src={{profileImage}}>
+        </div> -->
+        <div class="media-body">
+          <div class="feedback-input" contenteditable=true>
+            Log feedback...
+          </div>
+        </div>
+      </div>
+      <div class="">
+        <div class="btn-group btn-group-sm pull-right">
+          <button type="button" class="btn btn-primary">Contacted</button>
+          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="#">Contacted</a></li>
+            <li><a href="#">Hot Lead</a></li>
+            <li><a href="#">Completed</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">To Contact</a></li>
+            <li><a href="#">Not interested</a></li>
+          </ul>
+        </div>
+
+        <div class="btn-group btn-group-sm">
+          <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            #SlugNameHere <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="#">#OtherSlugName</a></li>
+            <li><a href="#">#SlugName</a></li>
+            <li><a href="#">#SomethingElse</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <template name="contactPosts">
+
+  <div class="panel panel-sm">
+    <ul class="list-group">
+    {{#each posts}}
+      <li class="list-group-item">
+        {{> displayPost post=this}}
+      </li>
+    {{/each}}
+    </ul>
+  </div>
+  {{#if instance.spinner.get}}
+    <div class="spinner-box">
+      {{> spinner}}
+    </div>
+  {{/if}}
+
   <div class="post-container">
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-xs-2">
         <img class="img-rounded" src={{profileImage}}>
       </div>
@@ -117,7 +179,8 @@
           </div>
         </form>
       </div>
-    </div>
+    </div> -->
+
     {{#if instance.postOpen.get}}
       <hr>
       <div class="row">
@@ -139,15 +202,7 @@
     {{/if}}
     <hr>
   </div>
-  {{#each posts}}
-    {{> displayPost post=this}}
-    <hr>
-  {{/each}}
-  {{#if instance.spinner.get}}
-    <div class="spinner-box">
-      {{> spinner}}
-    </div>
-  {{/if}}
+
 </template>
 
 <template name="postSignature">

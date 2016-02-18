@@ -1,5 +1,4 @@
 <template name="contactSlideIn">
-  {{#with contactDetails}}
   <div class="info-slide-in">
     <ul class="nav nav-pills nav-slide-in pull-left">
       <li role="presentation">
@@ -21,11 +20,11 @@
       <div class="container-fluid">
         <div class="media">
           <div class="media-left">
-            <img class="media-object img-rounded" src="{{avatar}}" alt="{{name}} avatar">
+            <img class="media-object img-rounded" src="{{contactDetails.contact.avatar}}" alt="{{contactDetails.contact.name}} avatar">
           </div>
           <div class="media-body">
-            <h4 class="media-heading">{{name}}</h4>
-            <h5>{{jobTitles}}, {{primaryOutlets}}</h5>
+            <h4 class="media-heading">{{contactDetails.contact.name}}</h4>
+            <h5>{{contactDetails.contact.jobTitles}}, {{contactDetails.contact.primaryOutlets}}</h5>
           </div>
         </div>
         <div class="info-menu">
@@ -43,12 +42,12 @@
         </div>
       </div>
     </div>
-    {{> Template.dynamic template=contactSection data=this}}
+    {{> Template.dynamic template=contactSection data=contactDetails}}
   </div>
-  {{/with}}
 </template>
 
 <template name="contactDetails">
+  {{#with contact}}
   <div class="container-fluid info-content">
     <form>
       <div class="last-updated text-right">
@@ -83,13 +82,16 @@
       </div>
     </form>
   </div>
+  {{/with}}
 </template>
 
 <template name="contactActivity">
   <div class="container-fluid info-activity-log">
     <ul class="activity-menu text-center">
       <li role="presentation" class="{{#if equal instance.option.get 'all'}}active{{/if}}" data-option="all">All Activity</li>
-      <li role="presentation" class="{{#if equal instance.option.get 'medialist'}}active{{/if}}" data-option="medialist">#{{routeSlug}}</li>
+      {{#unless noMedialist}}
+        <li role="presentation" class="{{#if equal instance.option.get 'medialist'}}active{{/if}}" data-option="medialist">#{{routeSlug}}</li>
+      {{/unless}}
       <li role="presentation" class="{{#if equal instance.option.get 'needToKnow'}}active{{/if}}" data-option="needToKnow">Need-to-know</li>
     </ul>
 
@@ -99,46 +101,50 @@
 </template>
 
 <template name="contactPosts">
-  <div class="post-container">
-    <div class="row">
-      <div class="col-xs-2">
-        <img class="img-rounded" src={{profileImage}}>
-      </div>
-      <div class="col-xs-10">
-        <form>
-          <div class="form-group">
-            <div class="form-control contenteditable-container {{#if instance.postOpen.get}}open{{/if}}">
-              {{#if instance.postOpen.get}}
-                <span contenteditable=true tabindex=0 data-field="post-text"></span>&nbsp;-&nbsp;{{> postSignature status=instance.status.get medialist=routeSlug}}
-              {{else}}
-                <span class="placeholder">What did {{firstName contact.name}} think of #{{routeSlug}}?</span>
-              {{/if}}
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-    {{#if instance.postOpen.get}}
-      <hr>
+  {{#unless noMedialist}}
+    <div class="post-container">
       <div class="row">
-        <div class="col-xs-12">
-          <button type="button" class="btn btn-sm btn-primary pull-right" data-action="save-post">Save</button>
-          <span class="pull-right">
-            <a data-target="#" class="btn btn-sm dropdown-toggle status status-{{classify instance.status.get}}" data-toggle="dropdown">
-              {{instance.status.get}}
-              <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-              {{#each statuses}}
-                <li><a data-action="set-status" class="status status-{{classify this}}">{{this}}</a></li>
-              {{/each}}
-            </ul>
-          </span>
+        <div class="col-xs-2">
+          <img class="img-rounded" src={{profileImage}}>
+        </div>
+        <div class="col-xs-10">
+          <form>
+            <div class="form-group">
+              <div class="form-control contenteditable-container {{#if instance.postOpen.get}}open{{/if}}">
+                {{#if instance.postOpen.get}}
+                  <span contenteditable=true tabindex=0 data-field="post-text"></span>&nbsp;-&nbsp;{{> postSignature status=instance.status.get medialist=routeSlug}}
+                {{else}}
+                  <span class="placeholder">What did {{firstName contact.name}} think of #{{routeSlug}}?</span>
+                {{/if}}
+              </div>
+            </div>
+          </form>
         </div>
       </div>
-    {{/if}}
-    <hr>
-  </div>
+      {{#if instance.postOpen.get}}
+        <hr>
+        <div class="row">
+          <div class="col-xs-12">
+            <button type="button" class="btn btn-sm btn-primary pull-right" data-action="save-post">Save</button>
+            <span class="pull-right">
+              <a data-target="#" class="btn btn-sm dropdown-toggle status status-{{classify instance.status.get}}" data-toggle="dropdown">
+                {{instance.status.get}}
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                {{#each statuses}}
+                  <li><a data-action="set-status" class="status status-{{classify this}}">{{this}}</a></li>
+                {{/each}}
+              </ul>
+            </span>
+          </div>
+        </div>
+      {{/if}}
+      <hr>
+    </div>
+  {{else}}
+    <div class="spacer"></div>
+  {{/unless}}
   {{#each posts}}
     {{> displayPost post=this}}
     <hr>

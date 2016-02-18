@@ -9,7 +9,10 @@ Template.contactSlideIn.onCreated(function () {
 
 Template.contactSlideIn.helpers({
   contactDetails: function () {
-    return Contacts.findOne({ slug: this.contact }, { transform: null })
+    return {
+      contact: Contacts.findOne({ slug: this.contact }, { transform: null }),
+      noMedialist: this.noMedialist
+    }
   },
   contactSection: function () {
     return slideIn.contactSection.get()
@@ -59,16 +62,14 @@ Template.contactActivity.helpers({
       case 'all':
         return {
           template: 'contactPosts',
-          data: {
-            contact: this
-          }
+          data: this
         }
         break
       case 'medialist':
         return {
           template: 'contactPosts',
           data: {
-            contact: this,
+            contact: this.contact,
             medialist: FlowRouter.getParam('slug')
           }
         }
@@ -76,9 +77,7 @@ Template.contactActivity.helpers({
       case 'needToKnow':
         return {
           template: 'contactNeedToKnows',
-          data: {
-            contact: this
-          }
+          data: this
         }
         break
     }

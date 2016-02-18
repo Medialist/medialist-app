@@ -13,16 +13,13 @@
     </div>
   </div>
 </div>
-<table class="medialist-table table table-responsive">
+<table class="medialist-table table table-responsive table-hover">
   <thead>
   <tr>
     <th class="no-sort col-checkbox">
       <div class="checkbox checkbox-default">
         <label>
-          <input type="checkbox"/>
-          <span class="checkbox-material" data-checkbox-all>
-            <span class="check"></span>
-          </span>
+          <input type="checkbox" data-checkbox-all/>
         </label>
       </div>
     </th>
@@ -35,14 +32,11 @@
   </thead>
   <tbody>
     {{#each medialists}}
-    <tr class="document-row green {{#if equal slug instance.selected.get}}selected{{/if}}" data-medialist="{{slug}}" data-action="show-medialist-details">
+    <tr class="document-row green {{#if checked}}checked-row{{/if}} {{#if equal slug instance.selected.get}}selected{{/if}}" data-medialist="{{slug}}" data-action="show-medialist-details">
       <td class="col-checkbox">
         <div class="checkbox checkbox-default">
           <label>
-            <input type="checkbox" checked={{checked}} />
-            <span class="checkbox-material" data-checkbox>
-              <span class="check"></span>
-            </span>
+            <input type="checkbox" checked={{checked}} data-checkbox />
           </label>
         </div>
       </td>

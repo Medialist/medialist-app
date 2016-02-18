@@ -45,13 +45,6 @@ Template.contactRow.helpers({
     FlowRouter.watchPathChange()
     var medialistSlug = FlowRouter.getParam('slug')
     return this.medialists.indexOf(medialistSlug) > -1
-  },
-  contactLink: function () {
-    FlowRouter.watchPathChange()
-    var medialistSlug = FlowRouter.getParam('slug')
-    if (this.medialists.indexOf(medialistSlug) > -1) {
-
-    }
   }
 })
 
@@ -62,11 +55,20 @@ Template.contactRow.events({
     })
   },
   'click [data-action="view-contact"]': function () {
+    Modal.hide()
     var medialistSlug = FlowRouter.getParam('slug')
-    if (this.medialists.indexOf(medialistSlug) > -1) {
-      return SlideIns.show('')
+    var updateHighlight = () => {
+      var parentTpl = Blaze.getView($('.medialist-table')[0]).templateInstance()
+      console.log(parentTpl)
+      parentTpl.selected.set(this.slug)
     }
-    FlowRouter.go('contacts')
-    SlideIns.show('')
+    var slideInContext = { contact: this.slug }
+    if (this.medialists.indexOf(medialistSlug) === -1) {
+      FlowRouter.go('contacts')
+      slideInContext.noMedialist = true
+    }
+    FlowRouter.setQueryParams({ contact: this.slug })
+    SlideIns.show('right', 'contactSlideIn', slideInContext)
+    Meteor.setTimeout(() => Tracker.afterFlush(updateHighlight), 1)
   }
 })

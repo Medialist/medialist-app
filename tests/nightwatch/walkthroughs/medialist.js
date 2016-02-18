@@ -33,7 +33,7 @@ module.exports = {
       .click('[data-action="toggle-mainmenu"]')
       .pause(1000)
     client
-      .expect.element('.medialist-breadcrumbs li:last-child a').text.to.equal('#medialist1').before(timeout)
+      .expect.element('.mainmenu-favourites li:last-child a').text.to.equal('#medialist1').before(timeout)
     client
       .expect.element('.medialist-purpose p').text.to.equal('A Medialist')
     client
@@ -45,15 +45,24 @@ module.exports = {
     var medialistPurpose = 'Test Medialist Purpose'
     var medialistClient = 'Test Client'
     client
+      .click('[href="/medialists"]')
+      .waitForElementNotPresent('.mainmenu.open', timeout)
+      .pause(500)
       .click('[data-action="create-medialist"]')
       .waitForElementVisible('.modal-body', timeout)
       .setValue('#medialist-name', medialistName)
       .setValue('#medialist-client', medialistClient)
       .setValue('#medialist-purpose', medialistPurpose)
       .submitForm('#addMedialist')
-      .pause(1000)
+      .pause(500)
     client
-      .expect.element('.medialist-breadcrumbs li:last-child a').text.to.equal('#' + medialistName).before(timeout)
+      .click('[data-action="toggle-mainmenu"]')
+      .pause(500)
+      .expect.element('.mainmenu-favourites [href="/medialist/' + medialistName + '"]').text.to.equal('#' + medialistName).before(timeout)
+    client
+      .click('[data-action="hide-mainmenu"]')
+      .waitForElementNotPresent('.mainmenu.open', timeout)
+      .pause(500)
   },
 
   'Add Contact': function (client) {
@@ -92,8 +101,10 @@ module.exports = {
     client
       .pause(1000)
       .click('.modal-body .btn-primary')
-      .waitForElementVisible('#contact-role-org', timeout)
+      .waitForElementVisible('#contact-primary-outlets', timeout)
       .click('[data-dismiss="modal"]')
+      .pause(500)
+      .click('.medialist-table th:nth-of-type(3)')
 
       client
         .expect.element('tbody .contact-row:last-child .col-name').text.to.equal('Twitter').before(timeout)
@@ -105,8 +116,6 @@ module.exports = {
       .click('[data-action="toggle-mainmenu"]')
       .waitForElementVisible('[href="/medialist/medialist1"]', timeout)
       .click('[href="/medialist/medialist1"]')
-      .pause(100)
-      .click('[data-action="toggle-mainmenu"]')
       .waitForElementNotVisible('.mainmenu-user', timeout)
       .click('[data-contact="contactone"] .col-name')
       .waitForElementVisible('.contact-slide-in', timeout)
@@ -127,12 +136,13 @@ module.exports = {
   'Add feedback to contact': function (client) {
     client
       .pause(1000)
-      .click('[data-option="logFeedback"]')
-      .waitForElementVisible('[data-field="message"]', timeout)
-      .setValue('[data-field="message"]', 'test message involving @contactthree and #medialist2')
-      .click('.contact-activity-log .form-group [data-toggle="dropdown"]')
-      .waitForElementVisible('.contact-activity-log [data-status="Hot Lead"]', timeout)
-      .click('.contact-activity-log [data-status="Hot Lead"]')
+      .click('.contenteditable-container')
+      .waitForElementVisible('.status', timeout)
+      .setValue('[data-field="post-text"]', 'test message involving @contactthree and #medialist2')
+      .click('.post-container [data-toggle="dropdown"]')
+      .waitForElementVisible('[data-action="set-status"].status-hot-lead', timeout)
+      .click('[data-action="set-status"].status-hot-lead')
+      .click('[data-action="save-post"]')
       .click('[data-action="close-contact-slide-in"]')
       .pause(1000)
 
@@ -148,8 +158,6 @@ module.exports = {
       .click('[data-action="toggle-mainmenu"]')
       .waitForElementVisible('.mainmenu-favourites [href="/medialist/medialist2"]', timeout)
       .click('.mainmenu-favourites [href="/medialist/medialist2"]')
-      .pause(100)
-      .click('[data-action="toggle-mainmenu"]')
       .waitForElementNotVisible('.mainmenu-user', timeout)
 
       client
@@ -176,8 +184,6 @@ module.exports = {
       .waitForElementVisible('.mainmenu [href="/medialists"]', timeout)
       .click('.mainmenu [href="/medialists"]')
       .waitForElementPresent('.col-campaign', timeout)
-      .click('[data-action="toggle-mainmenu"]')
-      .waitForElementNotVisible('.mainmenu [href="/medialists"]', timeout)
 
     client
       .expect.element('[data-medialist="medialist2"] .col-updated-on').text.to.equal('a few seconds ago').before(timeout)

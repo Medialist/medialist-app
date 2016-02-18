@@ -1,15 +1,22 @@
-TwitterUsers = new Mongo.Collection('twitter_users');
+TwitterUsers = new Mongo.Collection('twitter_users')
 
 TwitterUsers.allow({
-  insert: function (userId, doc) {
-    return false;
-  },
+  insert: () => false,
+  update: () => false,
+  remove: () => false,
+})
 
-  update: function (userId, doc, fieldNames, modifier) {
-    return false;
-  },
+TwitterUsers.find({}).observeChanges({
+  changed: updateContact
+})
 
-  remove: function (userId, doc) {
-    return false;
-  }
-});
+// Update contact info when twitter info changes.
+function updateContact (id, fields) {
+  var query = {}
+  if (fields.profile_image_url_https) query.avatar = fields.profile_image_url_https
+  if (fields.description) query.bio = fields.description
+  if (fields.screen_name) query['socials.$.value'] = fields.screen_name
+  if (Object.keys(query).length < 1) return
+  // TODO: migrate id to twitterId https://github.com/Medialist/medialist-app/issues/253
+  Contacts.update({ 'socials.id': id }, { $set: query })
+}

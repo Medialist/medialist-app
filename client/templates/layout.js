@@ -10,10 +10,11 @@ Template.Layout.events({
   },
   'error img[data-twitter-id]': function (evt) {
     var $img = $(evt.currentTarget)
+    if ($img.attr('src') === '/images/avatar.svg') return // bad times. We have lost contact with ground control.
     $img.attr('src', '/images/avatar.svg')
     var twitterId = $img.data('twitterId')
     if (!twitterId) return
-    Meteor.call('twitter/updateAvatar', twitterId + "")
+    Meteor.call('twitter/updateAvatar', twitterId + '')
   }
 })
 

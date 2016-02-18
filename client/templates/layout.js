@@ -7,6 +7,13 @@ Template.Layout.events({
   },
   'click [data-action="login"]': function () {
     Meteor.loginWithTwitter()
+  },
+  'error img[data-twitter-id]': function (evt) {
+    var $img = $(evt.currentTarget)
+    $img.attr('src', '/images/avatar.svg')
+    var twitterId = $img.data('twitterId')
+    if (!twitterId) return
+    Meteor.call('twitter/updateAvatar', twitterId + "")
   }
 })
 

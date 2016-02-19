@@ -1,0 +1,46 @@
+<template name="logFeedback">
+  <div class="panel panel-flat panel-border panel-sm panel-feedback">
+    <div class="panel-heading">
+      <h3 class="panel-title">Log feedback</h3>
+    </div>
+    <div class="panel-body">
+      <div class="media media-feedback {{#if active}}media-feedback-active{{/if}}">
+        <div class="media-left"><img width="36" height="36" class="img-rounded media-object" src={{profileImage}}></div>
+        <div class="media-body">
+          <div class="feedback-input" contenteditable="true" tabindex="0" >
+            {{#unless active}}What's happening with {{firstName contact.name}}{{/unless}}
+          </div>
+        </div>
+      </div>
+
+      <div>
+        {{#if active}}
+        <a data-action="save-feedback" class="btn btn-primary btn-sm pull-right">Save</a>
+
+        <div class="btn-group btn-group-sm">
+          <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            #{{routeSlug}} <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="#">#OtherSlugName</a></li>
+            <li><a href="#">#SlugName</a></li>
+            <li><a href="#">#SomethingElse</a></li>
+          </ul>
+        </div>
+
+        <div class="btn-group btn-group-smt">
+          <button type="button" class="btn btn-link text-{{classify status}} dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{status}}
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            {{#each statuses}}
+              <li><a data-action="set-status" class="text-{{classify this}}">{{this}}</a></li>
+            {{/each}}
+          </ul>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</template>

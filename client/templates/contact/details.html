@@ -87,65 +87,25 @@
 
 <template name="contactActivity">
   <div class="container-fluid contact-activity-log">
+    {{> logFeedback feedbackTemplate.data}}
 
-    {{> logFeedback}}
-
-    <div class="btn-group btn-group-justified activity-menu" role="group">
+    <!-- <div class="btn-group btn-group-justified activity-menu" role="group">
       <a role="button" class="btn btn-default {{#if equal instance.option.get 'all'}}active{{/if}}" data-option="all">All Activity</a>
       <a role="button" class="btn btn-default {{#if equal instance.option.get 'medialist'}}active{{/if}}" data-option="medialist">#{{routeSlug}}</a>
-    </div>
-
+    </div> -->
+    <ul class="nav nav-tabs nav-justified">
+      <li role="presentation" class="{{#if equal instance.option.get 'all'}}active{{/if}}">
+        <a data-option="all">All Activity</a>
+      </li>
+      <li role="presentation" class="{{#if equal instance.option.get 'medialist'}}active{{/if}}">
+        <a data-option="medialist">#{{routeSlug}}</a>
+      </li>
+    </ul>
     {{> Template.dynamic template=feedbackTemplate.template data=feedbackTemplate.data}}
   </div>
 </template>
 
-<template name="logFeedback">
-  <div class="panel panel-sm panel-feedback bg-primary-light">
-    <div class="panel-body">
-      <div class="media media-feedback">
-        <!-- <div class="media-left">
-          <img width="36" height="36 " class="img-rounded media-object" src={{profileImage}}>
-        </div> -->
-        <div class="media-body">
-          <div class="feedback-input" contenteditable=true>
-            Log feedback...
-          </div>
-        </div>
-      </div>
-      <div class="">
-        <div class="btn-group btn-group-sm pull-right">
-          <button type="button" class="btn btn-primary">Contacted</button>
-          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="caret"></span>
-            <span class="sr-only">Toggle Dropdown</span>
-          </button>
-          <ul class="dropdown-menu">
-            <li><a href="#">Contacted</a></li>
-            <li><a href="#">Hot Lead</a></li>
-            <li><a href="#">Completed</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">To Contact</a></li>
-            <li><a href="#">Not interested</a></li>
-          </ul>
-        </div>
-
-        <div class="btn-group btn-group-sm">
-          <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            #SlugNameHere <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li><a href="#">#OtherSlugName</a></li>
-            <li><a href="#">#SlugName</a></li>
-            <li><a href="#">#SomethingElse</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
 <template name="contactPosts">
-
   <div class="panel panel-sm">
     <ul class="list-group">
     {{#each posts}}
@@ -160,7 +120,6 @@
       {{> spinner}}
     </div>
   {{/if}}
-
   <div class="post-container">
     <!-- <div class="row">
       <div class="col-xs-2">

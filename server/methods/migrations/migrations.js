@@ -165,7 +165,7 @@ var MigrationVersions = [
             }))
           }, []),
           socials: [{
-            label: 'twitter',
+            label: 'Twitter',
             value: contact.twitter.screenName,
             id: contact.twitter.id
           }],
@@ -196,7 +196,7 @@ var MigrationVersions = [
       Contacts.find({}, { transform: null }).forEach(contact => {
         var save = false
         contact.socials.forEach(social => {
-          if (social.label === 'twitter' && social.id) {
+          if (social.label === 'Twitter' && social.id) {
             social.twitterId = social.id
             delete social.id
             save = true
@@ -271,6 +271,6 @@ function removeMoments (doc) {
     if (typeof val === 'object') {
       return removeMoments(val)
     }
-    return false
+    return isAltered
   }, false)
 }

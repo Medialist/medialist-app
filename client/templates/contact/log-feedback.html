@@ -15,20 +15,21 @@
 
       <div>
         {{#if active}}
-        <a data-action="save-feedback" class="btn btn-primary btn-sm pull-right">Save</a>
+        <a data-action="save" class="btn btn-primary pull-right">Save</a>
 
-        <div class="btn-group btn-group-sm">
+        <div class="btn-group">
           <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            #{{routeSlug}} <span class="caret"></span>
+            #{{routeSlug}}
+            <!-- <span class="caret"></span> -->
           </button>
-          <ul class="dropdown-menu">
+          <!--TODO: <ul class="dropdown-menu">
             <li><a href="#">#OtherSlugName</a></li>
             <li><a href="#">#SlugName</a></li>
             <li><a href="#">#SomethingElse</a></li>
-          </ul>
+          </ul> -->
         </div>
 
-        <div class="btn-group btn-group-smt">
+        <div class="btn-group">
           <button type="button" class="btn btn-link text-{{classify status}} dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{status}}
             <span class="caret"></span>

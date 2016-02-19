@@ -173,25 +173,6 @@ Template.contactPosts.events({
     evt.preventDefault()
     var text = evt.originalEvent.clipboardData.getData('text/plain')
     $(evt.currentTarget).html(text)
-  },
-  'click .signature' (evt, tpl) { tpl.$('[data-field="post-text"]').focus() },
-  'click [data-action="set-status"]' (evt, tpl) { tpl.status.set(this.valueOf()) },
-  'click [data-action="save-post"]' (evt, tpl) {
-    var status = tpl.status.get()
-    var medialist = FlowRouter.getParam('slug')
-    var contact = this.contact.slug
-    var message = App.cleanFeedback(tpl.$('[data-field="post-text"]').html())
-    if (!message) return
-    Meteor.call('posts/create', {
-      contactSlug: contact,
-      medialistSlug: medialist,
-      message: message,
-      status: status
-    }, function (err) {
-      if (err) return console.error(err)
-      tpl.postOpen.set(false)
-      $('.contact-activity-log').perfectScrollbar('update')
-    })
   }
 })
 

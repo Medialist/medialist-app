@@ -3,6 +3,7 @@ Template.logFeedback.onCreated(function () {
   var contact = Template.currentData().contact
   this.status = new ReactiveVar(medialist && medialist.contacts[contact.slug])
   this.active = new ReactiveVar(false)
+  this.medialistSlug = new ReactiveVar(FlowRouter.getParam('slug'))
 
   this.autorun(() => {
     FlowRouter.watchPathChange()
@@ -10,6 +11,7 @@ Template.logFeedback.onCreated(function () {
     contact = Template.currentData().contact
     if (!medialist || !contact) return
     this.status.set(medialist.contacts[contact.slug])
+    this.medialistSlug.set(FlowRouter.getParam('slug'))
   })
 })
 
@@ -21,6 +23,13 @@ Template.logFeedback.helpers({
   'status': function () {
     var tpl = Template.instance()
     return tpl.status.get()
+  },
+  'medialistSlug': function () {
+    var tpl = Template.instance()
+    return tpl.medialistSlug.get()
+  },
+  'medialists': function () {
+    return Medialists.find({}, {limit: 10, sort: {updatedAt: -1}, fields: {slug: 1} }).fetch()
   }
 })
 
@@ -31,6 +40,9 @@ Template.logFeedback.events({
   'click [data-action="set-status"]': function (evt, tpl) {
     tpl.status.set(this.valueOf())
   },
+  'click [data-action="set-medialist"]': function (evt, tpl) {
+    tpl.medialistSlug.set(this.slug)
+  },
   'click [data-action="save"]': function (evt, tpl) {
     var $input = tpl.$('.feedback-input')
     var message = App.cleanFeedback($input.text())
@@ -39,7 +51,7 @@ Template.logFeedback.events({
       message: message,
       status: tpl.status.get(),
       contactSlug: tpl.data.contact.slug,
-      medialistSlug: FlowRouter.getParam('slug')
+      medialistSlug: tpl.medialistSlug.get()
     }
     console.log('Feedback', data)
     Meteor.call('posts/create', data, function (err) {

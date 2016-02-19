@@ -91,7 +91,6 @@ Template.contactActivity.events({
   },
 })
 
-
 Template.contactPosts.onCreated(function () {
   this.limit = new ReactiveVar(Posts.feedLimit.initial)
   this.postOpen = new ReactiveVar(false)

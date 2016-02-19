@@ -19,14 +19,14 @@
 
         <div class="btn-group">
           <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            #{{routeSlug}}
-            <!-- <span class="caret"></span> -->
+            #{{medialistSlug}}
+            <span class="caret"></span>
           </button>
-          <!--TODO: <ul class="dropdown-menu">
-            <li><a href="#">#OtherSlugName</a></li>
-            <li><a href="#">#SlugName</a></li>
-            <li><a href="#">#SomethingElse</a></li>
-          </ul> -->
+          <ul class="dropdown-menu">
+            {{#each medialists}}
+            <li><a data-action="set-medialist">{{slug}}</a></li>
+            {{/each}}
+          </ul>
         </div>
 
         <div class="btn-group">

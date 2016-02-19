@@ -94,7 +94,7 @@ Template.contactActivity.events({
 Template.contactPosts.onCreated(function () {
   this.limit = new ReactiveVar(Posts.feedLimit.initial)
   this.postOpen = new ReactiveVar(false)
-  this.spinner = new ReactiveVar(false)
+  this.spinner = new ReactiveVar(true)
   var medialist = Medialists.findOne({ slug: FlowRouter.getParam('slug') })
   this.status = new ReactiveVar(medialist && medialist.contacts[Template.currentData().contact.slug])
   // reset form when the medialist or contact slug is changed
@@ -114,7 +114,6 @@ Template.contactPosts.onCreated(function () {
     var limit = this.limit.get()
     var opts = { contact, limit, types: ['feedback', 'medialists changed', 'need-to-knows'] }
     if (medialist) opts.medialist = medialist
-    this.spinner.set(true)
     Meteor.subscribe('posts', opts, () => {
       this.spinner.set(false)
       Tracker.afterFlush(() => $('.info-activity-log').perfectScrollbar('update'))
@@ -197,7 +196,7 @@ Template.contactPosts.events({
 Template.contactNeedToKnows.onCreated(function () {
   this.limit = new ReactiveVar(Posts.feedLimit.initial)
   this.postOpen = new ReactiveVar(false)
-  this.spinner = new ReactiveVar(false)
+  this.spinner = new ReactiveVar(true)
   // reset form when contact slug is changed
   this.autorun(() => {
     Template.currentData()
@@ -210,7 +209,6 @@ Template.contactNeedToKnows.onCreated(function () {
     var contact = data.contact.slug
     var limit = this.limit.get()
     var opts = { contact, limit }
-    this.spinner.set(true)
     Meteor.subscribe('posts', opts, () => {
       this.spinner.set(false)
       Tracker.afterFlush(() => $('.info-activity-log').perfectScrollbar('update'))

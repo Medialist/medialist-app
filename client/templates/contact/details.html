@@ -148,6 +148,14 @@
   {{#each posts}}
     {{> displayPost post=this}}
     <hr>
+  {{else}}
+    <div class="display-post">
+      <div class="row">
+        <div class="col-xs-12 text-center">
+          There are no posts to display.
+        </div>
+      </div>
+    </div>
   {{/each}}
   {{#if instance.spinner.get}}
     <div class="spinner-box">
@@ -195,6 +203,14 @@
   {{#each posts}}
     {{> displayPost post=this}}
     <hr>
+  {{else}}
+    <div class="display-post">
+      <div class="row">
+        <div class="col-xs-12 text-center">
+          There are no posts to display.
+        </div>
+      </div>
+    </div>
   {{/each}}
   {{#if instance.spinner.get}}
     <div class="spinner-box">

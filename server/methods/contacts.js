@@ -9,7 +9,7 @@ Meteor.methods({
       primaryOutlets: '',
       sectors: '',
       jobTitles: '',
-      languages: ['English'],
+      languages: 'English',
       emails: [],
       phones: []
     }
@@ -31,12 +31,12 @@ Meteor.methods({
     contact.socials = []
     if (details.screenName) {
       contact.socials.push({
-        label: 'twitter',
+        label: 'Twitter',
         value: details.screenName
       })
     }
     // return if a matching twitter handle already exists
-    var existingContact = details.screenName && Contacts.findOne({ 'socials.label': 'twitter', 'socials.value': details.screenName }, { transform: null })
+    var existingContact = details.screenName && Contacts.findOne({ 'socials.label': 'Twitter', 'socials.value': details.screenName }, { transform: null })
     if (existingContact) return existingContact
     contact.avatar = '/images/avatar.svg'
     contact.slug = details.screenName || App.cleanSlug(details.name)
@@ -160,7 +160,7 @@ Meteor.methods({
 
 function addTwitterDetailsToContact(err, user) {
   if (err || !user) return console.log('Couldn\'t get Twitter info for ' + this.name)
-  Contacts.update({ slug: this.slug, 'socials.label': 'twitter' }, {
+  Contacts.update({ slug: this.slug, 'socials.label': 'Twitter' }, {
     $set: {
       avatar: user.profile_image_url_https,
       'socials.$.id': user.id_str

@@ -2,6 +2,7 @@ Template.Layout.events({
   'click [data-action="logout"]': function () {
     Meteor.logout(function (err) {
       if (err) return console.error(err)
+      localStorage.removeItem('medialist/recentMedialists')
       FlowRouter.go('home')
     })
   },

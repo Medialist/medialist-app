@@ -168,13 +168,15 @@ Template.addToMedialist.helpers({
   searchMedialists: () => {
     var term = Template.instance().term.get()
     if (!term) return []
-    return Medialists.query({
+    return Medialists.search({
       regex: term,
       limit: App.medialistSuggestions
     })
   },
   recentMedialists: () => {
-    return Medialists.find({ slug: { $in: App.getRecentMedialists() } })
+    var recentMedialists = App.getRecentMedialists()
+    var medialists = Medialists.find({ slug: { $in: recentMedialists } }).fetch()
+    return medialists.sort((m1, m2) => recentMedialists.indexOf(m1.slug) - recentMedialists.indexOf(m2.slug))
   },
   favouriteMedialists: () => {
     return Medialists.find({}, { limit: 5 })

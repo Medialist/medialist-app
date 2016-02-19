@@ -1,6 +1,6 @@
 Meteor.publish('medialists', function (opts) {
   if (!this.userId) return this.ready()
-  return Medialists.query(opts)
+  return Medialists.search(opts)
 })
 
 Meteor.publish('medialists-by-slug', function (slugs) {

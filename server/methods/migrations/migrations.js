@@ -134,7 +134,7 @@ var MigrationVersions = [
       // Make sure there are no moments actually in the DB
       ;['Orgs', 'Clients', 'Contacts', 'Medialists', 'Posts'].forEach(collection => {
         var Collection = global[collection]
-        Collection.find({}).forEach(doc => {
+        Collection.find({}, { transform: null }).forEach(doc => {
           if (removeMoments(doc)) Collection.update(doc._id, doc)
         })
       })
@@ -193,7 +193,7 @@ var MigrationVersions = [
     number: 11,
     instructions () {
       // Updates id to twitterId in socials objects
-      Contacts.find().forEach(contact => {
+      Contacts.find({}, { transform: null }).forEach(contact => {
         var save = false
         contact.socials.forEach(social => {
           if (social.label === 'twitter' && social.id) {

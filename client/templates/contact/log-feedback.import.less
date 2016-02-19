@@ -1,0 +1,28 @@
+.media-feedback {
+  margin-bottom:10px;
+  border:solid 1px @grey-200;
+  border-left: 0 none;
+  border-right: 0 none;
+  padding: 10px 0;
+  transition: border 250ms ease-in-out;
+  .media-left {
+    padding-right:0;
+  }
+}
+.feedback-input {
+  background:white;
+  min-height:32px;
+  line-height:20px;
+  padding:7px 10px;
+  color:@grey-500;
+  font-size: 14px;
+  &:focus{
+    outline:none;
+  }
+}
+.media-feedback-active {
+   border-color:@brand-primary;
+  .feedback-input {
+    color:@grey-800;
+  }
+}

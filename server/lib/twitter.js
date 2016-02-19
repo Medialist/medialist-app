@@ -43,3 +43,17 @@ TwitterClient.grabUserByScreenName = function (screen_name, cb) {
 TwitterClient.grabUserById = function (id, cb) {
   TwitterClient.grabUser({user_id: id}, cb)
 }
+
+// Max 100 screen names: https://dev.twitter.com/rest/reference/get/users/lookup
+TwitterClient.lookupUsersByScreenNames = (screenNames, cb) => {
+  var query = {screen_name: screenNames.join(',')}
+
+  TwitterClient.twitter.post('users/lookup', query, Meteor.bindEnvironment((err, users) => {
+    if (err) {
+      console.error('TwitterClient.lookupUsersByScreenNames', err, query)
+      return cb(err)
+    }
+
+    cb(null, users)
+  }))
+}

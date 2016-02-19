@@ -84,6 +84,7 @@ spacebars-compiler@1.0.7
 standard-minifiers@1.0.2
 tableflip:modal@0.0.1
 tableflip:slide-ins@0.0.1
+tableflip:snackbar@0.0.0
 tableflip:tablesort@0.0.1
 tableflip:twitter@0.0.1
 tableflip:twitter-screen-name@1.0.0

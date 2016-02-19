@@ -1,6 +1,11 @@
-Meteor.publish('medialists', function () {
-  if (!this.userId) return []
-  return Medialists.find({}, { limit: 100 })
+Meteor.publish('medialists', function (opts) {
+  if (!this.userId) return this.ready()
+  return Medialists.query(opts)
+})
+
+Meteor.publish('medialists-by-slug', function (slugs) {
+  if (!this.userId) return this.ready()
+  return Medialists.find({ slug: { $in: slugs } })
 })
 
 Meteor.publish('medialist', function (slug) {

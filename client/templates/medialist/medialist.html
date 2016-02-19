@@ -9,7 +9,7 @@
       {{#if checkSelectKeys}}
       <button class="btn btn-link">{{pluralize 'contact' checkSelectKeys.length}}</button>
       <a href="#" class="btn btn-success" data-action="create-new-medialist">Create Medialist</a>
-      <a href="#" class="btn btn-success" data-action="add-to-existing-medialist">Add to existing</a>
+      {{> addToMedialist selectedContacts=checkSelectKeys}}
       <a href="#" class="btn btn-danger" data-action="remove-from-medialist">Remove</a>
       {{else}}
       <a href="#" class="btn btn-primary btn-raised" data-action="add-new">Add Contact</a>
@@ -105,5 +105,33 @@
   {{message}}
   <div class="feedback-details">
     {{createdBy.name}} | {{fromNow createdAt}}
+  </div>
+</template>
+
+<template name="addToMedialist">
+  <div class="btn-group">
+    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Add to existing Medialist <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li>
+        <input type="text" class="form-control" name="medialist-search" placeholder="Search medialists" />
+      </li>
+      {{#each searchMedialists}}
+      <li><a href="#" data-action="add-to-medialist">#{{slug}}</a></li>
+      {{/each}}
+      {{#if recentMedialists}}
+        <li class="dropdown-header">Recent</li>
+        {{#each recentMedialists}}
+          <li><a href="#" data-action="add-to-medialist">#{{slug}}</a></li>
+        {{/each}}
+      {{/if}}
+      {{#if favouriteMedialists}}
+        <li class="dropdown-header">Favourites</li>
+        {{#each favouriteMedialists}}
+          <li><a href="#" data-action="add-to-medialist">#{{slug}}</a></li>
+        {{/each}}
+      {{/if}}
+    </ul>
   </div>
 </template>

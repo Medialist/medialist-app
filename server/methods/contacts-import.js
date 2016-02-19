@@ -70,7 +70,8 @@ function createContact (data, user) {
 
   check(data, Schemas.Contacts)
 
-  return Contacts.insert(data)
+  var id = Contacts.insert(data)
+  TwitterTask.queueContactUpdate(id)
 }
 
 function mergeContact (data, contact, user) {
@@ -112,7 +113,8 @@ function mergeContact (data, contact, user) {
 
   check(contact, Schemas.Contacts)
 
-  return Contacts.update({_id: id}, {$set: contact})
+  Contacts.update({_id: id}, {$set: contact})
+  TwitterTask.queueContactUpdate(id)
 }
 
 function mergeLabelValueLists (oldList, newList) {

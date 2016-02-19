@@ -86,6 +86,7 @@ tableflip:modal@0.0.1
 tableflip:slide-ins@0.0.1
 tableflip:tablesort@0.0.1
 tableflip:twitter@0.0.1
+tableflip:twitter-screen-name@1.0.0
 templating@1.1.5
 templating-tools@1.0.0
 tests-helpers@0.0.1

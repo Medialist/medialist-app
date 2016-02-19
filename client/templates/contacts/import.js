@@ -18,6 +18,11 @@ Template.contactsImport.onCreated(function () {
 
     if (!file) return
 
+    if (!s.endsWith(file.name, '.csv')) {
+      console.warn('Ignoring non CSV file', file.name) // TODO: snackbar.js
+      return tpl.file.set(null)
+    }
+
     tpl.parsing.set(true)
 
     Papa.parse(file, {
@@ -26,7 +31,7 @@ Template.contactsImport.onCreated(function () {
         tpl.parsing.set(false)
 
         // TODO: snackbar.js
-    		if (results.errors && results.errors.length) {
+        if (results.errors && results.errors.length) {
           return console.error(results.errors)
         }
 

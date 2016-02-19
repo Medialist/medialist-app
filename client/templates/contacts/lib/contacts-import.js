@@ -32,8 +32,9 @@ ContactsImport = {
         if (s.startsWith(value, 'cell')) return true
 
         if (/^[0-9 -+()]+$/.test(value)) {
-          // Is mobile if remove all non numerics and it starts with 07
-          return _.startsWith(value.replace(/[^0-9]/g, ''), '07')
+          // Is mobile if remove all non numerics and it starts with 07 || 447
+          var numbers = value.replace(/[^0-9]/g, '')
+          return _.startsWith(numbers, '07') || _.startsWith(numbers, '447')
         }
 
         return false
@@ -145,7 +146,7 @@ ContactsImport = {
       },
       twitter (contact, value) {
         contact.socials = contact.socials || []
-        contact.socials.push({label: 'Twitter', value: value})
+        contact.socials.push({label: 'Twitter', value: twitterScreenName(value) || value})
       },
       facebook (contact, value) {
         contact.socials = contact.socials || []

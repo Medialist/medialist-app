@@ -54,7 +54,7 @@ function createContact (data, user) {
   data.phones = data.phones || []
   data.importedData = [{data: data.importedData, importedAt: new Date()}]
 
-  data.avatar = '/images/avatar.svg' // TODO: From twitter?
+  data.avatar = '/images/avatar.svg'
   data.slug = App.cleanSlug(data.name)
   data.slug = App.uniqueSlug(data.slug, Contacts)
   data.medialists = []

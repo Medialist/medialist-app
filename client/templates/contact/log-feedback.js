@@ -1,10 +1,16 @@
 Template.logFeedback.onCreated(function () {
   var medialist = Medialists.findOne({ slug: FlowRouter.getParam('slug') })
   var contact = Template.currentData().contact
-  this.active = new ReactiveVar(false)
-  this.medialist = new ReactiveVar(medialist)
   this.status = new ReactiveVar(medialist && medialist.contacts[contact.slug])
-  this.contact = new ReactiveVar(contact)
+  this.active = new ReactiveVar(false)
+
+  this.autorun(() => {
+    FlowRouter.watchPathChange()
+    medialist = Medialists.findOne({ slug: FlowRouter.getParam('slug') })
+    contact = Template.currentData().contact
+    if (!medialist || !contact) return
+    this.status.set(medialist.contacts[contact.slug])
+  })
 })
 
 Template.logFeedback.helpers({
@@ -32,8 +38,8 @@ Template.logFeedback.events({
     var data = {
       message: message,
       status: tpl.status.get(),
-      contactSlug: tpl.contact.get().slug,
-      medialistSlug: tpl.medialist.get().slug,
+      contactSlug: tpl.data.contact.slug,
+      medialistSlug: FlowRouter.getParam('slug')
     }
     console.log('Feedback', data)
     Meteor.call('posts/create', data, function (err) {

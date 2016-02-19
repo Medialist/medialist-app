@@ -132,8 +132,7 @@ var MigrationVersions = [
     number: 9,
     instructions () {
       // Make sure there are no moments actually in the DB
-      ;['Orgs', 'Clients', 'Contacts', 'Medialists', 'Posts'].forEach(collection => {
-        var Collection = global[collection]
+      ;[Orgs, Clients, Contacts, Medialists, Posts].forEach(Collection => {
         Collection.find({}, { transform: null }).forEach(doc => {
           if (removeMoments(doc)) Collection.update(doc._id, doc)
         })

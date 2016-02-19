@@ -101,8 +101,10 @@ var MigrationVersions = [
       Posts.find({}, { transform: null }).forEach(post => {
         if (!post.createdBy.avatar) {
           var user = Meteor.users.findOne(post.createdBy._id)
-          post.createdBy.avatar = user.services.twitter.profile_image_url_https
-          Posts.update(post._id, post)
+          if (user) {
+            post.createdBy.avatar = user.services.twitter.profile_image_url_https
+            Posts.update(post._id, post)
+          }
         }
       })
     }
@@ -128,6 +130,19 @@ var MigrationVersions = [
 
   {
     number: 9,
+    instructions () {
+      // Make sure there are no moments actually in the DB
+      ;['Orgs', 'Clients', 'Contacts', 'Medialists', 'Posts'].forEach(collection => {
+        var Collection = global[collection]
+        Collection.find({}).forEach(doc => {
+          if (removeMoments(doc)) Collection.update(doc._id, doc)
+        })
+      })
+    }
+  },
+
+  {
+    number: 10,
     instructions () {
       // Replaces contact details based on new schema
       Contacts.find({}, { transform: null }).forEach(contact => {
@@ -170,6 +185,24 @@ var MigrationVersions = [
 
         check(_.omit(newContact, '_id'), Schemas.Contacts)
         Contacts.update(contact._id, newContact)
+      })
+    }
+  },
+
+  {
+    number: 11,
+    instructions () {
+      // Updates id to twitterId in socials objects
+      Contacts.find().forEach(contact => {
+        var save = false
+        contact.socials.forEach(social => {
+          if (social.label === 'twitter' && social.id) {
+            social.twitterId = social.id
+            delete social.id
+            save = true
+          }
+        })
+        if (save) Contacts.update(contact._id, contact)
       })
     }
   }
@@ -222,9 +255,22 @@ Meteor.methods({
   }
 })
 
-function checkMigrator(userId) {
+function checkMigrator (userId) {
   if (!userId) throw new Meteor.Error('Only a logged-in user can run migrations')
   var user = Meteor.users.findOne(userId)
   var whitelist = Meteor.settings && Meteor.settings.migrations.whitelist
   if (whitelist.indexOf(user.services.twitter.screenName) === -1) throw new Meteor.Error('Only a whitelisted user can run migrations')
+}
+
+function removeMoments (doc) {
+  return _.reduce(doc, (isAltered, val, key) => {
+    if (val && val._isAMomentObject) {
+      doc[key] = moment(val).toDate()
+      return true
+    }
+    if (typeof val === 'object') {
+      return removeMoments(val)
+    }
+    return false
+  }, false)
 }

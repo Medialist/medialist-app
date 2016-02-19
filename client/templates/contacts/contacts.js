@@ -19,6 +19,7 @@ Template.contacts.onCreated(function () {
   this.subscribe('contacts', {limit: 100})
   this.filterTerm = new ReactiveVar()
   this.query = new ReactiveVar()
+  this.selected = new ReactiveVar()
   this.autorun(() => {
     this.query.set(makeQuery(this.filterTerm.get()))
   })
@@ -86,5 +87,19 @@ Template.contacts.events({
 Template.allContactsRow.helpers({
   checked: function () {
     return this.slug in allContactsTpl.checkSelect.get()
+  },
+  selected: function () {
+    return allContactsTpl.selected.get()
+  }
+})
+
+Template.allContactsRow.events({
+  'click [data-action="show-contact-slide-in"]': function (evt, tpl) {
+    var $el = tpl.$(evt.target)
+    if (!$el.parents('[data-no-sidebar]').length) {
+      FlowRouter.setQueryParams({ contact: this.slug })
+      allContactsTpl.selected.set(this.slug)
+      SlideIns.show('right', 'contactSlideIn', { contact: this.slug, noMedialist: true })
+    }
   }
 })

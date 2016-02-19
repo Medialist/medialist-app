@@ -10,6 +10,8 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
+  var faker = Npm.require('faker')
+
   Meteor.methods({
     'tests/createAndLoginTestUser': function () {
       Meteor.users.upsert({ _id: 'AAAAAAAAAAAAAAAAA' }, {
@@ -47,6 +49,44 @@ if (Meteor.isServer) {
         Orgs.insert(orgs)
       })
       return true
+    },
+
+    'tests/makeMedialists': function (n) {
+      Array(n).fill(0).forEach(() => {
+        Meteor.call('medialists/create', {
+          name: faker.commerce.productName(),
+          client: {
+            name: faker.company.companyName()
+          },
+          purpose: faker.lorem.sentence()
+        })
+      })
+    },
+
+    'tests/makeContacts': function (n) {
+      var medialists = Medialists.find().map(medialist => medialist.slug)
+      Array(n).fill(0).forEach(() => {
+        Meteor.call('contacts/create', {
+          screenName: faker.internet.domainWord(),
+          name: faker.name.findName(),
+          bio: faker.lorem.sentence()
+        }, _.sample(medialists))
+      })
+    },
+
+    'tests/makePosts': function (n) {
+      var contacts = Contacts.find().fetch()
+      var statuses = _.values(Contacts.status)
+      Array(n).fill(0).forEach(() => {
+        var contact = _.sample(contacts)
+        if (!contact.medialists.length) return console.log('Skipping contact with no medialists')
+        Meteor.call('posts/create', {
+          contactSlug: contact.slug,
+          medialistSlug: _.sample(contact.medialists),
+          message: faker.lorem.sentence(),
+          status: _.sample(statuses)
+        })
+      })
     }
   })
 }

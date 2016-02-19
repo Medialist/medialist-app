@@ -51,7 +51,7 @@
 </template>
 
 <template name="allContactsRow">
-  <tr class="contact-row {{#if checked}}checked-row{{/if}}" data-contact="{{slug}}" data-action="show-contact-slide-in">
+  <tr class="document-row {{#if equal slug selected}}selected{{/if}} {{#if checked}}checked-row{{/if}}" data-contact="{{slug}}" data-action="show-contact-slide-in">
     <td class="col-checkbox">
       <div class="checkbox checkbox-default">
         <label>

@@ -19,7 +19,8 @@ Template.contactsImport.onCreated(function () {
     if (!file) return
 
     if (!s.endsWith(file.name, '.csv')) {
-      console.warn('Ignoring non CSV file', file.name) // TODO: snackbar.js
+      console.warn('Ignoring non CSV file', file.name)
+      Snackbar.warn('Please upload a CSV file')
       return tpl.file.set(null)
     }
 
@@ -30,9 +31,10 @@ Template.contactsImport.onCreated(function () {
     	complete: function (results) {
         tpl.parsing.set(false)
 
-        // TODO: snackbar.js
         if (results.errors && results.errors.length) {
-          return console.error(results.errors)
+          console.error('Failed to parse csv', results.errors)
+          tpl.file.set(null)
+          return results.errors.forEach(err => Snackbar.error(err.message))
         }
 
         tpl.rows.set(results.data)
@@ -87,17 +89,18 @@ Template.contactsImport.events({
 
     Meteor.call('contacts/import', contacts, (err, res) => {
       tpl.importing.set(false)
-      // TODO: snackbar
-      if (err) return console.error('Failed to import contacts', err)
 
-      // TODO: snackbar
-      if (res.updated) {
-        alert(`${res.created} contacts created, ${res.updated} contacts updated`)
-      } else {
-        alert(`${res.created} contacts created`)
+      if (err) {
+        return Snackbar.error(err.reason || err.error || 'Failed to import contacts')
       }
 
       FlowRouter.go('/contacts')
+
+      if (res.updated) {
+        Snackbar.info(`${res.created} contacts created, ${res.updated} contacts updated`)
+      } else {
+        Snackbar.info(`${res.created} contacts created`)
+      }
     })
   },
 

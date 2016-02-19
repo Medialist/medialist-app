@@ -1,0 +1,18 @@
+.snackbar-primary {
+  background-color: #2196f3;
+}
+.snackbar-primary:hover {
+  background-color: #0d87e9;
+}
+.snackbar-warning {
+  background-color: #ff9800;
+}
+.snackbar-warning:hover {
+  background-color: #e08600;
+}
+.snackbar-danger {
+  background-color: #e51c23;
+}
+.snackbar-danger:hover {
+  background-color: #cb171e;
+}

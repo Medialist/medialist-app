@@ -19,7 +19,8 @@ Template.contactsImport.onCreated(function () {
     if (!file) return
 
     if (!s.endsWith(file.name, '.csv')) {
-      console.warn('Ignoring non CSV file', file.name) // TODO: snackbar.js
+      console.warn('Ignoring non CSV file', file.name)
+      Snackbar.warn('Please upload a CSV file')
       return tpl.file.set(null)
     }
 

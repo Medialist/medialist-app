@@ -10,5 +10,17 @@ Meteor.methods({
       fut.return(res)
     })
     return fut.wait()
+  },
+
+  // The client is just letting us know there is some work to do, they don't care about the response.
+  'twitter/updateAvatar': function (twitterId) {
+    if (!this.userId) throw new Meteor.Error('Only logged in users can request twitter updates')
+    check(twitterId, String)
+    // Can we still see their avatar?
+    var twit = TwitterUsers.findOne({_id: twitterId}, {fields: {'profile_image_url_https': 1}})
+    HTTP.get(twit.profile_image_url_https, err => {
+      if (!err) return // avatar is fine. ignore.
+      TwitterClient.grabUserById(twitterId, err => { if (err) console.log(err) })
+    })
   }
 })

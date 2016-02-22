@@ -80,10 +80,10 @@
     {{#unless (or posts.count instance.spinner.get)}}
       <div class="h6 text-center">There is no activity for this medialist.</div>
     {{/unless}}
-    {{#if instance.spinner.get}}
+    {{#unless Template.subscriptionsReady}}
       <div class="spinner-box">
         {{> spinner}}
       </div>
-    {{/if}}
+    {{/unless}}
   </div>
 </template>

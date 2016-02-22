@@ -1,5 +1,6 @@
 {
   "less": {
+    "customVariables": false,
     "exposeMixins": true,
     "compile": false,
     "modules": {
@@ -10,7 +11,7 @@
        "buttons": true,
        "carousel": true,
        "close": true,
-       "code": true,
+       "code": false,
        "component-animations": true,
        "dropdowns": true,
        "forms": true,
@@ -29,7 +30,7 @@
        "pagination": true,
        "panels": true,
        "popovers": true,
-       "print": true,
+       "print": false,
        "progress-bars": true,
        "responsive-embed": true,
        "responsive-utilities": true,
@@ -45,16 +46,16 @@
   "javascript": {
     "expose": false,
     "modules": {
-      "affix": true,
+      "affix": false,
       "alert": true,
       "button": true,
-      "carousel": true,
+      "carousel": false,
       "collapse": true,
       "dropdown": true,
       "modal": true,
       "popover": true,
-      "scrollspy": true,
-      "tab": true,
+      "scrollspy": false,
+      "tab": false,
       "tooltip": true,
       "transition": true
     }

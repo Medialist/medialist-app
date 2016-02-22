@@ -74,7 +74,6 @@ Template.contactActivity.events({
 
 Template.contactPosts.onCreated(function () {
   this.limit = new ReactiveVar(Posts.feedLimit.initial)
-  this.spinner = new ReactiveVar(false)
   var medialist = Medialists.findOne({ slug: FlowRouter.getParam('medialistSlug') })
   this.status = new ReactiveVar(medialist && medialist.contacts[Template.currentData().contact.slug])
   // reset form when the medialist or contact slug is changed
@@ -92,17 +91,15 @@ Template.contactPosts.onCreated(function () {
     var limit = this.limit.get()
     var opts = { contact, limit, types: ['feedback', 'medialists changed', 'need-to-knows'] }
     if (medialist) opts.medialist = medialist
-    this.spinner.set(true)
     Meteor.subscribe('posts', opts, () => {
-      this.spinner.set(false)
-      Tracker.afterFlush(() => $('.info-activity-log').perfectScrollbar('update'))
+      Tracker.afterFlush(() => $(this.firstNode).parents('.info-activity-log').perfectScrollbar('update'))
     })
   })
 })
 
 Template.contactPosts.onRendered(function () {
   var data = Template.currentData()
-  Meteor.setTimeout(() => Tracker.afterFlush(() => $('.info-activity-log').perfectScrollbar()), 1)
+  Meteor.setTimeout(() => Tracker.afterFlush(() => $(this.firstNode).parents('.info-activity-log').perfectScrollbar()), 1)
   var incrementLimit = _.debounce(() => {
     // check if there are going to be any more results coming
     var query = { 'contacts.slug': data.contact.slug }
@@ -116,7 +113,7 @@ Template.contactPosts.onRendered(function () {
 })
 
 Template.contactPosts.onDestroyed(function () {
-  $('.info-activity-log').perfectScrollbar('destroy')
+  $(this.firstNode).parents('.info-activity-log').perfectScrollbar('destroy')
   $(document).off('ps-y-reach-end')
 })
 

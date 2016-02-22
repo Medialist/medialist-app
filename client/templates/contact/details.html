@@ -114,12 +114,12 @@
     {{/each}}
     </ul>
   </div>
-  {{#if instance.spinner.get}}
+  {{#unless Template.subscriptionsReady}}
     <div class="spinner-box">
       {{> spinner}}
     </div>
-  {{/if}}
-  {{#unless (or posts.count instance.spinner.get)}}
+  {{/unless}}
+  {{#unless (or posts.count (not Template.subscriptionsReady))}}
     <div class="h6 text-center">There is no activity for this contact.</div>
   {{/unless}}
 </template>

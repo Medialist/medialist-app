@@ -5,7 +5,7 @@
       {{#if checkSelectKeys}}
       <button class="btn btn-link">{{pluralize 'contact' checkSelectKeys.length}}</button>
       <a href="#" class="btn btn-success" data-action="create-new-medialist">Create Medialist</a>
-      <a href="#" class="btn btn-success" data-action="add-to-existing-medialist">Add to existing</a>
+      {{> addToMedialist selectedContacts=checkSelectKeys}}
       {{else}}
       <a href="#" class="btn btn-primary btn-raised" data-action="add-new">Add Contact</a>
       <a href="/contacts/import" class="btn btn-primary">Import Contacts</a>

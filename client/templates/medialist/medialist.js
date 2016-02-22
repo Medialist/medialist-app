@@ -76,17 +76,6 @@ Template.medialist.events({
     var contactSlugs = _.keys(medialistTpl.checkSelect.get())
     Modal.show('createMedialist', { contacts: contactSlugs })
   },
-  'click [data-action="add-to-existing-medialist"]': function () {
-    var contactSlugs = _.keys(medialistTpl.checkSelect.get())
-    var cb = function (medialistSlug) {
-      Meteor.call('contacts/addToMedialist', contactSlugs, medialistSlug, function (err) {
-        if (err) return console.log(err)
-        Modal.hide()
-        FlowRouter.go('medialist', { slug: medialistSlug })
-      })
-    }
-    Modal.show('selectMedialist', { callback: cb })
-  },
   'click [data-action="remove-from-medialist"]': function () {
     var contactSlugs = _.keys(medialistTpl.checkSelect.get())
     var medialistSlug = medialistTpl.slug.get()
@@ -132,8 +121,8 @@ Template.medialistContactRow.helpers({
   checked: function () {
     return this.slug in medialistTpl.checkSelect.get()
   },
-  selected: function () {
-    return medialistTpl.selected.get()
+  selectedContacts: function () {
+    return _.keys(medialistTpl.checkSelect.get())
   }
 })
 
@@ -156,6 +145,59 @@ Template.medialistContactRow.events({
       status: status
     }, function (err) {
       if (err) console.error(err)
+    })
+  }
+})
+
+Template.addToMedialist.onCreated(function () {
+  var tpl = this
+  tpl.term = new ReactiveVar('')
+
+  tpl.subscribe('medialist-favourites')
+  tpl.subscribe('medialists-by-slug', App.getRecentMedialists())
+  tpl.autorun(() => {
+    var term = tpl.term.get()
+    Meteor.subscribe('medialists', {
+      regex: term,
+      limit: App.medialistSuggestions
+    })
+  })
+})
+
+Template.addToMedialist.helpers({
+  searchMedialists: () => {
+    var term = Template.instance().term.get()
+    if (!term) return []
+    return Medialists.search({
+      regex: term,
+      limit: App.medialistSuggestions
+    })
+  },
+  recentMedialists: () => {
+    var recentMedialists = App.getRecentMedialists()
+    var medialists = Medialists.find({ slug: { $in: recentMedialists } }).fetch()
+    return medialists.sort((m1, m2) => recentMedialists.indexOf(m1.slug) - recentMedialists.indexOf(m2.slug))
+  },
+  favouriteMedialists: () => {
+    return Medialists.find({}, { limit: 5 })
+  }
+})
+
+Template.addToMedialist.events({
+  'keyup [name="medialist-search"]': (evt, tpl) => {
+    tpl.term.set($(evt.currentTarget).val())
+  },
+  'hidden.bs.dropdown .btn-group': (evt, tpl) => {
+    tpl.term.set('')
+    tpl.$('[name="medialist-search"]').val('')
+  },
+  'click [data-action="add-to-medialist"]': function (evt, tpl) {
+    var medialistSlug = this.slug
+    var contactSlugs = tpl.data.selectedContacts
+    Meteor.call('contacts/addToMedialist', contactSlugs, medialistSlug, err => {
+      if (err) return console.err(err)
+      // TODO Add snackbar
+      FlowRouter.go('medialist', { slug: medialistSlug })
     })
   }
 })

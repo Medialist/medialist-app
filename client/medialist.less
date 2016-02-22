@@ -1,5 +1,5 @@
 @import "lib/material/colors.import.less";
-@import "lib/bootstrap/bootstrap-raw.less";
+@import "lib/bootstrap/bootstrap-raw.import.less";
 @import "lib/bootswatch-paper/variables.import.less";
 @import "lib/bootswatch-paper/bootswatch.import.less";
 
@@ -12,8 +12,13 @@
 @import "templates/posts/post.import.less";
 
 // custom vars
-@brand-primary-light: lighten(@brand-primary, 40%);
-@brand-accent: @yellow-600;
+@brand-accent:          @yellow-600;
+@brand-primary-light:   lighten(@brand-primary, 40%);
+@status-to-contact:     @grey-600;
+@status-contacted:      @light-blue-600;
+@status-hot-lead:       @orange-600;
+@status-completed:      @green-600;
+@status-not-interested: @red-400;
 
 // boostrap overrides
 @navbar-height: 68px;
@@ -21,15 +26,11 @@
 @border-radius-large: 2px;
 @border-radius-small: 0px;
 @body-bg: @grey-50;
+@text-color: @gray-dark;
+@input-color: @gray-darker;
 @navbar-default-link-active-color: @navbar-default-link-color;
 @navbar-default-link-active-bg: @navbar-default-bg;
 @table-bg-hover: @brand-primary-light;
-
-@status-to-contact:     @grey-600;
-@status-contacted:      @light-blue-600;
-@status-hot-lead:       @orange-600;
-@status-completed:      @green-600;
-@status-not-interested: @red-400;
 
 .bg-to-contact {
   background-color: @status-to-contact;

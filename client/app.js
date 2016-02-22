@@ -22,3 +22,16 @@ App.toggleReactiveObject = function (reactiveObject, key) {
   }
   reactiveObject.set(currObj)
 }
+
+App.pushRecentMedialist = function (slug) {
+  var recentRaw = localStorage.getItem('medialist/recentMedialists')
+  var recents = recentRaw ? JSON.parse(recentRaw) : []
+  recents.unshift(slug)
+  if (recents.length > 5) recents.pop()
+  localStorage.setItem('medialist/recentMedialists', JSON.stringify(recents))
+}
+
+App.getRecentMedialists = function () {
+  var recentRaw = localStorage.getItem('medialist/recentMedialists')
+  return recentRaw ? JSON.parse(recentRaw) : []
+}

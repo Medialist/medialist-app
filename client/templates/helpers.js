@@ -46,7 +46,8 @@ var helpers = {
     return user && user.name
   },
   or: (x, y) => x || y,
-  and: (x, y) => x && y
+  and: (x, y) => x && y,
+  not: x => !x
 }
 
 _.each(helpers, function (helper, name) {

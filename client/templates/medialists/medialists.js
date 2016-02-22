@@ -64,6 +64,7 @@ Template.medialists.events({
     if(!$(evt.currentTarget).prop('checked')) $('[data-checkbox-all]').prop('checked', false)
   },
   'click [data-action="show-medialist-details"]': function (evt, tpl) {
+    if (evt.target.tagName === 'A') return SlideIns.hide('right')
     tpl.selected.set(this.slug)
     FlowRouter.setQueryParams({ medialist: this.slug })
     SlideIns.show('right', 'medialistSlideIn', { medialist: this.slug })

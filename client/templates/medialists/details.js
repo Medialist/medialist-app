@@ -5,7 +5,7 @@ Template.medialistSlideIn.onCreated(function () {
 
 Template.medialistSlideIn.helpers({
   medialistDetails () {
-    return Medialists.findOne({ slug: this.medialist })
+    return Medialists.findOne({ slug: this.medialist }, { transform: null })
   }
 })
 

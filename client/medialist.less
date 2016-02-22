@@ -6,20 +6,122 @@
 @import "templates/components/topbar.import.less";
 @import "templates/components/mainmenu.import.less";
 @import "templates/contact/details.import.less";
+@import "templates/contact/log-feedback.import.less";
+@import "templates/contacts/import.import.less";
 @import "templates/medialist/medialist.import.less";
 @import "templates/posts/post.import.less";
 
+// custom vars
+@brand-primary-light: lighten(@brand-primary, 40%);
+@brand-accent: @yellow-600;
+
 // boostrap overrides
+@navbar-height: 68px;
+@border-radius-base:  0px;
+@border-radius-large: 2px;
+@border-radius-small: 0px;
 @body-bg: @grey-50;
-@border-radius-base:        0px;
-@border-radius-large:       2px;
-@border-radius-small:       0px;
 @navbar-default-link-active-color: @navbar-default-link-color;
 @navbar-default-link-active-bg: @navbar-default-bg;
-@table-bg-hover: lighten(@brand-primary, 40%);
+@table-bg-hover: @brand-primary-light;
 
+@status-to-contact:     @grey-600;
+@status-contacted:      @light-blue-600;
+@status-hot-lead:       @orange-600;
+@status-completed:      @green-600;
+@status-not-interested: @red-400;
+
+.bg-to-contact {
+  background-color: @status-to-contact;
+  color: white;
+}
+.bg-contacted {
+  background-color: @status-contacted;
+  color: white;
+}
+.bg-hot-lead {
+  background-color: @status-hot-lead;
+  color: white;
+}
+.bg-completed {
+  background-color: @status-completed;
+  color: white;
+}
+.bg-not-interested {
+  background-color: @status-not-interested;
+  color: white;
+}
+.text-to-contact {
+  color: @status-to-contact !important;
+}
+.text-contacted {
+  color: @status-contacted !important;
+}
+.text-hot-lead {
+  color: @status-hot-lead !important;
+}
+.text-completed {
+  color: @status-completed !important;
+}
+.text-not-interested {
+  color: @status-not-interested !important;
+}
+#btn-status(@class,@bg) {
+  .btn-@{class} {
+    background-size: 200%;
+    background-position: 50%;
+    background-color: @bg;
+    color:white;
+    &:focus {
+      background-color: @bg;
+    }
+    &:hover,
+    &:active:hover {
+      color:white;
+      background-color: darken(@bg, 6%);
+    }
+    &:active {
+      background-color: darken(@bg, 12%);
+      #gradient > .radial(darken(@bg, 12%) 10%, @bg 11%);
+      background-size: 1000%;
+      .box-shadow(2px 2px 2px rgba(0,0,0,.4));
+    }
+  }
+}
+#btn-status(to-contact,     @status-to-contact);
+#btn-status(contacted,      @status-contacted);
+#btn-status(hot-lead,       @status-hot-lead);
+#btn-status(completed,      @status-completed);
+#btn-status(not-interested, @status-not-interested);
+
+.bg-primary-light {
+  background-color: @brand-primary-light;
+}
+.bg-accent {
+  background-color: @yellow-600;
+}
 .btn-underline {
   border-bottom: solid 2px @brand-primary;
+}
+.panel-flat {
+  box-shadow:none;
+}
+.panel-border {
+  border: 1px solid @grey-400;
+  padding: 6px 8px;
+  .panel-title {
+    font-size:13px;
+    font-weight:bold;
+  }
+}
+
+.panel-sm {
+  .panel-heading {
+    padding:4px 0 2px;
+  }
+  .panel-body {
+    padding:2px 0 4px;
+  }
 }
 
 a {
@@ -76,7 +178,8 @@ body {
 
 .slide-in {
   bottom:0;
-  height: calc(~"100% - 62px");
+  height: calc(~"100% - " @navbar-height);
+  z-index:2000;
 
   .nav-slide-in a {
     color: #fff;
@@ -84,8 +187,13 @@ body {
 }
 .slide-in.left {
   background: #fff;
+  box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.2);
+  border: 0 none;
 }
-
+.slide-in.right {
+  box-shadow:-1px 1px 1px 0px rgba(0,0,0,0.2);
+  border: 0 none;
+}
 .modal-dialog{
   max-height: 90vh;
   overflow-y: auto;
@@ -128,4 +236,9 @@ table th.sort-down:hover:after {
 table th.sort-up:after {
   border-bottom:none;
   border-width:4px 4px 0;
+}
+.bg-primary, .bg-completed {
+  h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    color:white;
+  }
 }

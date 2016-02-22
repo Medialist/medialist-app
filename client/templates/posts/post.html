@@ -1,15 +1,20 @@
 <template name="displayPost">
   {{#with post}}
-  <div class="display-post">
-    <div class="row">
-      <div class="col-xs-2">
-        {{#if profileImage}}
-        <div class="media-left">
-          <img class="media-object img-rounded" src="{{createdBy.avatar}}" alt="{{createdBy.name}} avatar">
-        </div>
-        {{/if}}
+  <div class="media display-post">
+    {{#if ../contactAvatar}}
+      {{#if contacts.[0].avatar}}
+      <div class="media-left">
+        <img width=36 height=36 class="media-object img-rounded" src="{{contacts.[0].avatar}}" alt="{{contacts.[0].name}} avatar">
       </div>
-      <div class="col-xs-10">
+      {{/if}}
+    {{else}}
+      {{#if profileImage}}
+      <div class="media-left">
+        <img width=36 height=36 class="media-object img-rounded" src="{{createdBy.avatar}}" alt="{{createdBy.name}} avatar">
+      </div>
+      {{/if}}
+    {{/if}}
+      <div class="media-body">
         <div class="display-post-details">
           {{#if equal type 'need to know'}}
             <a href="#">{{youOrName createdBy}}</a> added a Need-to-know{{#if ../showContact}} for {{contacts.[0].name}}{{/if}}
@@ -28,7 +33,6 @@
           {{fromNow createdAt}}
         </div>
       </div>
-    </div>
     {{#if or (equal type 'feedback') (equal type 'need to know')}}
       {{#if message}}
       <div class="row">

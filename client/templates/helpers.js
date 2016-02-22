@@ -25,6 +25,9 @@ var helpers = {
   fromNow: function (date) {
     return moment(Math.min(date, new Date() - 1)).fromNow()
   },
+  dateFormat: function (date, format) {
+    return moment(date).format(format)
+  },
   instance: function() {
     return Template.instance()
   },
@@ -42,7 +45,8 @@ var helpers = {
     if (user && user._id === Meteor.userId()) return 'You'
     return user && user.name
   },
-  or: (x, y) => x || y
+  or: (x, y) => x || y,
+  and: (x, y) => x && y
 }
 
 _.each(helpers, function (helper, name) {

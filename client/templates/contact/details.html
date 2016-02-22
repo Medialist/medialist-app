@@ -16,15 +16,15 @@
         <a><i class="glyphicon glyphicon-option-vertical"></i></a>
       </li>
     </ul>
-    <div class="info-top-section">
+    <div class="info-top-section bg-primary">
       <div class="container-fluid">
         <div class="media">
           <div class="media-left">
-            <img class="media-object img-rounded" src="{{contactDetails.contact.avatar}}" alt="{{contactDetails.contact.name}} avatar">
+            <img class="media-object img-rounded" src="{{avatar}}" alt="{{name}} avatar">
           </div>
           <div class="media-body">
-            <h4 class="media-heading">{{contactDetails.contact.name}}</h4>
-            <h5>{{contactDetails.contact.jobTitles}}, {{contactDetails.contact.primaryOutlets}}</h5>
+            <h4 class="media-heading">{{name}}</h4>
+            <p>{{primaryOutlets}}</p>
           </div>
         </div>
         <div class="info-menu">
@@ -67,7 +67,7 @@
       </div>
       <div class="form-group">
         <label for="contact-detail-screenName">Twitter</label>
-        <p class="editable-text-container" id="contact-detail-screenName">{{> editableText collection="contacts" field="socials.0.value" acceptEmpty=true inputClass="form-control" eventType="dblclick" substitute="-" beforeUpdate="generateUpdatePost"}}</p>
+        <p class="editable-text-container" id="contact-detail-screenName">{{> editableText collection="contacts" field="socials.0.value" acceptEmpty=true inputClass="form-control" eventType="dblclick" substitute="-" beforeUpdate="generateUpdatePostTwitter"}}</p>
       </div>
       <div class="form-group">
         <label for="contact-detail-email">Email</label>
@@ -87,12 +87,14 @@
 
 <template name="contactActivity">
   <div class="container-fluid info-activity-log">
-    <ul class="activity-menu text-center">
-      <li role="presentation" class="{{#if equal instance.option.get 'all'}}active{{/if}}" data-option="all">All Activity</li>
-      {{#unless noMedialist}}
-        <li role="presentation" class="{{#if equal instance.option.get 'medialist'}}active{{/if}}" data-option="medialist">#{{routeSlug}}</li>
-      {{/unless}}
-      <li role="presentation" class="{{#if equal instance.option.get 'needToKnow'}}active{{/if}}" data-option="needToKnow">Need-to-know</li>
+    {{> logFeedback feedbackTemplate.data}}
+    <ul class="nav nav-tabs nav-justified">
+      <li role="presentation" class="{{#if equal instance.option.get 'all'}}active{{/if}}">
+        <a data-option="all">All Activity</a>
+      </li>
+      <li role="presentation" class="{{#if equal instance.option.get 'medialist'}}active{{/if}}">
+        <a data-option="medialist">#{{routeSlug}}</a>
+      </li>
     </ul>
 
     {{> Template.dynamic template=feedbackTemplate.template data=feedbackTemplate.data}}
@@ -101,64 +103,47 @@
 </template>
 
 <template name="contactPosts">
-  {{#unless noMedialist}}
-    <div class="post-container">
-      <div class="row">
-        <div class="col-xs-2">
-          <img class="img-rounded" src={{profileImage}}>
-        </div>
-        <div class="col-xs-10">
-          <form>
-            <div class="form-group">
-              <div class="form-control contenteditable-container {{#if instance.postOpen.get}}open{{/if}}">
-                {{#if instance.postOpen.get}}
-                  <span contenteditable=true tabindex=0 data-field="post-text"></span>&nbsp;-&nbsp;{{> postSignature status=instance.status.get medialist=routeSlug}}
-                {{else}}
-                  <span class="placeholder">What did {{firstName contact.name}} think of #{{routeSlug}}?</span>
-                {{/if}}
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-      {{#if instance.postOpen.get}}
-        <hr>
-        <div class="row">
-          <div class="col-xs-12">
-            <button type="button" class="btn btn-sm btn-primary pull-right" data-action="save-post">Save</button>
-            <span class="pull-right">
-              <a data-target="#" class="btn btn-sm dropdown-toggle status status-{{classify instance.status.get}}" data-toggle="dropdown">
-                {{instance.status.get}}
-                <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                {{#each statuses}}
-                  <li><a data-action="set-status" class="status status-{{classify this}}">{{this}}</a></li>
-                {{/each}}
-              </ul>
-            </span>
-          </div>
-        </div>
-      {{/if}}
-      <hr>
-    </div>
-  {{else}}
-    <div class="spacer"></div>
-  {{/unless}}
-  {{#each posts}}
-    {{> displayPost post=this}}
-    <hr>
-  {{/each}}
+  <div class="panel panel-sm">
+    <ul class="list-group">
+    {{#each posts}}
+      <li class="list-group-item">
+        {{> displayPost post=this}}
+      </li>
+    {{/each}}
+    </ul>
+  </div>
   {{#if instance.spinner.get}}
     <div class="spinner-box">
       {{> spinner}}
     </div>
   {{/if}}
+  <div class="post-container">
+    {{#if instance.postOpen.get}}
+      <hr>
+      <div class="row">
+        <div class="col-xs-12">
+          <button type="button" class="btn btn-sm btn-primary pull-right" data-action="save-post">Save</button>
+          <span class="pull-right">
+            <a data-target="#" class="btn btn-sm dropdown-toggle status status-{{classify instance.status.get}}" data-toggle="dropdown">
+              {{instance.status.get}}
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              {{#each statuses}}
+                <li><a data-action="set-status" class="status status-{{classify this}}">{{this}}</a></li>
+              {{/each}}
+            </ul>
+          </span>
+        </div>
+      </div>
+    {{/if}}
+    <hr>
+  </div>
 </template>
 
 <template name="postSignature">
   <span class="signature">
-    <span class="status status-{{classify status}}">{{status}}</span> for <a href="/medialist/{{medialist}}">#{{medialist}}</a>
+    <span class="text-{{classify status}}">{{status}}</span> for <a href="/medialist/{{medialist}}">#{{medialist}}</a>
   </span>
 </template>
 

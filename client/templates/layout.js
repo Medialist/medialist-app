@@ -8,13 +8,13 @@ Template.Layout.events({
   'click [data-action="login"]': function () {
     Meteor.loginWithTwitter()
   },
-  'error img[data-twitter-id]': function (evt) {
+  'error img[data-slug]': function (evt) {
     var $img = $(evt.currentTarget)
     if ($img.attr('src') === '/images/avatar.svg') return // bad times. We have lost contact with ground control.
     $img.attr('src', '/images/avatar.svg')
-    var twitterId = $img.data('twitterId')
-    if (!twitterId) return
-    Meteor.call('twitter/updateAvatar', twitterId + '')
+    var slug = $img.attr('data-slug')
+    if (!slug) return
+    Meteor.call('contacts/updateAvatar', slug)
   }
 })
 

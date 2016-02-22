@@ -41,7 +41,6 @@ hot-code-push@1.0.0
 html-tools@1.0.5
 htmljs@1.0.5
 http@1.1.1
-huttonr:bootstrap3@3.3.6_6
 huttonr:bootstrap3-assets@3.3.6_2
 id-map@1.0.4
 jquery@1.11.4
@@ -82,6 +81,7 @@ session@1.1.1
 spacebars@1.0.7
 spacebars-compiler@1.0.7
 standard-minifiers@1.0.2
+tableflip:bootstrap3@3.3.6_7
 tableflip:modal@0.0.1
 tableflip:slide-ins@0.0.1
 tableflip:snackbar@0.0.0

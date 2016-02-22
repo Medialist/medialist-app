@@ -34,14 +34,14 @@ Template.medialistActivity.onCreated(function () {
     }
     tpl.subscribe('posts', opts, () => {
       this.spinner.set(false)
-      Tracker.afterFlush(() => $('.info-activity-log').perfectScrollbar('update'))
+      Tracker.afterFlush(() => tpl.$('.info-activity-log').perfectScrollbar('update'))
     })
   })
 })
 
 Template.medialistActivity.onRendered(function () {
   var data = Template.currentData()
-  Meteor.setTimeout(() => Tracker.afterFlush(() => $('.info-activity-log').perfectScrollbar()), 1)
+  Meteor.setTimeout(() => Tracker.afterFlush(() => this.$('.info-activity-log').perfectScrollbar()), 1)
   var incrementLimit = _.debounce(() => {
     // check if there are going to be any more results coming
     var query = { medialists: data.slug }
@@ -54,7 +54,7 @@ Template.medialistActivity.onRendered(function () {
 })
 
 Template.medialistActivity.onDestroyed(function () {
-  $('.info-activity-log').perfectScrollbar('destroy')
+  this.$('.info-activity-log').perfectScrollbar('destroy')
   $(document).off('ps-y-reach-end')
 })
 

@@ -21,9 +21,6 @@ Template.addContact.helpers({
     }
     return Contacts.find(query, { limit: App.contactSuggestions })
   },
-  medialistSlug: function () {
-    return FlowRouter.getParam('slug')
-  },
   name: function () {
     return Template.instance().name.get()
   }
@@ -35,7 +32,7 @@ Template.addContact.events({
   },
   'submit, click [data-action="create-contact"]': function (evt, tpl) {
     evt.preventDefault()
-    var context = { medialist: FlowRouter.getParam('slug') }
+    var context = { medialist: FlowRouter.getParam('medialistSlug') }
     var identifier = tpl.name.get()
     if (identifier.slice(0, 1) === '@') {
       context.screenName = identifier.slice(1)
@@ -48,22 +45,26 @@ Template.addContact.events({
 });
 
 Template.contactRow.helpers({
+  status: function () {
+    var medialist = Medialists.findOne(FlowRouter.getParam('medialistSlug'))
+    return medialist && medialist.contacts[this.slug]
+  },
   inCurrentMedialist: function () {
     FlowRouter.watchPathChange()
-    var medialistSlug = FlowRouter.getParam('slug')
+    var medialistSlug = FlowRouter.getParam('medialistSlug')
     return this.medialists.indexOf(medialistSlug) > -1
   }
 })
 
 Template.contactRow.events({
   'click [data-action="add-contact"]': function () {
-    Meteor.call('contacts/addToMedialist', this.slug, FlowRouter.getParam('slug'), function (err) {
+    Meteor.call('contacts/addToMedialist', this.slug, FlowRouter.getParam('medialistSlug'), function (err) {
       if (err) console.error(err)
     })
   },
   'click [data-action="view-contact"]': function () {
     Modal.hide()
-    var medialistSlug = FlowRouter.getParam('slug')
+    var medialistSlug = FlowRouter.getParam('medialistSlug')
     var updateHighlight = () => {
       var parentTpl = Blaze.getView($('.medialist-table')[0]).templateInstance()
       console.log(parentTpl)

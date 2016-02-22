@@ -21,6 +21,9 @@
 @status-not-interested: @red-400;
 
 // boostrap overrides
+@font-size-base:  13px;
+@font-size-small: 10px;
+@font-size-large: 18px;
 @navbar-height: 68px;
 @border-radius-base:  0px;
 @border-radius-large: 2px;
@@ -243,24 +246,18 @@ table th.sort-up:after {
     color:white;
   }
 }
-
 .form-group-editable .form-control-static {
   display:block;
 }
 .form-group-editable {
-  margin-bottom:5px;
   position:relative;
   transition: box-shadow 200ms linear;
-  .add-link {
-    opacity:0;
-    transition: opacity 200ms linear;
-  }
   &::after {
     .glyphicon();
     color: @gray-light;
     position:absolute;
     right: 5px;
-    top: 35px;
+    top: 25px;
     content:"\270f";
     opacity: 0;
     transition: opacity 200ms linear;
@@ -270,11 +267,24 @@ table th.sort-up:after {
     &::after {
       opacity: 1;
     }
-    .add-link {
-      opacity: 1;
-    }
   }
   label {
-    margin-bottom:0;
+    display:block;
+    margin-bottom:-8px;
+    font-size:12px;
   }
+  .form-group-sub {
+    position:absolute;
+    bottom:-20px;
+    right:0;
+    width:100%;
+    text-align:right;
+    font-size:12px;
+    opacity:0;
+    transition: opacity 200ms linear;
+  }
+}
+.form-group-sub:hover,
+.form-group-editable:hover .form-group-sub {
+  opacity:1;
 }

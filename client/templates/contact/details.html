@@ -49,7 +49,7 @@
 <template name="contactDetails">
   <div class="container-fluid info-content">
     <form>
-      <div class="last-updated text-right">
+      <div class="last-updated text-right small">
         Last updated by <span class="text-primary">{{youOrName updatedBy}}</span> {{fromNow updatedAt}}
       </div>
       <div class="form-group form-group-editable">
@@ -82,9 +82,9 @@
 <template name="contactEmails">
   {{#each allOrDefault emails}}
   <div class="form-group form-group-editable">
+    <div class="form-group-sub"><a>Add Email</a></div>
     <label class="text-capitalize">{{label}} Email<span class="caret"></span></label>
     {{> editableText collection="contacts" field="value" acceptEmpty=true placeholder='Add Email' class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
-    <a class="text-sm pull-right add-link">Add Email</a>
   </div>
   {{/each}}
 </template>
@@ -92,13 +92,13 @@
 <template name="contactPhones">
   {{#each allOrDefault phones}}
   <div class="form-group form-group-editable">
+    <div class="form-group-sub"><a>Add Phone</a></div>
     <label class="text-capitalize">
       {{label}}
       <i class="glyphicon glyphicon-phone{{#if equal label 'Landline'}}-alt{{/if}}" data-action="toggle-phone-type"></i>
       <span class="caret"></span>
     </label>
     {{> editableText collection="contacts" field="value" acceptEmpty=true placeholder='Add Phone' class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
-    <a class="text-sm pull-right add-link">Add Phone</a>
   </div>
   {{/each}}
 </template>
@@ -106,9 +106,9 @@
 <template name="contactSocials">
   {{#each allOrDefault socials}}
   <div class="form-group form-group-editable">
+    <div class="form-group-sub"><a>Add Social</a></div>
     <label class="text-capitalize">{{label}}<span class="caret"></span></label>
     {{> editableText collection="contacts" field="value" acceptEmpty=true placeholder='Add Social' class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
-    <a class="text-sm pull-right add-link">Add Social</a>
   </div>
   {{/each}}
 </template>

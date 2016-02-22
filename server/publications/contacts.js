@@ -8,8 +8,8 @@ Meteor.publish('contacts', function (opts) {
   })
 
   var query = {}
-  if (opts.name) {
-    var regex = new RegExp(opts.name, 'gi')
+  if (opts.regex) {
+    var regex = new RegExp(opts.regex, 'gi')
     query = { $or: [
       { name: regex },
       { jobTitles: regex },

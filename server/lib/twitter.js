@@ -47,8 +47,8 @@ TwitterClient.grabUserById = function (id, cb) {
 // Max 100 users: https://dev.twitter.com/rest/reference/get/users/lookup
 TwitterClient.lookupUsers = (identifiers, cb) => {
   check(identifiers, {
-    id: Match.Optional(Array),
-    screenName: Match.Optional(Array)
+    id: Match.Optional([String]),
+    screenName: Match.Optional([String])
   })
 
   var query = {}

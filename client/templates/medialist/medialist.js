@@ -22,7 +22,7 @@ Template.medialist.onCreated(function () {
   })
   medialistTpl.autorun(() => {
     FlowRouter.watchPathChange()
-    medialistTpl.slug.set(FlowRouter.getParam('slug'))
+    medialistTpl.slug.set(FlowRouter.getParam('medialistSlug'))
     medialistTpl.filterTerm.set()
   })
   medialistTpl.autorun(() => {

@@ -31,9 +31,9 @@ var helpers = {
   instance: function() {
     return Template.instance()
   },
-  routeSlug: function () {
+  medialistSlug: function () {
     FlowRouter.watchPathChange()
-    return FlowRouter.getParam('slug')
+    return FlowRouter.getParam('medialistSlug')
   },
   firstName: App.firstName,
   profileImage: function () {
@@ -46,7 +46,8 @@ var helpers = {
     return user && user.name
   },
   or: (x, y) => x || y,
-  and: (x, y) => x && y
+  and: (x, y) => x && y,
+  not: x => !x
 }
 
 _.each(helpers, function (helper, name) {

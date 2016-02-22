@@ -17,7 +17,7 @@
         <a><i class="glyphicon glyphicon-option-vertical"></i></a>
       </li>
     </ul>
-    <div class="info-top-section">
+    <div class="info-top-section bg-primary">
       <div class="container-fluid">
         <div class="media">
           <div class="media-left">
@@ -25,7 +25,7 @@
           </div>
           <div class="media-body">
             <h4 class="media-heading">{{name}}</h4>
-            <h5>{{jobTitles}}, {{primaryOutlets}}</h5>
+            <p>{{primaryOutlets}}</p>
           </div>
         </div>
         <div class="info-menu">
@@ -87,10 +87,14 @@
 
 <template name="contactActivity">
   <div class="container-fluid info-activity-log">
-    <ul class="activity-menu text-center">
-      <li role="presentation" class="{{#if equal instance.option.get 'all'}}active{{/if}}" data-option="all">All Activity</li>
-      <li role="presentation" class="{{#if equal instance.option.get 'medialist'}}active{{/if}}" data-option="medialist">#{{routeSlug}}</li>
-      <li role="presentation" class="{{#if equal instance.option.get 'needToKnow'}}active{{/if}}" data-option="needToKnow">Need-to-know</li>
+    {{> logFeedback feedbackTemplate.data}}
+    <ul class="nav nav-tabs nav-justified">
+      <li role="presentation" class="{{#if equal instance.option.get 'all'}}active{{/if}}">
+        <a data-option="all">All Activity</a>
+      </li>
+      <li role="presentation" class="{{#if equal instance.option.get 'medialist'}}active{{/if}}">
+        <a data-option="medialist">#{{routeSlug}}</a>
+      </li>
     </ul>
 
     {{> Template.dynamic template=feedbackTemplate.template data=feedbackTemplate.data}}
@@ -99,25 +103,21 @@
 </template>
 
 <template name="contactPosts">
-  <div class="post-container">
-    <div class="row">
-      <div class="col-xs-2">
-        <img class="img-rounded" src={{profileImage}}>
-      </div>
-      <div class="col-xs-10">
-        <form>
-          <div class="form-group">
-            <div class="form-control contenteditable-container {{#if instance.postOpen.get}}open{{/if}}">
-              {{#if instance.postOpen.get}}
-                <span contenteditable=true tabindex=0 data-field="post-text"></span>&nbsp;-&nbsp;{{> postSignature status=instance.status.get medialist=routeSlug}}
-              {{else}}
-                <span class="placeholder">What did {{firstName contact.name}} think of #{{routeSlug}}?</span>
-              {{/if}}
-            </div>
-          </div>
-        </form>
-      </div>
+  <div class="panel panel-sm">
+    <ul class="list-group">
+    {{#each posts}}
+      <li class="list-group-item">
+        {{> displayPost post=this}}
+      </li>
+    {{/each}}
+    </ul>
+  </div>
+  {{#if instance.spinner.get}}
+    <div class="spinner-box">
+      {{> spinner}}
     </div>
+  {{/if}}
+  <div class="post-container">
     {{#if instance.postOpen.get}}
       <hr>
       <div class="row">
@@ -139,20 +139,11 @@
     {{/if}}
     <hr>
   </div>
-  {{#each posts}}
-    {{> displayPost post=this}}
-    <hr>
-  {{/each}}
-  {{#if instance.spinner.get}}
-    <div class="spinner-box">
-      {{> spinner}}
-    </div>
-  {{/if}}
 </template>
 
 <template name="postSignature">
   <span class="signature">
-    <span class="status status-{{classify status}}">{{status}}</span> for <a href="/medialist/{{medialist}}">#{{medialist}}</a>
+    <span class="text-{{classify status}}">{{status}}</span> for <a href="/medialist/{{medialist}}">#{{medialist}}</a>
   </span>
 </template>
 

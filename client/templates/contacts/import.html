@@ -1,0 +1,104 @@
+<template name="contactsImport">
+  <div class="contacts-import">
+    <div class="medialist-toolbar">
+      <div class="container-fluid">
+        <div class="navbar-form navbar-left">
+          {{#if hasFile}}
+            {{#if or isParsing isImporting}}
+              <a href="#" class="btn btn-primary" disabled>Import contacts</a>
+              <a href="#" class="btn btn-danger" disabled>Cancel</a>
+            {{else}}
+              <a href="#" class="btn btn-primary" data-action="import">Import contacts</a>
+              <a href="#" class="btn btn-danger" data-action="cancel">Cancel</a>
+            {{/if}}
+          {{else}}
+            <a href="#" class="btn btn-primary" disabled>Import contacts</a>
+            <a href="#" class="btn btn-danger" disabled>Cancel</a>
+          {{/if}}
+          <span class="label label-default label-rows">{{rowsMessage}}</span>
+        </div>
+        <div class="navbar-form navbar-right" >
+          <div class="form-group">
+            <div class="checkbox checkbox-default checkbox-toggle-csv-header">
+              <label>
+                <input type="checkbox" checked data-action="toggle-csv-header"/>
+                <span class="checkbox-material">
+                  <span class="check"></span>
+                </span>
+                First row is column heading labels
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{#if hasFile}}
+      {{#if or isParsing isImporting}}
+        {{> spinner}}
+      {{else}}
+        {{> contactsImportPreview rows=instance.rows columns=instance.columns header=instance.header}}
+      {{/if}}
+    {{else}}
+      {{> contactsImportChoose file=instance.file}}
+    {{/if}}
+  </div>
+</template>
+
+<template name="contactsImportChoose">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="drop-target">
+          <div>
+            <h1>Drag and Drop CSV file here</h1>
+            <p>&ndash; or &ndash;</p>
+            <input type="file" accept="text/csv">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="contactsImportPreview">
+  <table class="medialist-table table table-responsive">
+    <thead>
+      <tr>
+        <th></th>
+        {{#each columns.get}}
+          <th>
+            <div class="dropdown">
+              <a class="btn btn-link" data-target="#" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                {{label}}
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                {{#let colIndex=@index}}
+                  {{#each fields}}
+                    {{#if equal ../key key}}
+                      <li class="active"><a href="#">{{label}}</a></li>
+                    {{else}}
+                      <li><a href="#" data-action="change-field" data-key="{{key}}" data-index="{{colIndex}}">{{label}}</a></li>
+                    {{/if}}
+                  {{/each}}
+                {{/let}}
+                <li role="separator" class="divider"></li>
+                <li><a href="#" data-action="change-field" data-key="" data-index="{{@index}}">Ignore</a></li>
+              </ul>
+            </div>
+          </th>
+        {{/each}}
+      </tr>
+    </thead>
+    <tbody>
+      {{#each limitRows rows.get header.get}}
+        <tr>
+          <td></td>
+          {{#each this}}
+            <td>{{this}}</td>
+          {{/each}}
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</template>

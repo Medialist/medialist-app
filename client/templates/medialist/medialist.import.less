@@ -13,7 +13,7 @@
   tbody > tr > td {
     vertical-align: middle;
   }
-  .contact-row.selected {
+  .document-row.selected {
     background-color: #51adf6;
   }
 }
@@ -53,6 +53,12 @@
   color: @grey-500;
 }
 
+.document-row.bg-completed {
+  &:hover {
+    background-color: lighten(@status-completed, 10%);
+  }
+}
+
 .dropdown-menu {
 
   .dropdown-header {
@@ -60,9 +66,15 @@
     font-weight: bold;
     color: @gray-dark;
   }
-
   li input.form-control {
     margin: 10px 20px;
     font-size: 13px;
+  }
+
+  a, a:visited {
+    color: darken(@status-contacted, 20%);
+  }
+  a:hover, a:active, a:focus {
+    color: darken(@status-contacted, 15%);
   }
 }

@@ -1,6 +1,6 @@
 <template name="contactSlideIn">
   {{#with contactDetails}}
-  <div class="contact-slide-in">
+  <div class="info-slide-in">
     <ul class="nav nav-pills nav-slide-in pull-left">
       <li role="presentation">
         <a data-action="close-contact-slide-in"><i class="glyphicon glyphicon-chevron-right"></i></a>
@@ -17,7 +17,7 @@
         <a><i class="glyphicon glyphicon-option-vertical"></i></a>
       </li>
     </ul>
-    <div class="contact-top-section bg-primary">
+    <div class="info-top-section bg-primary">
       <div class="container-fluid">
         <div class="media">
           <div class="media-left">
@@ -28,16 +28,16 @@
             <p>{{primaryOutlets}}</p>
           </div>
         </div>
-        <div class="contact-menu">
+        <div class="info-menu">
           <div class="row">
-            <a data-section="contactDetails" class="col-xs-4 contact-menu-option {{#if equal contactSection 'contactDetails'}}active{{/if}}">
+            <a data-section="contactDetails" class="col-xs-4 info-menu-option {{#if equal contactSection 'contactDetails'}}active{{/if}}">
               Details
             </a>
-            <a data-section="contactActivity" class="col-xs-4 contact-menu-option {{#if equal contactSection 'contactActivity'}}active{{/if}}">
+            <a data-section="contactActivity" class="col-xs-4 info-menu-option {{#if equal contactSection 'contactActivity'}}active{{/if}}">
               Activity
             </a>
-            <a data-section="contactRelated" class="col-xs-4 contact-menu-option {{#if equal contactSection 'contactRelated'}}active{{/if}}">
-              Intel
+            <a data-section="contactRelated" class="col-xs-4 info-menu-option {{#if equal contactSection 'contactRelated'}}active{{/if}}">
+              Related
             </a>
           </div>
         </div>
@@ -49,7 +49,7 @@
 </template>
 
 <template name="contactDetails">
-  <div class="container-fluid contact-info">
+  <div class="container-fluid info-content">
     <form>
       <div class="last-updated text-right">
         Last updated by <span class="text-primary">{{youOrName updatedBy}}</span> {{fromNow updatedAt}}
@@ -86,7 +86,7 @@
 </template>
 
 <template name="contactActivity">
-  <div class="container-fluid contact-activity-log">
+  <div class="container-fluid info-activity-log">
     {{> logFeedback feedbackTemplate.data}}
     <ul class="nav nav-tabs nav-justified">
       <li role="presentation" class="{{#if equal instance.option.get 'all'}}active{{/if}}">
@@ -96,7 +96,9 @@
         <a data-option="medialist">#{{routeSlug}}</a>
       </li>
     </ul>
+
     {{> Template.dynamic template=feedbackTemplate.template data=feedbackTemplate.data}}
+
   </div>
 </template>
 

@@ -25,6 +25,9 @@ var helpers = {
   fromNow: function (date) {
     return moment(Math.min(date, new Date() - 1)).fromNow()
   },
+  dateFormat: function (date, format) {
+    return moment(date).format(format)
+  },
   instance: function() {
     return Template.instance()
   },

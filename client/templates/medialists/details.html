@@ -1,0 +1,89 @@
+<template name="medialistSlideIn">
+  {{#with medialistDetails}}
+  <div class="info-slide-in">
+    <ul class="nav nav-pills nav-slide-in pull-left">
+      <li role="presentation">
+        <a data-action="close-medialist-slide-in"><i class="glyphicon glyphicon-chevron-right"></i></a>
+      </li>
+    </ul>
+    <ul class="nav nav-pills nav-slide-in pull-right">
+      <li role="presentation">
+        <a><i class="glyphicon glyphicon-new-window"></i></a>
+      </li>
+      <li role="presentation">
+        <a><i class="glyphicon glyphicon-star-empty"></i></a>
+      </li>
+      <li role="presentation">
+        <a><i class="glyphicon glyphicon-option-vertical"></i></a>
+      </li>
+    </ul>
+    <div class="info-top-section bg-completed">
+      <div class="container-fluid">
+        <div class="media-body">
+          <h4 class="media-heading text-center">#{{slug}}</h4>
+        </div>
+        <div class="info-menu">
+          <div class="row">
+            <a data-section="medialistDetails" class="col-xs-6 info-menu-option {{#if equal instance.section.get 'medialistDetails'}}active{{/if}}">
+              Details
+            </a>
+            <a data-section="medialistActivity" class="col-xs-6 info-menu-option {{#if equal instance.section.get 'medialistActivity'}}active{{/if}}">
+              Activity
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{> Template.dynamic template=instance.section.get data=this}}
+  </div>
+  {{/with}}
+</template>
+
+<template name="medialistDetails">
+  <div class="container-fluid info-content">
+    <form>
+      <div class="last-updated text-right">
+        Last updated by <span class="text-primary">{{youOrName updatedBy}}</span> {{fromNow updatedAt}}
+      </div>
+      <div class="form-group">
+        <label for="medialist-detail-name">Name</label>
+        <p class="editable-text-container" id="medialist-detail-name">{{> editableText collection="medialists" field="name" inputClass="form-control" eventType="dblclick" substitute="-" beforeUpdate="generateUpdatePost"}}</p>
+      </div>
+      <div class="form-group">
+        <label for="medialist-detail-client">Client</label>
+        <p id="medialist-detail-client">{{client.name}}</p>
+      </div>
+      <div class="form-group">
+        <label for="medialist-detail-purpose">Purpose</label>
+        <p class="editable-text-container" id="medialist-detail-purpose">{{> editableText textarea=true collection="medialists" field="purpose" inputClass="form-control" eventType="dblclick" substitute="-" beforeUpdate="generateUpdatePost"}}</p>
+      </div>
+      <div class="form-group">
+        <label for="medialist-detail-created">Created by</label>
+        <p id="medialist-detail-created">{{youOrName createdBy}} on {{dateFormat createdAt 'ddd MMMM YY'}}</p>
+      </div>
+    </form>
+  </div>
+</template>
+
+<template name="medialistActivity">
+  <div class="spacer"></div>
+  <div class="container-fluid info-activity-log">
+    <div class="panel panel-sm">
+      <ul class="list-group">
+      {{#each posts}}
+        <li class="list-group-item">
+          {{> displayPost post=this contactAvatar=true showContact=true}}
+        </li>
+      {{/each}}
+      </ul>
+    </div>
+    {{#unless (or posts.count instance.spinner.get)}}
+      <div class="h6 text-center">There is no activity for this medialist.</div>
+    {{/unless}}
+    {{#unless Template.subscriptionsReady}}
+      <div class="spinner-box">
+        {{> spinner}}
+      </div>
+    {{/unless}}
+  </div>
+</template>

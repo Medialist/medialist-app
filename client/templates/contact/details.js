@@ -117,14 +117,14 @@ Template.contactPosts.onCreated(function () {
     this.spinner.set(true)
     Meteor.subscribe('posts', opts, () => {
       this.spinner.set(false)
-      Tracker.afterFlush(() => $('.contact-activity-log').perfectScrollbar('update'))
+      Tracker.afterFlush(() => $('.info-activity-log').perfectScrollbar('update'))
     })
   })
 })
 
 Template.contactPosts.onRendered(function () {
   var data = Template.currentData()
-  Meteor.setTimeout(() => Tracker.afterFlush(() => $('.contact-activity-log').perfectScrollbar()), 1)
+  Meteor.setTimeout(() => Tracker.afterFlush(() => $('.info-activity-log').perfectScrollbar()), 1)
   var incrementLimit = _.debounce(() => {
     // check if there are going to be any more results coming
     var query = { 'contacts.slug': data.contact.slug }
@@ -138,7 +138,7 @@ Template.contactPosts.onRendered(function () {
 })
 
 Template.contactPosts.onDestroyed(function () {
-  $('.contact-activity-log').perfectScrollbar('destroy')
+  $('.info-activity-log').perfectScrollbar('destroy')
   $(document).off('ps-y-reach-end')
 })
 
@@ -194,14 +194,14 @@ Template.contactNeedToKnows.onCreated(function () {
     this.spinner.set(true)
     Meteor.subscribe('posts', opts, () => {
       this.spinner.set(false)
-      Tracker.afterFlush(() => $('.contact-activity-log').perfectScrollbar('update'))
+      Tracker.afterFlush(() => $('.info-activity-log').perfectScrollbar('update'))
     })
   })
 })
 
 Template.contactNeedToKnows.onRendered(function () {
   var data = Template.currentData()
-  Meteor.setTimeout(() => Tracker.afterFlush(() => $('.contact-activity-log').perfectScrollbar()), 1)
+  Meteor.setTimeout(() => Tracker.afterFlush(() => $('.info-activity-log').perfectScrollbar()), 1)
   var incrementLimit = _.debounce(() => {
     // check if there are going to be any more results coming
     var query = { 'contacts.slug': data.contact.slug, type: 'need to know' }
@@ -214,7 +214,7 @@ Template.contactNeedToKnows.onRendered(function () {
 })
 
 Template.contactNeedToKnows.onDestroyed(function () {
-  $('.contact-activity-log').perfectScrollbar('destroy')
+  $('.info-activity-log').perfectScrollbar('destroy')
   $(document).off('ps-y-reach-end')
 })
 
@@ -251,8 +251,7 @@ Template.contactNeedToKnows.events({
     }, function (err) {
       if (err) return console.error(err)
       tpl.postOpen.set(false)
-      $('.contact-activity-log').perfectScrollbar('update')
+      $('.info-activity-log').perfectScrollbar('update')
     })
   }
 })
-

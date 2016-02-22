@@ -8,8 +8,4 @@ App.medialistUpdated = function (medialistSlug, userId) {
   }})
 }
 
-Meteor.startup(() => {
-  var period = 1000 * 60 * 60 * 24
-  ContactsTask.periodicallyUpdate(period)
-  console.log(`Periodically updating contacts every ${period / 1000 / 60 / 60} hours`)
-})
+Meteor.startup(() => ContactsTask.periodicallyUpdate())

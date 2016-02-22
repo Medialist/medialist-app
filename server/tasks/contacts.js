@@ -97,11 +97,12 @@ function updateContact (contact, user) {
 }
 
 ContactsTask.periodicallyUpdate = (period) => {
-  check(period, Number)
+  check(period, Match.Optional(Number))
+
   return Meteor.setInterval(() => {
     var ids = Contacts.find({'socials.label': 'Twitter'}, {fields: {_id: 1}}).fetch().map(c => c._id)
     ContactsTask.queueUpdate(ids)
-  }, period)
+  }, period || 1000 * 60 * 60 * 24)
 }
 
 ContactsTask.queueUpdate = (ids) => {

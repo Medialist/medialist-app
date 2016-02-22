@@ -1,11 +1,19 @@
 <template name="displayPost">
   {{#with post}}
   <div class="media display-post">
+    {{#if ../contactAvatar}}
+      {{#if contacts.[0].avatar}}
+      <div class="media-left">
+        <img width=36 height=36 class="media-object img-rounded" src="{{contacts.[0].avatar}}" alt="{{contacts.[0].name}} avatar">
+      </div>
+      {{/if}}
+    {{else}}
       {{#if profileImage}}
       <div class="media-left">
         <img width=36 height=36 class="media-object img-rounded" src="{{createdBy.avatar}}" alt="{{createdBy.name}} avatar">
       </div>
       {{/if}}
+    {{/if}}
       <div class="media-body">
         <div class="display-post-details">
           {{#if equal type 'need to know'}}

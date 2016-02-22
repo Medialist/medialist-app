@@ -15,16 +15,6 @@
   }
   .document-row.selected {
     background-color: #51adf6;
-    &.green {
-      color: #fff;
-      background-color: #54AD59;
-      a, a:visited {
-        color: darken(#0D87E9, 20%);
-      }
-      a:hover, a:active, a:focus {
-        color: darken(#0D87E9, 15%);
-      }
-    }
   }
 }
 .col-checkbox {
@@ -61,4 +51,16 @@
 
 .feedback-details {
   color: @grey-500;
+}
+
+.document-row.bg-completed {
+  &:hover {
+    background-color: lighten(@status-completed, 10%);
+  }
+  a, a:visited {
+    color: darken(@status-contacted, 20%);
+  }
+  a:hover, a:active, a:focus {
+    color: darken(@status-contacted, 15%);
+  }
 }

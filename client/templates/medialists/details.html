@@ -17,9 +17,11 @@
         <a><i class="glyphicon glyphicon-option-vertical"></i></a>
       </li>
     </ul>
-    <div class="info-top-section green">
+    <div class="info-top-section bg-completed">
       <div class="container-fluid">
-        <h4 class="medialist-heading text-center">#{{name}}</h4>
+        <div class="media-body">
+          <h4 class="media-heading text-center">#{{slug}}</h4>
+        </div>
         <div class="info-menu">
           <div class="row">
             <a data-section="medialistDetails" class="col-xs-6 info-menu-option {{#if equal instance.section.get 'medialistDetails'}}active{{/if}}">
@@ -40,9 +42,12 @@
 <template name="medialistDetails">
   <div class="container-fluid info-content">
     <form>
+      <div class="last-updated text-right">
+        Last updated by <span class="text-primary">{{youOrName updatedBy}}</span> {{fromNow updatedAt}}
+      </div>
       <div class="form-group">
         <label for="medialist-detail-name">Name</label>
-        <p class="editable-text-container" id="medialist-detail-name">{{> editableText collection="medialists" field="name" inputClass="form-control" eventType="dblclick" substitute="-"}}</p>
+        <p class="editable-text-container" id="medialist-detail-name">{{> editableText collection="medialists" field="name" inputClass="form-control" eventType="dblclick" substitute="-" beforeUpdate="generateUpdatePost"}}</p>
       </div>
       <div class="form-group">
         <label for="medialist-detail-client">Client</label>
@@ -50,11 +55,11 @@
       </div>
       <div class="form-group">
         <label for="medialist-detail-purpose">Purpose</label>
-        <p class="editable-text-container" id="medialist-detail-purpose">{{> editableText textarea=true collection="medialists" field="purpose" inputClass="form-control" eventType="dblclick" substitute="-"}}</p>
+        <p class="editable-text-container" id="medialist-detail-purpose">{{> editableText textarea=true collection="medialists" field="purpose" inputClass="form-control" eventType="dblclick" substitute="-" beforeUpdate="generateUpdatePost"}}</p>
       </div>
       <div class="form-group">
         <label for="medialist-detail-created">Created by</label>
-        <p id="medialist-detail-created">{{youOrName createdBy}} on {{createdAt.format 'ddd MMMM YY'}}</p>
+        <p id="medialist-detail-created">{{youOrName createdBy}} on {{dateFormat createdAt 'ddd MMMM YY'}}</p>
       </div>
     </form>
   </div>
@@ -63,10 +68,18 @@
 <template name="medialistActivity">
   <div class="spacer"></div>
   <div class="container-fluid info-activity-log">
-    {{#each posts}}
-      {{> displayPost post=this}}
-      <hr>
-    {{/each}}
+    <div class="panel panel-sm">
+      <ul class="list-group">
+      {{#each posts}}
+        <li class="list-group-item">
+          {{> displayPost post=this contactAvatar=true showContact=true}}
+        </li>
+      {{/each}}
+      </ul>
+    </div>
+    {{#unless (or posts.count instance.spinner.get)}}
+      <div class="h6 text-center">There is no activity for this medialist.</div>
+    {{/unless}}
     {{#if instance.spinner.get}}
       <div class="spinner-box">
         {{> spinner}}

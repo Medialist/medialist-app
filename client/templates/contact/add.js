@@ -1,19 +1,23 @@
 Template.addContact.onCreated(function () {
   this.name = new ReactiveVar('')
   this.autorun(() => {
-    this.subscribe('contacts', { name: this.name.get() })
+    this.subscribe('contacts', { regex: this.name.get() })
   })
 })
 
 Template.addContact.helpers({
   contacts: function () {
+    var nameString = Template.instance().name.get()
+    if (!nameString) return []
+    var regex = new RegExp(nameString, 'gi')
     if (this.ignoreExisting) return []
-    var regex = new RegExp(Template.instance().name.get(), 'gi')
     var query = {
-      name: {
-        $regex: regex,
-        $options: 'i'
-      }
+      $or: [
+        { name: regex },
+        { jobTitles: regex },
+        { primaryOutlets: regex },
+        { otherOutlets: regex }
+      ]
     }
     return Contacts.find(query, { limit: App.contactSuggestions })
   },
@@ -44,6 +48,11 @@ Template.contactRow.helpers({
   status: function () {
     var medialist = Medialists.findOne(FlowRouter.getParam('medialistSlug'))
     return medialist && medialist.contacts[this.slug]
+  },
+  inCurrentMedialist: function () {
+    FlowRouter.watchPathChange()
+    var medialistSlug = FlowRouter.getParam('medialistSlug')
+    return this.medialists.indexOf(medialistSlug) > -1
   }
 })
 
@@ -52,5 +61,22 @@ Template.contactRow.events({
     Meteor.call('contacts/addToMedialist', this.slug, FlowRouter.getParam('medialistSlug'), function (err) {
       if (err) console.error(err)
     })
+  },
+  'click [data-action="view-contact"]': function () {
+    Modal.hide()
+    var medialistSlug = FlowRouter.getParam('medialistSlug')
+    var updateHighlight = () => {
+      var parentTpl = Blaze.getView($('.medialist-table')[0]).templateInstance()
+      console.log(parentTpl)
+      parentTpl.selected.set(this.slug)
+    }
+    var slideInContext = { contact: this.slug }
+    if (this.medialists.indexOf(medialistSlug) === -1) {
+      FlowRouter.go('contacts')
+      slideInContext.noMedialist = true
+    }
+    FlowRouter.setQueryParams({ contact: this.slug })
+    SlideIns.show('right', 'contactSlideIn', slideInContext)
+    Meteor.setTimeout(() => Tracker.afterFlush(updateHighlight), 1)
   }
 })

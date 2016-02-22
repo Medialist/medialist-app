@@ -1,5 +1,4 @@
 <template name="contactSlideIn">
-  {{#with contactDetails}}
   <div class="info-slide-in">
     <ul class="nav nav-pills nav-slide-in pull-left">
       <li role="presentation">
@@ -21,11 +20,11 @@
       <div class="container-fluid">
         <div class="media">
           <div class="media-left">
-            <img class="media-object img-rounded" src="{{avatar}}" alt="{{name}} avatar">
+            <img class="media-object img-rounded" src="{{contactDetails.avatar}}" alt="{{contactDetails.name}} avatar">
           </div>
           <div class="media-body">
-            <h4 class="media-heading">{{name}}</h4>
-            <p>{{primaryOutlets}}</p>
+            <h4 class="media-heading">{{contactDetails.name}}</h4>
+            <p>{{contactDetails.primaryOutlets}}</p>
           </div>
         </div>
         <div class="info-menu">
@@ -43,9 +42,8 @@
         </div>
       </div>
     </div>
-    {{> Template.dynamic template=contactSection data=this}}
+    {{> Template.dynamic template=contactSection data=contactDetails}}
   </div>
-  {{/with}}
 </template>
 
 <template name="contactDetails">

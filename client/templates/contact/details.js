@@ -35,9 +35,10 @@ Template.contactActivity.onCreated(function () {
   var tpl = this
   tpl.option = new ReactiveVar('')
   tpl.autorun(function () {
+    var data = Template.currentData()
     var opts = {
       medialist: slideIn.medialistSlugPosts.get(),
-      contact: Template.currentData().slug,
+      contact: data && data.slug,
       limit: 10
     }
     tpl.subscribe('posts', opts)

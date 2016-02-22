@@ -16,10 +16,10 @@ var allContactsTpl
 Template.contacts.onCreated(function () {
   allContactsTpl = this
   this.checkSelect = new ReactiveVar({})
-  this.selected = new ReactiveVar()
   this.subscribe('contacts', {limit: 100})
   this.filterTerm = new ReactiveVar()
   this.query = new ReactiveVar()
+  this.selected = new ReactiveVar()
   this.autorun(() => {
     this.query.set(makeQuery(this.filterTerm.get()))
   })
@@ -97,9 +97,9 @@ Template.allContactsRow.events({
   'click [data-action="show-contact-slide-in"]': function (evt, tpl) {
     var $el = tpl.$(evt.target)
     if (!$el.parents('[data-no-sidebar]').length) {
-      allContactsTpl.selected.set(this.slug)
       FlowRouter.setQueryParams({ contact: this.slug })
-      SlideIns.show('right', 'contactSlideIn', { contact: this.slug })
+      allContactsTpl.selected.set(this.slug)
+      SlideIns.show('right', 'contactSlideIn', { contact: this.slug, noMedialist: true })
     }
   }
 })

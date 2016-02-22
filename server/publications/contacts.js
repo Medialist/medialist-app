@@ -3,14 +3,19 @@ Meteor.publish('contacts', function (opts) {
 
   opts = opts || {}
   check(opts, {
-    name: Match.Optional(String),
+    regex: Match.Optional(String),
     limit: Match.Optional(Number)
   })
 
   var query = {}
-  if (opts.name) {
-    var regex = new RegExp(opts.name, 'gi')
-    query.name = { $regex: regex, $options: 'i'}
+  if (opts.regex) {
+    var regex = new RegExp(opts.regex, 'gi')
+    query = { $or: [
+      { name: regex },
+      { jobTitles: regex },
+      { primaryOutlets: regex },
+      { otherOutlets: regex }
+    ]}
   }
 
   var options = {

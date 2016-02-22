@@ -126,6 +126,7 @@
       "SlideIns": true,
       "Modal": true,
       "MeteorTablesort": true,
+      "twitterScreenName": false,
       // Globals
       "App": true,
       "Schemas": true,

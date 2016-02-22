@@ -52,35 +52,65 @@
       <div class="last-updated text-right">
         Last updated by <span class="text-primary">{{youOrName updatedBy}}</span> {{fromNow updatedAt}}
       </div>
-      <div class="form-group">
+      <div class="form-group form-group-editable">
         <label for="contact-detail-name">Name</label>
-        <p class="editable-text-container" id="contact-detail-name">{{> editableText collection="contacts" field="name" inputClass="form-control" eventType="dblclick" substitute="-" beforeUpdate="generateUpdatePost"}}</p>
+        {{> editableText collection="contacts" field="name" class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
       </div>
-      <div class="form-group">
+      <div class="form-group form-group-editable">
         <label for="contact-detail-job-title">Title</label>
-        <p class="editable-text-container" id="contact-detail-job-title">{{> editableText collection="contacts" field="jobTitles" acceptEmpty=true inputClass="form-control" eventType="dblclick" substitute="-" beforeUpdate="generateUpdatePost"}}</p>
+        {{> editableText collection="contacts" field="jobTitles" acceptEmpty=true class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
       </div>
-      <div class="form-group">
+      <div class="form-group form-group-editable">
         <label for="contact-detail-primary-outlets">Media outlet</label>
-        <p class="editable-text-container" id="contact-detail-primary-outlets">{{> editableText collection="contacts" field="primaryOutlets" acceptEmpty=true inputClass="form-control" eventType="dblclick" substitute="-" beforeUpdate="generateUpdatePost"}}</p>
+        {{> editableText collection="contacts" field="primaryOutlets" acceptEmpty=true class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
       </div>
-      <div class="form-group">
-        <label for="contact-detail-screenName">Twitter</label>
-        <p class="editable-text-container" id="contact-detail-screenName">{{> editableText collection="contacts" field="socials.0.value" acceptEmpty=true inputClass="form-control" eventType="dblclick" substitute="-" beforeUpdate="generateUpdatePostTwitter"}}</p>
+      {{> contactSocials }}
+      {{> contactEmails }}
+      {{> contactPhones}}
+      <div class="form-group form-group-editable">
+        <label for="contact-detail-primary-outlets">Work Website</label>
+        {{> editableText collection="contacts" field="website" acceptEmpty=true class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
       </div>
-      <div class="form-group">
-        <label for="contact-detail-email">Email</label>
-        <p class="editable-text-container" id="contact-detail-email">{{> editableText collection="contacts" field="emails.0.value" acceptEmpty=true inputClass="form-control" eventType="dblclick" substitute="-" beforeUpdate="generateUpdatePost"}}</p>
-      </div>
-      <div class="form-group">
-        <label for="contact-detail-phone">Phone</label>
-        <p class="editable-text-container" id="contact-detail-phone">
-          <i class="glyphicon glyphicon-phone{{#if equal phones.[0].type 'landline'}}-alt{{/if}}" data-action="toggle-phone-type"></i>
-          {{> editableText collection="contacts" field="phones.0.value" acceptEmpty=true inputClass="form-control inline" class="inline" eventType="dblclick" substitute="-" beforeUpdate="generateUpdatePost"}}
-          </p>
+      <div class="form-group form-group-editable">
+        <label for="contact-detail-primary-outlets">Address</label>
+        {{> editableText collection="contacts" field="address" acceptEmpty=true class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
       </div>
     </form>
   </div>
+</template>
+
+<template name="contactEmails">
+  {{#each allOrDefault emails}}
+  <div class="form-group form-group-editable">
+    <label class="text-capitalize">{{label}} Email<span class="caret"></span></label>
+    {{> editableText collection="contacts" field="value" acceptEmpty=true placeholder='Add Email' class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
+    <a class="text-sm pull-right add-link">Add Email</a>
+  </div>
+  {{/each}}
+</template>
+
+<template name="contactPhones">
+  {{#each allOrDefault phones}}
+  <div class="form-group form-group-editable">
+    <label class="text-capitalize">
+      {{label}}
+      <i class="glyphicon glyphicon-phone{{#if equal label 'Landline'}}-alt{{/if}}" data-action="toggle-phone-type"></i>
+      <span class="caret"></span>
+    </label>
+    {{> editableText collection="contacts" field="value" acceptEmpty=true placeholder='Add Phone' class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
+    <a class="text-sm pull-right add-link">Add Phone</a>
+  </div>
+  {{/each}}
+</template>
+
+<template name="contactSocials">
+  {{#each allOrDefault socials}}
+  <div class="form-group form-group-editable">
+    <label class="text-capitalize">{{label}}<span class="caret"></span></label>
+    {{> editableText collection="contacts" field="value" acceptEmpty=true placeholder='Add Social' class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
+    <a class="text-sm pull-right add-link">Add Social</a>
+  </div>
+  {{/each}}
 </template>
 
 <template name="contactActivity">

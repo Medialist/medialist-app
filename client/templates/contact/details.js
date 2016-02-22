@@ -148,3 +148,24 @@ Template.contactPosts.events({
     $(evt.currentTarget).html(text)
   }
 })
+
+Template.contactEmails.helpers({
+  allOrDefault (arr) {
+    if (arr && arr.length) return arr
+    return [{ label: 'Work', value: ''}]
+  }
+})
+
+Template.contactPhones.helpers({
+  allOrDefault (arr) {
+    if (arr && arr.length) return arr
+    return [{ label: 'Mobile', value: ''}]
+  }
+})
+
+Template.contactSocials.helpers({
+  allOrDefault (arr) {
+    if (arr && arr.length) return arr
+    return [{ label: 'Twitter', value: ''}]
+  }
+})

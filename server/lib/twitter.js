@@ -44,13 +44,30 @@ TwitterClient.grabUserById = function (id, cb) {
   TwitterClient.grabUser({user_id: id}, cb)
 }
 
-// Max 100 screen names: https://dev.twitter.com/rest/reference/get/users/lookup
-TwitterClient.lookupUsersByScreenNames = (screenNames, cb) => {
-  var query = {screen_name: screenNames.join(',')}
+// Max 100 users: https://dev.twitter.com/rest/reference/get/users/lookup
+TwitterClient.lookupUsers = (identifiers, cb) => {
+  check(identifiers, {
+    id: Match.Optional([String]),
+    screenName: Match.Optional([String])
+  })
+
+  var query = {}
+
+  if (identifiers.id && identifiers.id.length) {
+    query.user_id = identifiers.id.join(',')
+  }
+
+  if (identifiers.screenName && identifiers.screenName.length) {
+    query.screen_name = identifiers.screenName.join(',')
+  }
+
+  if (!Object.keys(query).length) {
+    return Meteor.setTimeout(() => cb(null, []))
+  }
 
   TwitterClient.twitter.post('users/lookup', query, Meteor.bindEnvironment((err, users) => {
     if (err) {
-      console.error('TwitterClient.lookupUsersByScreenNames', err, query)
+      console.error('TwitterClient.lookupUsers', err, query)
       return cb(err)
     }
 

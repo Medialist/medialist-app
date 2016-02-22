@@ -155,6 +155,21 @@ Meteor.methods({
       'updatedBy.avatar': user.services.twitter.profile_image_url_https,
       'updatedAt': new Date()
     }})
+  },
+
+  // The client is just letting us know there is some work to do, they don't care about the response.
+  'contacts/updateAvatar': function (contactSlug) {
+    if (!this.userId) throw new Meteor.Error('Only logged in users can request avatar updates')
+    check(contactSlug, String)
+    // Can we still see their avatar?
+    var contact = Contacts.findOne({slug: contactSlug}, {fields: {avatar: 1}})
+
+    if (!contact) return
+
+    HTTP.get(contact.avatar, err => {
+      if (!err) return // avatar is fine. ignore.
+      ContactsTask.queueUpdate(contact._id)
+    })
   }
 })
 
@@ -163,7 +178,8 @@ function addTwitterDetailsToContact(err, user) {
   Contacts.update({ slug: this.slug, 'socials.label': 'Twitter' }, {
     $set: {
       avatar: user.profile_image_url_https,
-      'socials.$.id': user.id_str
+      'socials.$.twitterId': user.id_str,
+      'socials.$.value': user.screen_name
     }
   })
 }

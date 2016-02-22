@@ -7,3 +7,5 @@ App.medialistUpdated = function (medialistSlug, userId) {
     'updatedAt': new Date()
   }})
 }
+
+Meteor.startup(() => ContactsTask.periodicallyUpdate())

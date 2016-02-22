@@ -28,7 +28,7 @@ Template.addContact.events({
   },
   'submit, click [data-action="create-contact"]': function (evt, tpl) {
     evt.preventDefault()
-    var context = { medialist: FlowRouter.getParam('slug') }
+    var context = { medialist: FlowRouter.getParam('medialistSlug') }
     var identifier = tpl.name.get()
     if (identifier.slice(0, 1) === '@') {
       context.screenName = identifier.slice(1)
@@ -42,14 +42,14 @@ Template.addContact.events({
 
 Template.contactRow.helpers({
   status: function () {
-    var medialist = Medialists.findOne(FlowRouter.getParam('slug'))
+    var medialist = Medialists.findOne(FlowRouter.getParam('medialistSlug'))
     return medialist && medialist.contacts[this.slug]
   }
 })
 
 Template.contactRow.events({
   'click [data-action="add-contact"]': function () {
-    Meteor.call('contacts/addToMedialist', this.slug, FlowRouter.getParam('slug'), function (err) {
+    Meteor.call('contacts/addToMedialist', this.slug, FlowRouter.getParam('medialistSlug'), function (err) {
       if (err) console.error(err)
     })
   }

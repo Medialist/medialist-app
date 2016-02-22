@@ -31,9 +31,9 @@ var helpers = {
   instance: function() {
     return Template.instance()
   },
-  routeSlug: function () {
+  medialistSlug: function () {
     FlowRouter.watchPathChange()
-    return FlowRouter.getParam('slug')
+    return FlowRouter.getParam('medialistSlug')
   },
   firstName: App.firstName,
   profileImage: function () {

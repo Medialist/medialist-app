@@ -87,14 +87,18 @@
 
 <template name="contactActivity">
   <div class="container-fluid info-activity-log">
-    {{> logFeedback feedbackTemplate.data}}
+    {{#if medialistSlug}}
+      {{> logFeedback feedbackTemplate.data}}
+    {{/if}}
     <ul class="nav nav-tabs nav-justified">
-      <li role="presentation" class="{{#if equal instance.option.get 'all'}}active{{/if}}">
-        <a data-option="all">All Activity</a>
+      <li role="presentation" class="{{#if equal instance.option.get ''}}active{{/if}}">
+        <a data-option="">All Activity</a>
       </li>
-      <li role="presentation" class="{{#if equal instance.option.get 'medialist'}}active{{/if}}">
-        <a data-option="medialist">#{{routeSlug}}</a>
-      </li>
+      {{#if medialistSlug}}
+        <li role="presentation" class="{{#if equal instance.option.get medialistSlug}}active{{/if}}">
+          <a data-option="{{medialistSlug}}">#{{medialistSlug}}</a>
+        </li>
+      {{/if}}
     </ul>
 
     {{> Template.dynamic template=feedbackTemplate.template data=feedbackTemplate.data}}
@@ -117,79 +121,14 @@
       {{> spinner}}
     </div>
   {{/if}}
-  <div class="post-container">
-    {{#if instance.postOpen.get}}
-      <hr>
-      <div class="row">
-        <div class="col-xs-12">
-          <button type="button" class="btn btn-sm btn-primary pull-right" data-action="save-post">Save</button>
-          <span class="pull-right">
-            <a data-target="#" class="btn btn-sm dropdown-toggle status status-{{classify instance.status.get}}" data-toggle="dropdown">
-              {{instance.status.get}}
-              <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-              {{#each statuses}}
-                <li><a data-action="set-status" class="status status-{{classify this}}">{{this}}</a></li>
-              {{/each}}
-            </ul>
-          </span>
-        </div>
-      </div>
-    {{/if}}
-    <hr>
-  </div>
-</template>
-
-<template name="postSignature">
-  <span class="signature">
-    <span class="text-{{classify status}}">{{status}}</span> for <a href="/medialist/{{medialist}}">#{{medialist}}</a>
-  </span>
-</template>
-
-<template name="contactNeedToKnows">
-  <div class="post-container">
-    <div class="row">
-      <div class="col-xs-2">
-        <img class="img-rounded" src={{profileImage}}>
-      </div>
-      <div class="col-xs-10">
-        <form>
-          <div class="form-group">
-            <div class="form-control contenteditable-container {{#if instance.postOpen.get}}open{{/if}}">
-              {{#if instance.postOpen.get}}
-                <span contenteditable=true tabindex=0 data-field="need-to-know-text"></span>
-              {{else}}
-                <span class="placeholder">What is {{firstName contact.name}} writing about at the moment?</span>
-              {{/if}}
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-    {{#if instance.postOpen.get}}
-      <hr>
-      <div class="row">
-        <div class="col-xs-12">
-          <button type="button" class="btn btn-sm btn-primary pull-right" data-action="save-need-to-know">Save</button>
-        </div>
-      </div>
-    {{/if}}
-    <hr>
-  </div>
-  {{#each posts}}
-    {{> displayPost post=this}}
-    <hr>
-  {{/each}}
-  {{#if instance.spinner.get}}
-    <div class="spinner-box">
-      {{> spinner}}
-    </div>
-  {{/if}}
+  {{#unless (or posts.count instance.spinner.get)}}
+    <div class="h6 text-center">There is no activity for this contact.</div>
+  {{/unless}}
 </template>
 
 <template name="contactRelated">
-  <div class="container-fluid">
-    <h2>Related</h2>
+  <div class="container-fluid info-activity-log">
+    <div class="spacer"></div>
+    <h5 class="text-center">Related</h5>
   </div>
 </template>

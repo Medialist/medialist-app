@@ -31,6 +31,14 @@ Template.contactSlideIn.events({
   }
 })
 
+Template.contactDetails.onRendered(function () {
+  Tracker.afterFlush(() => this.$('.info-content').perfectScrollbar())
+})
+
+Template.contactDetails.onRendered(function () {
+  this.$('.info-content').perfectScrollbar('destroy')
+})
+
 Template.contactActivity.onCreated(function () {
   var tpl = this
   tpl.option = new ReactiveVar('')

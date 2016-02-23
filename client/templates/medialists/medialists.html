@@ -31,22 +31,26 @@
   </tr>
   </thead>
   <tbody>
-    {{#each medialists}}
-    <tr class="document-row {{#if checked}}checked-row{{/if}} {{#if equal slug medialistQuerySlug}}bg-completed{{/if}}" data-medialist="{{slug}}" data-action="show-medialist-details">
-      <td class="col-checkbox">
-        <div class="checkbox checkbox-default">
-          <label>
-            <input type="checkbox" checked={{checked}} data-checkbox />
-          </label>
-        </div>
-      </td>
-      <td class="col-campaign"><a href="/medialist/{{slug}}">#{{slug}}</a></td>
-      <td class="col-client">{{client.name}}</td>
-      <td class="col-purpose">{{purpose}}</td>
-      <td class="col-updated-on" data-sort="{{updatedAt.valueOf}}">{{fromNow updatedAt}}</td>
-      <td class="col-updated-by">{{updatedBy.name}}</td>
-    </tr>
-  {{/each}}
+    {{#unless Template.subscriptionsReady}}
+      {{> spinner}}
+    {{else}}
+      {{#each medialists}}
+      <tr class="document-row {{#if checked}}checked-row{{/if}} {{#if equal slug medialistQuerySlug}}bg-completed{{/if}}" data-medialist="{{slug}}" data-action="show-medialist-details">
+        <td class="col-checkbox">
+          <div class="checkbox checkbox-default">
+            <label>
+              <input type="checkbox" checked={{checked}} data-checkbox />
+            </label>
+          </div>
+        </td>
+        <td class="col-campaign"><a href="/medialist/{{slug}}">#{{slug}}</a></td>
+        <td class="col-client">{{client.name}}</td>
+        <td class="col-purpose">{{purpose}}</td>
+        <td class="col-updated-on" data-sort="{{updatedAt.valueOf}}">{{fromNow updatedAt}}</td>
+        <td class="col-updated-by">{{updatedBy.name}}</td>
+      </tr>
+      {{/each}}
+    {{/unless}}
   </tbody>
 </table>
 </template>

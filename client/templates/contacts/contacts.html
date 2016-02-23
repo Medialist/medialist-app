@@ -12,8 +12,16 @@
     </div>
     <div class="navbar-form navbar-right">
       <input type="text" class="form-control" placeholder="Filter" data-field="filter-term" value="{{filterTerm}}">
-      <a href="/contacts/import" class="btn btn-primary">Import Contacts</a>
-      <a href="#" class="btn btn-primary btn-raised" data-action="add-new">Add Contact</a>
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary" data-action="add-new">Add New Contact</button>
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="caret"></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="/contacts/import">Import Contacts</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

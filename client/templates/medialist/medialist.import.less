@@ -25,6 +25,7 @@
     background-color: #51adf6;
   }
   .document-row a.label {
+    font-size: 14px;
     display: inline-block;
   }
 }
@@ -68,6 +69,12 @@
   &:hover {
     background-color: lighten(@status-completed, 10%);
   }
+  a, a:visited {
+    color: darken(@status-contacted, 20%);
+  }
+  a:hover, a:active, a:focus {
+    color: darken(@status-contacted, 15%);
+  }
 }
 
 .dropdown-menu {
@@ -82,10 +89,4 @@
     font-size: 13px;
   }
 
-  a, a:visited {
-    color: darken(@status-contacted, 20%);
-  }
-  a:hover, a:active, a:focus {
-    color: darken(@status-contacted, 15%);
-  }
 }

@@ -3,15 +3,15 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Create Medialist</h4>
+        <h4 class="modal-title">Add Medialist</h4>
       </div>
       <div class="modal-body">
         <form id="addMedialist">
           <div class="form-group">
-            <label for="medialist-name">Campaign</label>
+            <label for="medialist-name">Name</label>
             <div class="input-group">
               <span class="input-group-addon">#</span>
-              <input type="text" id="medialist-name" class="form-control" placeholder="hashtag" autofocus >
+              <input type="text" id="medialist-name" class="form-control" placeholder="Add a hashtag" autofocus>
             </div>
           </div>
           <div class="form-group">
@@ -25,12 +25,19 @@
             <label for="medialist-purpose">Purpose</label>
             <div class="input-group">
               <span class="input-group-addon"><span class="glyphicon glyphicon-pencil"></span></span>
-              <input type="text" id="medialist-purpose" class="form-control" placeholder="Tell the world about...">
+              <textarea id="medialist-purpose" class="form-control" placeholder="What is your Medialist for?"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="medialist-topics">Topics</label>
+            <div class="input-group">
+              <span class="input-group-addon"><span class="glyphicon glyphicon-tags"></span></span>
+              <input type="text" class="form-control" name="client" autocomplete="off" spellcheck="off" id="medialist-topics" placeholder="Add a list of topics such as mobile, phones and tech">
             </div>
           </div>
           <div class="text-right">
             <a class="btn btn-flat btn-default" data-dismiss="modal" aria-label="Close">Cancel</a>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Save</button>
           </div>
           {{#if error}}
             <div class="alert alert-danger">

@@ -2,6 +2,11 @@
 {{#with medialist}}
 <div class="medialist-purpose">
   <p>{{purpose}}</p>
+  {{#if topics}}
+    <ul class="list-unstyled list-inline">
+      {{#each topics}}<li><span class="label label-default">{{this}}</span></li>{{/each}}
+    </ul>
+  {{/if}}
 </div>
 <div class="medialist-toolbar">
   <div class="container-fluid">

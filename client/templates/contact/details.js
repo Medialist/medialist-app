@@ -149,6 +149,41 @@ Template.contactPosts.events({
   }
 })
 
+function setLabel (type, evt, tpl) {
+  var $item = tpl.$(evt.currentTarget)
+  var label = $item.text()
+  var index = $item.parents('[data-index]').data('index')
+  console.log($item.text(), $item.parents('[data-index]').data('index'))
+  Meteor.call('contacts/setLabel', tpl.data.slug, type, index, label)
+}
+
+Template.contactPhones.events({
+  'click [data-action=add-phone]' (evt, tpl) {
+    Meteor.call('contacts/addPhone', tpl.data.slug)
+  },
+  'click [data-action=set-label]' (evt, tpl) {
+    setLabel('phone', evt, tpl)
+  }
+})
+
+Template.contactEmails.events({
+  'click [data-action=add-email]' (evt, tpl) {
+    Meteor.call('contacts/addEmail', tpl.data.slug)
+  },
+  'click [data-action=set-label]' (evt, tpl) {
+    setLabel('email', evt, tpl)
+  }
+})
+
+Template.contactSocials.events({
+  'click [data-action=add-social]' (evt, tpl) {
+    Meteor.call('contacts/addSocial', tpl.data.slug)
+  },
+  'click [data-action=set-label]' (evt, tpl) {
+    setLabel('social', evt, tpl)
+  }
+})
+
 Template.contactEmails.helpers({
   allOrDefault (arr) {
     if (arr && arr.length) return arr

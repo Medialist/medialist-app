@@ -134,6 +134,41 @@ Meteor.methods({
     })
     return Contacts.update({ slug: contactSlug }, { $set: details })
   },
+  // MarkMolloy email 0 Work
+  'contacts/setLabel': function (contactSlug, type, index, newLabel) {
+    console.log('contacts/setLabel', contactSlug, type, index, newLabel)
+    if (!this.userId) throw new Meteor.Error('Only a logged in user can add roles to a contact')
+    if (['email', 'phone', 'social'].indexOf(type) < 0) throw new Meteor.Error('Bad type', type)
+    if (Contacts[type + 'Types'].indexOf(newLabel) < 0) throw new Meteor.Error('Bad label', newLabel)
+    checkContactSlug(contactSlug)
+    check(index, Match.Integer)
+    var prop = type + 's'
+    var key = [prop, index, 'label'].join('.')
+    var query = {}
+    query[key] = newLabel
+    return Contacts.update({ slug: contactSlug }, { $set: query })
+  },
+
+  'contacts/addPhone': function (contactSlug) {
+    if (!this.userId) throw new Meteor.Error('Only a logged in user can add roles to a contact')
+    checkContactSlug(contactSlug)
+    var item = { label: 'Work', value:'', wip: this.userId }
+    return Contacts.update({ slug: contactSlug }, { $push: { phones: item }})
+  },
+
+  'contacts/addEmail': function (contactSlug) {
+    if (!this.userId) throw new Meteor.Error('Only a logged in user can add roles to a contact')
+    checkContactSlug(contactSlug)
+    var item = { label: 'Work', value:'', wip: this.userId }
+    return Contacts.update({ slug: contactSlug }, { $push: { emails: item }})
+  },
+
+  'contacts/addSocial': function (contactSlug) {
+    if (!this.userId) throw new Meteor.Error('Only a logged in user can add roles to a contact')
+    checkContactSlug(contactSlug)
+    var item = { label: 'LinkedIn', value:'', wip: this.userId }
+    return Contacts.update({ slug: contactSlug }, { $push: { socials: item }})
+  },
 
   'contacts/togglePhoneType': function (contactSlug) {
     if (!this.userId) throw new Meteor.Error('Only a logged in user can add roles to a contact')
@@ -182,4 +217,9 @@ function addTwitterDetailsToContact(err, user) {
       'socials.$.value': user.screen_name
     }
   })
+}
+
+function checkContactSlug (contactSlug) {
+  check(contactSlug, String)
+  if (!Contacts.find({slug: contactSlug}).count()) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
 }

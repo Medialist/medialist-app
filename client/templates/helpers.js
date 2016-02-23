@@ -45,6 +45,15 @@ var helpers = {
     if (user && user._id === Meteor.userId()) return 'You'
     return user && user.name
   },
+  emailTypes: function () {
+    return Contacts.emailTypes
+  },
+  phoneTypes: function () {
+    return Contacts.phoneTypes
+  },
+  socialTypes: function () {
+    return Contacts.socialTypes
+  },
   or: (x, y) => x || y,
   and: (x, y) => x && y,
   not: x => !x

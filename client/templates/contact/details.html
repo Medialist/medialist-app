@@ -81,9 +81,20 @@
 
 <template name="contactEmails">
   {{#each allOrDefault emails}}
-  <div class="form-group form-group-editable">
-    <div class="form-group-sub"><a>Add Email</a></div>
-    <label class="text-capitalize">{{label}} Email<span class="caret"></span></label>
+  <div class="form-group form-group-editable" data-index={{@index}}>
+    <div class="form-group-sub"><a data-action="add-email">Add Email</a></div>
+    <div class="dropdown">
+      <label class="text-capitalize" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        {{label}} Email <span class="caret"></span>
+      </label>
+      <ul class="dropdown-menu">
+        {{#each emailTypes}}
+        <li><a data-action='set-label'>{{this}}</a></li>
+        {{/each}}
+        <li role="separator" class="divider"></li>
+        <li><a data-action='delete-email' class="text-danger">Delete</a></li>
+      </ul>
+    </div>
     {{> editableText collection="contacts" field="value" acceptEmpty=true placeholder='Add Email' class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
   </div>
   {{/each}}
@@ -91,13 +102,22 @@
 
 <template name="contactPhones">
   {{#each allOrDefault phones}}
-  <div class="form-group form-group-editable">
+  <div class="form-group form-group-editable" data-index={{@index}}>
     <div class="form-group-sub"><a data-action="add-phone">Add Phone</a></div>
-    <label class="text-capitalize">
-      {{label}}
-      <i class="glyphicon glyphicon-phone{{#if equal label 'Landline'}}-alt{{/if}}" data-action="toggle-phone-type"></i>
-      <span class="caret"></span>
-    </label>
+    <div class="dropdown">
+      <label class="text-capitalize" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        {{label}}
+        <i class="glyphicon glyphicon-phone{{#if equal label 'Landline'}}-alt{{/if}}" data-action="toggle-phone-type"></i>
+        <span class="caret"></span>
+      </label>
+      <ul class="dropdown-menu">
+        {{#each phoneTypes}}
+        <li><a data-action='set-label'>{{this}}</a></li>
+        {{/each}}
+        <li role="separator" class="divider"></li>
+        <li><a data-action='delete-email' class="text-danger">Delete</a></li>
+      </ul>
+    </div>
     {{> editableText collection="contacts" field="value" acceptEmpty=true placeholder='Add Phone' class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
   </div>
   {{/each}}
@@ -105,9 +125,20 @@
 
 <template name="contactSocials">
   {{#each allOrDefault socials}}
-  <div class="form-group form-group-editable">
-    <div class="form-group-sub"><a>Add Social</a></div>
-    <label class="text-capitalize">{{label}}<span class="caret"></span></label>
+  <div class="form-group form-group-editable" data-index={{@index}}>
+    <div class="form-group-sub"><a data-action="add-social">Add Social</a></div>
+    <div class="dropdown">
+      <label class="text-capitalize" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        {{label}} <span class="caret"></span>
+      </label>
+      <ul class="dropdown-menu">
+        {{#each socialTypes}}
+        <li><a data-action='set-label'>{{this}}</a></li>
+        {{/each}}
+        <li role="separator" class="divider"></li>
+        <li><a data-action='delete-email' class="text-danger">Delete</a></li>
+      </ul>
+    </div>
     {{> editableText collection="contacts" field="value" acceptEmpty=true placeholder='Add Social' class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
   </div>
   {{/each}}

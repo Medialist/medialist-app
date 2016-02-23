@@ -127,6 +127,7 @@
       "Modal": true,
       "MeteorTablesort": true,
       "twitterScreenName": false,
+      "Snackbar": false,
       // Globals
       "App": true,
       "Schemas": true,

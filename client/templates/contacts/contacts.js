@@ -29,7 +29,7 @@ Template.contacts.onCreated(function () {
     if (Contacts.find({ slug: contactSlug }).count()) {
       SlideIns.show('right', 'contactSlideIn', { contact: contactSlug })
       Meteor.setTimeout(() => {
-        var contactRow = $(`[data-contact="${contactSlug}"]`)
+        var contactRow = allContactsTpl.$(`[data-contact="${contactSlug}"]`)
         if (!contactRow.visible()) $.scrollTo(contactRow, { offset: -250 })
       }, 1)
     } else {
@@ -58,7 +58,7 @@ Template.contacts.helpers({
 
 Template.contacts.events({
   'click [data-action="add-new"]': function () {
-    FlowRouter.setQueryParams({ contact: null })
+    FlowRouter.setQueryParams({ contact: null, medialist: null })
     Modal.show('addContact', { ignoreExisting: true })
   },
   'keyup [data-field="filter-term"]': function (evt, tpl) {
@@ -82,6 +82,7 @@ Template.contacts.events({
     if(!$(evt.currentTarget).prop('checked')) $('[data-checkbox-all]').prop('checked', false)
   },
   'click [data-action="create-new-medialist"]': function (evt, tpl) {
+    FlowRouter.setQueryParams({ contact: null, medialist: null })
     var contactSlugs = _.keys(tpl.checkSelect.get())
     Modal.show('createMedialist', { contacts: contactSlugs })
   },
@@ -94,6 +95,7 @@ Template.contacts.events({
         FlowRouter.go('medialist', { slug: medialistSlug })
       })
     }
+    FlowRouter.setQueryParams({ contact: null, medialist: null })
     Modal.show('selectMedialist', { callback: cb })
   }
 })

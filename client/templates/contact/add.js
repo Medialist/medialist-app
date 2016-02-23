@@ -40,6 +40,7 @@ Template.addContact.events({
       context.name = identifier
     }
     tpl.name.set('')
+    FlowRouter.setQueryParams({ contact: null, medialist: null })
     Modal.show('createContact', context)
   }
 });

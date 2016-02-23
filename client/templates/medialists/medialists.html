@@ -2,14 +2,15 @@
 <div class="medialist-toolbar">
   <div class="container-fluid">
     <div class="navbar-form navbar-left">
+      <div class="btn-height">All medialists ({{medialists.length}})</div>
       {{#if checkSelectKeys}}
-      <button class="btn btn-link">{{pluralize 'medialist' checkSelectKeys.length}}</button>
-      {{else}}
-      <a href="#" class="btn btn-primary btn-raised" data-action="create-medialist">Add Medialist</a>
+      <div class="btn-height-divider"></div>
+      <div class="btn-height text-primary">{{checkSelectKeys.length}} selected</div>
       {{/if}}
     </div>
     <div class="navbar-form navbar-right" role="filter">
       <input type="text" class="form-control" placeholder="Filter" data-field="filter-term" value="{{filterTerm}}">
+      <a href="#" class="btn btn-primary btn-raised" data-action="create-medialist">Add Medialist</a>
     </div>
   </div>
 </div>
@@ -36,14 +37,14 @@
     {{else}}
       {{#each medialists}}
       <tr class="document-row {{#if checked}}checked-row{{/if}} {{#if equal slug medialistQuerySlug}}bg-completed{{/if}}" data-medialist="{{slug}}" data-action="show-medialist-details">
-        <td class="col-checkbox">
+        <td class="col-checkbox" data-no-sidebar>
           <div class="checkbox checkbox-default">
             <label>
               <input type="checkbox" checked={{checked}} data-checkbox />
             </label>
           </div>
         </td>
-        <td class="col-campaign"><a href="/medialist/{{slug}}">#{{slug}}</a></td>
+        <td class="col-campaign" data-no-sidebar><a href="/medialist/{{slug}}">#{{slug}}</a></td>
         <td class="col-client">{{client.name}}</td>
         <td class="col-purpose">{{purpose}}</td>
         <td class="col-updated-on" data-sort="{{updatedAt.valueOf}}">{{fromNow updatedAt}}</td>

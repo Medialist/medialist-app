@@ -79,8 +79,10 @@ Template.medialists.events({
     App.toggleReactiveObject(tpl.checkSelect, this.slug)
     if(!$(evt.currentTarget).prop('checked')) $('[data-checkbox-all]').prop('checked', false)
   },
-  'click [data-action="show-medialist-details"]': function (evt) {
-    if (evt.target.tagName === 'A') return SlideIns.hide('right')
-    FlowRouter.setQueryParams({ medialist: this.slug })
+  'click [data-action="show-medialist-details"]': function (evt, tpl) {
+    var $el = tpl.$(evt.target)
+    if (!$el.parents('[data-no-sidebar]').length) {
+      FlowRouter.setQueryParams({ medialist: this.slug })
+    }
   },
 })

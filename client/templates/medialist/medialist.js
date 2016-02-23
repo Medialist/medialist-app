@@ -6,7 +6,6 @@ Template.medialist.onCreated(function () {
   medialistTpl.checkSelect = new ReactiveVar({})
   medialistTpl.filterTerm = new ReactiveVar()
   medialistTpl.query = new ReactiveVar({})
-  medialistTpl.selected = new ReactiveVar()
   medialistTpl.autorun(() => {
     var filterTerm = medialistTpl.filterTerm.get()
     var query = { medialists: medialistTpl.slug.get() }
@@ -29,6 +28,20 @@ Template.medialist.onCreated(function () {
     medialistTpl.checkSelect.set({})
     $('[data-checkbox-all]').prop('checked', false)
     medialistTpl.subscribe('medialist', medialistTpl.slug.get())
+  })
+  medialistTpl.autorun(() => {
+    FlowRouter.watchPathChange()
+    if (!medialistTpl.subscriptionsReady()) return
+    var contactSlug = FlowRouter.getQueryParam('contact')
+    if (Contacts.find({ slug: contactSlug }).count()) {
+      SlideIns.show('right', 'contactSlideIn', { contact: contactSlug })
+      Meteor.setTimeout(() => {
+        var contactRow = medialistTpl.$(`[data-contact="${contactSlug}"]`)
+        if (!contactRow.visible()) $.scrollTo(contactRow, { offset: -250 })
+      }, 1)
+    } else {
+      SlideIns.hide('right')
+    }
   })
 })
 
@@ -55,6 +68,7 @@ Template.medialist.helpers({
 
 Template.medialist.events({
   'click [data-action="add-new"]': function () {
+    FlowRouter.setQueryParams({ contact: null, medialist: null })
     Modal.show('addContact')
   },
   'click [data-checkbox-all]': function (evt, tpl) {
@@ -73,6 +87,7 @@ Template.medialist.events({
     if(!$(evt.currentTarget).prop('checked')) $('[data-checkbox-all]').prop('checked', false)
   },
   'click [data-action="create-new-medialist"]': function () {
+    FlowRouter.setQueryParams({ contact: null, medialist: null })
     var contactSlugs = _.keys(medialistTpl.checkSelect.get())
     Modal.show('createMedialist', { contacts: contactSlugs })
   },
@@ -130,9 +145,7 @@ Template.medialistContactRow.events({
   'click [data-action="show-contact-slide-in"]': function (evt, tpl) {
     var $el = tpl.$(evt.target)
     if (!$el.parents('[data-no-sidebar]').length) {
-      medialistTpl.selected.set(this.slug)
       FlowRouter.setQueryParams({ contact: this.slug })
-      SlideIns.show('right', 'contactSlideIn', { contact: this.slug })
     }
   },
   'click [data-status]': function (evt, tpl) {

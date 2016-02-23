@@ -57,6 +57,14 @@
         <label for="medialist-detail-purpose">Purpose</label>
         <p class="editable-text-container" id="medialist-detail-purpose">{{> editableText textarea=true collection="medialists" field="purpose" inputClass="form-control" eventType="dblclick" substitute="-" beforeUpdate="generateUpdatePost"}}</p>
       </div>
+      {{#if topics}}
+      <div class="form-group">
+        <label>Topics</label>
+        <ul class="list-unstyled list-inline">
+          {{#each topics}}<li><span class="label label-default">{{this}}</span></li>{{/each}}
+        </ul>
+      </div>
+      {{/if}}
       <div class="form-group">
         <label for="medialist-detail-created">Created by</label>
         <p id="medialist-detail-created">{{youOrName createdBy}} on {{dateFormat createdAt 'ddd MMMM YY'}}</p>

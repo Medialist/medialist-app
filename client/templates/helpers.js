@@ -35,6 +35,14 @@ var helpers = {
     FlowRouter.watchPathChange()
     return FlowRouter.getParam('medialistSlug')
   },
+  contactQuerySlug: function () {
+    FlowRouter.watchPathChange()
+    return FlowRouter.getQueryParam('contact')
+  },
+  medialistQuerySlug: function () {
+    FlowRouter.watchPathChange()
+    return FlowRouter.getQueryParam('medialist')
+  },
   firstName: App.firstName,
   profileImage: function () {
     var user = Meteor.user();

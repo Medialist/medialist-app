@@ -2,6 +2,11 @@
 {{#with medialist}}
 <div class="medialist-purpose">
   <p>{{purpose}}</p>
+  {{#if topics}}
+    <ul class="list-unstyled list-inline">
+      {{#each topics}}<li><span class="label label-default">{{this}}</span></li>{{/each}}
+    </ul>
+  {{/if}}
 </div>
 <div class="medialist-toolbar">
   <div class="container-fluid">
@@ -40,25 +45,29 @@
   </tr>
   </thead>
   <tbody>
-    {{#each contacts}}
-      {{> medialistContactRow this}}
+    {{#unless Template.subscriptionsReady}}
+      {{> spinner}}
     {{else}}
-      <tr>
-        <td></td>
-        <td></td>
-        <td><strong>Add some people to contact&hellip;</strong></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    {{/each}}
+      {{#each contacts}}
+        {{> medialistContactRow this}}
+      {{else}}
+        <tr>
+          <td></td>
+          <td></td>
+          <td><strong>Add some people to contact&hellip;</strong></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      {{/each}}
+    {{/unless}}
   </tbody>
 </table>
 </template>
 
 <template name="medialistContactRow">
-  <tr class="document-row {{#if equal slug selected}}selected{{/if}} {{#if checked}}checked-row{{/if}}" data-contact="{{slug}}" data-action="show-contact-slide-in">
+  <tr class="document-row {{#if equal slug contactQuerySlug}}selected{{/if}} {{#if checked}}checked-row{{/if}}" data-contact="{{slug}}" data-action="show-contact-slide-in">
     <td class="col-checkbox" data-no-sidebar>
       <div class="checkbox checkbox-default">
         <label>

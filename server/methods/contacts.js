@@ -44,7 +44,7 @@ Meteor.methods({
     contact.medialists = []
     if (medialistSlug) contact.medialists.push(medialistSlug)
     check(contact, Schemas.Contacts)
-    Contacts.insert(contact)
+    var contactId = Contacts.insert(contact)
 
     if (medialistSlug) {
       var updateMedialist = {}
@@ -54,7 +54,7 @@ Meteor.methods({
     }
 
     if (details.screenName) {
-      TwitterClient.grabUserByScreenName(details.screenName, addTwitterDetailsToContact.bind(contact))
+      Contacts.changeScreenName(contactId, details.screenName)
     }
     return contact
   },
@@ -195,17 +195,6 @@ Meteor.methods({
     })
   }
 })
-
-function addTwitterDetailsToContact(err, user) {
-  if (err || !user) return console.log('Couldn\'t get Twitter info for ' + this.name)
-  Contacts.update({ slug: this.slug, 'socials.label': 'Twitter' }, {
-    $set: {
-      avatar: user.profile_image_url_https,
-      'socials.$.twitterId': user.id_str,
-      'socials.$.value': user.screen_name
-    }
-  })
-}
 
 function checkContactSlug (contactSlug) {
   check(contactSlug, String)

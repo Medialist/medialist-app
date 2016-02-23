@@ -15,6 +15,7 @@ Template.topbar.events({
     SlideIns.toggle('left', 'mainmenu')
   },
   'click [data-action="create-medialist"]': function () {
+    FlowRouter.setQueryParams({ contact: null, medialist: null })
     Modal.show('createMedialist')
   }
 })

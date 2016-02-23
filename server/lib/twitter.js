@@ -37,6 +37,7 @@ TwitterClient.grabUser = function (query, cb) {
 }
 
 TwitterClient.grabUserByScreenName = function (screen_name, cb) {
+  screen_name = twitterScreenName(screen_name)
   TwitterClient.grabUser({screen_name: screen_name}, cb)
 }
 

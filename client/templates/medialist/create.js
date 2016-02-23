@@ -22,14 +22,22 @@ Template.createMedialist.helpers({
 })
 
 Template.createMedialist.events({
-  'submit': function (evt, tpl) {
+  'blur #medialist-name' (evt) {
+    var field = $(evt.currentTarget)
+    var val = field.val()
+    var name = val.replace(/[^a-z0-9]/gi, '')
+    if (name !== val) field.val(name)
+  },
+  submit: function (evt, tpl) {
     evt.preventDefault()
 
     var medialist = {
       name: tpl.$('#medialist-name').val(),
       client: { name: tpl.$('#medialist-client').val() },
-      purpose: tpl.$('#medialist-purpose').val()
+      purpose: tpl.$('#medialist-purpose').val(),
+      topics: tpl.$('#medialist-topics').val().split(/\s*,\s*/g).filter(t => !!t)
     }
+
     if (Template.currentData().contacts) {
       medialist.contacts = _.reduce(Template.currentData().contacts, function (contactObj, contactSlug) {
         contactObj[contactSlug] = Contacts.status.toContact

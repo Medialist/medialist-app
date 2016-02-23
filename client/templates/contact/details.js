@@ -26,9 +26,7 @@ Template.contactSlideIn.events({
     slideIn.contactSection.set(section)
   },
   'dblclick [data-action="toggle-phone-type"]': function () {
-    Meteor.call('contacts/togglePhoneType', this.slug, err => {
-      if (err) return console.error(err)
-    })
+    Meteor.call('contacts/togglePhoneType', this.slug, errorReporter)
   }
 })
 
@@ -158,6 +156,57 @@ Template.contactPosts.events({
   }
 })
 
+function setLabel (type, evt, tpl) {
+  var $item = tpl.$(evt.currentTarget)
+  var label = $item.text()
+  var index = $item.parents('[data-index]').data('index')
+  Meteor.call('contacts/setLabel', tpl.data.slug, type, index, label, errorReporter)
+}
+
+function deleteType (type, evt, tpl) {
+  var $item = tpl.$(evt.currentTarget)
+  var index = $item.parents('[data-index]').data('index')
+  var data = tpl.data[type + 's'][index]
+  var item = { label: data.label, value: data.value }
+  Meteor.call('contacts/deleteType', tpl.data.slug, type, item, errorReporter)
+}
+
+Template.contactPhones.events({
+  'click [data-action=add-phone]' (evt, tpl) {
+    Meteor.call('contacts/addPhone', tpl.data.slug, errorReporter)
+  },
+  'click [data-action=set-label]' (evt, tpl) {
+    setLabel('phone', evt, tpl)
+  },
+  'click [data-action=delete]' (evt, tpl) {
+    deleteType('phone', evt, tpl)
+  },
+})
+
+Template.contactEmails.events({
+  'click [data-action=add-email]' (evt, tpl) {
+    Meteor.call('contacts/addEmail', tpl.data.slug, errorReporter)
+  },
+  'click [data-action=set-label]' (evt, tpl) {
+    setLabel('email', evt, tpl)
+  },
+  'click [data-action=delete]' (evt, tpl) {
+    deleteType('email', evt, tpl)
+  },
+})
+
+Template.contactSocials.events({
+  'click [data-action=add-social]' (evt, tpl) {
+    Meteor.call('contacts/addSocial', tpl.data.slug, errorReporter)
+  },
+  'click [data-action=set-label]' (evt, tpl) {
+    setLabel('social', evt, tpl)
+  },
+  'click [data-action=delete]' (evt, tpl) {
+    deleteType('social', evt, tpl)
+  },
+})
+
 Template.contactEmails.helpers({
   allOrDefault (arr) {
     if (arr && arr.length) return arr
@@ -178,3 +227,10 @@ Template.contactSocials.helpers({
     return [{ label: 'Twitter', value: ''}]
   }
 })
+
+function errorReporter (err) {
+  if (err) {
+    console.error(err)
+    Snackbar.error(err.reason || err.error || 'Sorry, there was a problem.')
+  }
+}

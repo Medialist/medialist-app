@@ -54,6 +54,10 @@ var helpers = {
   socialTypes: function () {
     return Contacts.socialTypes
   },
+  fieldName(a, index, b) {
+    var res = [a, index, b].join('.')
+    return res
+  },
   or: (x, y) => x || y,
   and: (x, y) => x && y,
   not: x => !x

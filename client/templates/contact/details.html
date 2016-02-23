@@ -95,7 +95,7 @@
         <li><a data-action='delete' class="text-danger">Delete</a></li>
       </ul>
     </div>
-    {{> editableText collection="contacts" field="value" acceptEmpty=true placeholder='Add Email' class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
+    {{> editableText context=.. collection="contacts" field=(fieldName "emails" @index "value") acceptEmpty=true placeholder='Add Email' class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
   </div>
   {{/each}}
 </template>
@@ -118,7 +118,7 @@
         <li><a data-action='delete' class="text-danger">Delete</a></li>
       </ul>
     </div>
-    {{> editableText collection="contacts" field="value" acceptEmpty=true placeholder='Add Phone' class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
+    {{> editableText context=.. collection="contacts" field=(fieldName "phones" @index "value") acceptEmpty=true placeholder='Add Phone' class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
   </div>
   {{/each}}
 </template>
@@ -139,7 +139,7 @@
         <li><a data-action='delete' class="text-danger">Delete</a></li>
       </ul>
     </div>
-    {{> editableText collection="contacts" field="value" acceptEmpty=true placeholder='Add Social' class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
+    {{> editableText context=.. collection="contacts" field=(fieldName "socials" @index "value") acceptEmpty=true placeholder='Add Social' class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
   </div>
   {{/each}}
 </template>

@@ -34,24 +34,28 @@
   </tr>
   </thead>
   <tbody>
-    {{#each allContacts}}
-      {{> allContactsRow this}}
+    {{#unless Template.subscriptionsReady}}
+      {{> spinner}}
     {{else}}
-      <tr>
-        <td></td>
-        <td></td>
-        <td><strong>Add some contacts&hellip;</strong></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    {{/each}}
+      {{#each allContacts}}
+        {{> allContactsRow this}}
+      {{else}}
+        <tr>
+          <td></td>
+          <td></td>
+          <td><strong>Add some contacts&hellip;</strong></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      {{/each}}
+    {{/unless}}
   </tbody>
 </table>
 </template>
 
 <template name="allContactsRow">
-  <tr class="document-row {{#if equal slug selected}}selected{{/if}} {{#if checked}}checked-row{{/if}}" data-contact="{{slug}}" data-action="show-contact-slide-in">
+  <tr class="document-row {{#if equal slug contactQuerySlug}}selected{{/if}} {{#if checked}}checked-row{{/if}}" data-contact="{{slug}}" data-action="show-contact-slide-in">
     <td class="col-checkbox">
       <div class="checkbox checkbox-default">
         <label>

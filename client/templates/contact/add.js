@@ -40,6 +40,7 @@ Template.addContact.events({
       context.name = identifier
     }
     tpl.name.set('')
+    FlowRouter.setQueryParams({ contact: null, medialist: null })
     Modal.show('createContact', context)
   }
 });
@@ -65,18 +66,8 @@ Template.contactRow.events({
   'click [data-action="view-contact"]': function () {
     Modal.hide()
     var medialistSlug = FlowRouter.getParam('medialistSlug')
-    var updateHighlight = () => {
-      var parentTpl = Blaze.getView($('.medialist-table')[0]).templateInstance()
-      console.log(parentTpl)
-      parentTpl.selected.set(this.slug)
-    }
-    var slideInContext = { contact: this.slug }
-    if (this.medialists.indexOf(medialistSlug) === -1) {
-      FlowRouter.go('contacts')
-      slideInContext.noMedialist = true
-    }
-    FlowRouter.setQueryParams({ contact: this.slug })
-    SlideIns.show('right', 'contactSlideIn', slideInContext)
-    Meteor.setTimeout(() => Tracker.afterFlush(updateHighlight), 1)
+    var context = { contact: this.slug }
+    if (this.medialists.indexOf(medialistSlug) === -1) return FlowRouter.go('contacts', {}, context)
+    FlowRouter.setQueryParams(context)
   }
 })

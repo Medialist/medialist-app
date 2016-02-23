@@ -56,6 +56,7 @@ Template.createContact.events({
 
     Meteor.call('contacts/create', contact, tpl.data.medialist, function (err, contact) {
       if (err) return console.error(err)
+      FlowRouter.setQueryParams({ contact: null, medialist: null })
       Modal.show('addContactDetails', {slug: contact.slug})
     })
   }

@@ -153,8 +153,15 @@ function setLabel (type, evt, tpl) {
   var $item = tpl.$(evt.currentTarget)
   var label = $item.text()
   var index = $item.parents('[data-index]').data('index')
-  console.log($item.text(), $item.parents('[data-index]').data('index'))
   Meteor.call('contacts/setLabel', tpl.data.slug, type, index, label)
+}
+
+function deleteType (type, evt, tpl) {
+  var $item = tpl.$(evt.currentTarget)
+  var index = $item.parents('[data-index]').data('index')
+  var data = tpl.data[type + 's'][index]
+  var item = { label: data.label, value: data.value }
+  Meteor.call('contacts/deleteType', tpl.data.slug, type, item)
 }
 
 Template.contactPhones.events({
@@ -163,7 +170,10 @@ Template.contactPhones.events({
   },
   'click [data-action=set-label]' (evt, tpl) {
     setLabel('phone', evt, tpl)
-  }
+  },
+  'click [data-action=delete]' (evt, tpl) {
+    deleteType('phone', evt, tpl)
+  },
 })
 
 Template.contactEmails.events({
@@ -172,7 +182,10 @@ Template.contactEmails.events({
   },
   'click [data-action=set-label]' (evt, tpl) {
     setLabel('email', evt, tpl)
-  }
+  },
+  'click [data-action=delete]' (evt, tpl) {
+    deleteType('email', evt, tpl)
+  },
 })
 
 Template.contactSocials.events({
@@ -181,7 +194,10 @@ Template.contactSocials.events({
   },
   'click [data-action=set-label]' (evt, tpl) {
     setLabel('social', evt, tpl)
-  }
+  },
+  'click [data-action=delete]' (evt, tpl) {
+    deleteType('social', evt, tpl)
+  },
 })
 
 Template.contactEmails.helpers({

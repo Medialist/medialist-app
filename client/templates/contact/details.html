@@ -92,7 +92,7 @@
         <li><a data-action='set-label'>{{this}}</a></li>
         {{/each}}
         <li role="separator" class="divider"></li>
-        <li><a data-action='delete-email' class="text-danger">Delete</a></li>
+        <li><a data-action='delete' class="text-danger">Delete</a></li>
       </ul>
     </div>
     {{> editableText collection="contacts" field="value" acceptEmpty=true placeholder='Add Email' class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
@@ -115,7 +115,7 @@
         <li><a data-action='set-label'>{{this}}</a></li>
         {{/each}}
         <li role="separator" class="divider"></li>
-        <li><a data-action='delete-email' class="text-danger">Delete</a></li>
+        <li><a data-action='delete' class="text-danger">Delete</a></li>
       </ul>
     </div>
     {{> editableText collection="contacts" field="value" acceptEmpty=true placeholder='Add Phone' class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}
@@ -136,7 +136,7 @@
         <li><a data-action='set-label'>{{this}}</a></li>
         {{/each}}
         <li role="separator" class="divider"></li>
-        <li><a data-action='delete-email' class="text-danger">Delete</a></li>
+        <li><a data-action='delete' class="text-danger">Delete</a></li>
       </ul>
     </div>
     {{> editableText collection="contacts" field="value" acceptEmpty=true placeholder='Add Social' class="form-control-static" inputClass="form-control" beforeUpdate="generateUpdatePost"}}

@@ -134,9 +134,8 @@ Meteor.methods({
     })
     return Contacts.update({ slug: contactSlug }, { $set: details })
   },
-  // MarkMolloy email 0 Work
+
   'contacts/setLabel': function (contactSlug, type, index, newLabel) {
-    console.log('contacts/setLabel', contactSlug, type, index, newLabel)
     if (!this.userId) throw new Meteor.Error('Only a logged in user can add roles to a contact')
     if (['email', 'phone', 'social'].indexOf(type) < 0) throw new Meteor.Error('Bad type', type)
     if (Contacts[type + 'Types'].indexOf(newLabel) < 0) throw new Meteor.Error('Bad label', newLabel)
@@ -149,47 +148,36 @@ Meteor.methods({
     return Contacts.update({ slug: contactSlug }, { $set: query })
   },
 
+  'contacts/deleteType': function (contactSlug, type, item) {
+    if (!this.userId) throw new Meteor.Error('Only a logged in user can add roles to a contact')
+    if (['email', 'phone', 'social'].indexOf(type) < 0) throw new Meteor.Error('Bad type', type)
+    checkContactSlug(contactSlug)
+    check(item, {label: String, value: String})
+    var prop = type + 's'
+    var query = { $pull: {} }
+    query.$pull[prop] = item
+    return Contacts.update({ slug: contactSlug }, query)
+  },
+
   'contacts/addPhone': function (contactSlug) {
     if (!this.userId) throw new Meteor.Error('Only a logged in user can add roles to a contact')
     checkContactSlug(contactSlug)
-    var item = { label: 'Work', value:'', wip: this.userId }
+    var item = { label: Contacts.phoneTypes[0], value:'' }
     return Contacts.update({ slug: contactSlug }, { $push: { phones: item }})
   },
 
   'contacts/addEmail': function (contactSlug) {
     if (!this.userId) throw new Meteor.Error('Only a logged in user can add roles to a contact')
     checkContactSlug(contactSlug)
-    var item = { label: 'Work', value:'', wip: this.userId }
+    var item = { label: Contacts.emailTypes[0], value:'' }
     return Contacts.update({ slug: contactSlug }, { $push: { emails: item }})
   },
 
   'contacts/addSocial': function (contactSlug) {
     if (!this.userId) throw new Meteor.Error('Only a logged in user can add roles to a contact')
     checkContactSlug(contactSlug)
-    var item = { label: 'LinkedIn', value:'', wip: this.userId }
+    var item = { label: Contacts.socialTypes[1], value:''}
     return Contacts.update({ slug: contactSlug }, { $push: { socials: item }})
-  },
-
-  'contacts/togglePhoneType': function (contactSlug) {
-    if (!this.userId) throw new Meteor.Error('Only a logged in user can add roles to a contact')
-    check(contactSlug, String)
-    var user = Meteor.users.findOne(this.userId)
-    var contact = Contacts.findOne({ slug: contactSlug })
-    if (!contact) throw new Meteor.Error('Contact #' + contactSlug + ' does not exist')
-
-    if (!contact.phones || !contact.phones.length) return Contacts.update({ slug: contactSlug }, {$push: {
-      phones: { label: Contacts.phoneTypes[1] }
-    }})
-    var phoneTypeInd = Contacts.phoneTypes.indexOf(contact.phones[0].label)
-    var newPhoneType = Contacts.phoneTypes[(phoneTypeInd + 1) % Contacts.phoneTypes.length]
-
-    return Contacts.update({ slug: contactSlug }, {$set: {
-      'phones.0.label': newPhoneType,
-      'updatedBy._id': user._id,
-      'updatedBy.name': user.profile.name,
-      'updatedBy.avatar': user.services.twitter.profile_image_url_https,
-      'updatedAt': new Date()
-    }})
   },
 
   // The client is just letting us know there is some work to do, they don't care about the response.

@@ -2,17 +2,26 @@
 <div class="medialist-toolbar">
   <div class="container-fluid">
     <div class="navbar-form navbar-left">
+      <div class="btn-height">All contacts ({{allContacts.count}})</div>
       {{#if checkSelectKeys}}
-      <button class="btn btn-link">{{pluralize 'contact' checkSelectKeys.length}}</button>
-      <a href="#" class="btn btn-success" data-action="create-new-medialist">Create Medialist</a>
+      <div class="btn-height-divider"></div>
+      <div class="btn-height text-primary">{{checkSelectKeys.length}} selected</div>
+      <a href="#" class="btn btn-primary" data-action="create-new-medialist">Create Medialist</a>
       {{> addToMedialist selectedContacts=checkSelectKeys}}
-      {{else}}
-      <a href="#" class="btn btn-primary btn-raised" data-action="add-new">Add Contact</a>
-      <a href="/contacts/import" class="btn btn-primary">Import Contacts</a>
       {{/if}}
     </div>
-    <div class="navbar-form navbar-right" role="filter">
+    <div class="navbar-form navbar-right">
       <input type="text" class="form-control" placeholder="Filter" data-field="filter-term" value="{{filterTerm}}">
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary" data-action="add-new">Add New Contact</button>
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="caret"></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="/contacts/import">Import Contacts</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
@@ -56,7 +65,7 @@
 
 <template name="allContactsRow">
   <tr class="document-row {{#if equal slug contactQuerySlug}}selected{{/if}} {{#if checked}}checked-row{{/if}}" data-contact="{{slug}}" data-action="show-contact-slide-in">
-    <td class="col-checkbox">
+    <td class="col-checkbox" data-no-sidebar>
       <div class="checkbox checkbox-default">
         <label>
           <input type="checkbox" checked={{checked}} data-checkbox />

@@ -18,6 +18,7 @@ Template.contactSlideIn.helpers({
 
 Template.contactSlideIn.events({
   'click [data-action="close-contact-slide-in"]': function () {
+    FlowRouter.setQueryParams({ contact: null, medialist: null })
     SlideIns.hide('right')
   },
   'click [data-section]': function (evt, tpl) {

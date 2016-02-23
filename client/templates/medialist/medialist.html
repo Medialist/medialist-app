@@ -11,17 +11,18 @@
 <div class="medialist-toolbar">
   <div class="container-fluid">
     <div class="navbar-form navbar-left">
+      <div class="btn-height">All contacts ({{contacts.count}})</div>
       {{#if checkSelectKeys}}
-      <button class="btn btn-link">{{pluralize 'contact' checkSelectKeys.length}}</button>
-      <a href="#" class="btn btn-success" data-action="create-new-medialist">Create Medialist</a>
+      <div class="btn-height-divider"></div>
+      <div class="btn-height text-primary">{{checkSelectKeys.length}} selected</div>
+      <a href="#" class="btn btn-primary" data-action="create-new-medialist">Create Medialist</a>
       {{> addToMedialist selectedContacts=checkSelectKeys}}
       <a href="#" class="btn btn-danger" data-action="remove-from-medialist">Remove</a>
-      {{else}}
-      <a href="#" class="btn btn-primary btn-raised" data-action="add-new">Add Contact</a>
       {{/if}}
     </div>
-    <div class="navbar-form navbar-right" role="filter">
+    <div class="navbar-form navbar-right">
       <input type="text" class="form-control" placeholder="Filter" data-field="filter-term" value="{{filterTerm}}">
+      <a href="#" class="btn btn-primary btn-raised" data-action="add-new">Add Contact</a>
     </div>
   </div>
 </div>
@@ -119,7 +120,7 @@
 
 <template name="addToMedialist">
   <div class="btn-group">
-    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Add to existing Medialist <span class="caret"></span>
     </button>
     <ul class="dropdown-menu">

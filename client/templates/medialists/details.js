@@ -15,6 +15,7 @@ Template.medialistSlideIn.events({
     tpl.section.set(section)
   },
   'click [data-action="close-medialist-slide-in"]': function () {
+    FlowRouter.setQueryParams({ contact: null, medialist: null })
     SlideIns.hide('right')
   }
 })

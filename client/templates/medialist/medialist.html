@@ -40,19 +40,23 @@
   </tr>
   </thead>
   <tbody>
-    {{#each contacts}}
-      {{> medialistContactRow this}}
+    {{#unless Template.subscriptionsReady}}
+      {{> spinner}}
     {{else}}
-      <tr>
-        <td></td>
-        <td></td>
-        <td><strong>Add some people to contact&hellip;</strong></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    {{/each}}
+      {{#each contacts}}
+        {{> medialistContactRow this}}
+      {{else}}
+        <tr>
+          <td></td>
+          <td></td>
+          <td><strong>Add some people to contact&hellip;</strong></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      {{/each}}
+    {{/unless}}
   </tbody>
 </table>
 </template>

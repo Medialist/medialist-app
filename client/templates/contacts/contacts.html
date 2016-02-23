@@ -34,18 +34,22 @@
   </tr>
   </thead>
   <tbody>
-    {{#each allContacts}}
-      {{> allContactsRow this}}
+    {{#unless Template.subscriptionsReady}}
+      {{> spinner}}
     {{else}}
-      <tr>
-        <td></td>
-        <td></td>
-        <td><strong>Add some contacts&hellip;</strong></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    {{/each}}
+      {{#each allContacts}}
+        {{> allContactsRow this}}
+      {{else}}
+        <tr>
+          <td></td>
+          <td></td>
+          <td><strong>Add some contacts&hellip;</strong></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      {{/each}}
+    {{/unless}}
   </tbody>
 </table>
 </template>

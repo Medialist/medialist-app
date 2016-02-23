@@ -13,4 +13,5 @@ Package.onUse(function(api) {
   api.addFiles('snackbar.css', 'client')
   api.addFiles('snackbar.js', 'client')
   api.export('Snackbar', 'client')
+  api.use('ecmascript')
 })

@@ -10,4 +10,5 @@ Package.onUse(function(api) {
   api.versionsFrom('1.1.0.3');
   api.addFiles('twitter.js', 'server')
   api.export('Twitter', 'server')
+  api.use('ecmascript')
 })

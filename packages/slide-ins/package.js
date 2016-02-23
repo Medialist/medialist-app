@@ -14,4 +14,5 @@ Package.onUse(function(api) {
   api.addFiles('slide-ins.js', 'client')
   api.addFiles('slide-ins.css', 'client')
   api.export('SlideIns', 'client')
+  api.use('ecmascript')
 })

@@ -12,4 +12,5 @@ Package.onUse(function(api) {
   api.addFiles('server.js', 'server')
   api.addFiles('client.browserify.js', 'client')
   api.export('twitterScreenName', ['client', 'server'])
+  api.use('ecmascript')
 })

@@ -21,13 +21,16 @@
 @status-not-interested: @red-400;
 
 // boostrap overrides
+@font-size-base:  13px;
+@font-size-small: 10px;
+@font-size-large: 18px;
 @navbar-height: 68px;
 @border-radius-base:  0px;
 @border-radius-large: 2px;
 @border-radius-small: 0px;
 @body-bg: @grey-50;
 @text-color: @gray-dark;
-@input-color: @gray-darker;
+@input-color: @gray-dark;
 @navbar-default-link-active-color: @navbar-default-link-color;
 @navbar-default-link-active-bg: @navbar-default-bg;
 @table-bg-hover: @brand-primary-light;
@@ -242,4 +245,46 @@ table th.sort-up:after {
   h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     color:white;
   }
+}
+.form-group-editable .form-control-static {
+  display:block;
+}
+.form-group-editable {
+  position:relative;
+  transition: box-shadow 200ms linear;
+  &::after {
+    .glyphicon();
+    color: @gray-light;
+    position:absolute;
+    right: 5px;
+    top: 25px;
+    content:"\270f";
+    opacity: 0;
+    transition: opacity 200ms linear;
+  }
+  &:hover {
+    box-shadow: inset 0 -1px 0 0 @gray-light;
+    &::after {
+      opacity: 1;
+    }
+  }
+  label {
+    display:block;
+    margin-bottom:-8px;
+    font-size:12px;
+  }
+  .form-group-sub {
+    position:absolute;
+    bottom:-20px;
+    right:0;
+    width:100%;
+    text-align:right;
+    font-size:12px;
+    opacity:0;
+    transition: opacity 200ms linear;
+  }
+}
+.form-group-sub:hover,
+.form-group-editable:hover .form-group-sub {
+  opacity:1;
 }

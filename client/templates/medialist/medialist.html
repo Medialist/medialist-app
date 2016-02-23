@@ -58,7 +58,7 @@
 </template>
 
 <template name="medialistContactRow">
-  <tr class="document-row {{#if equal slug selected}}selected{{/if}} {{#if checked}}checked-row{{/if}}" data-contact="{{slug}}" data-action="show-contact-slide-in">
+  <tr class="document-row {{#if equal slug contactQuerySlug}}selected{{/if}} {{#if checked}}checked-row{{/if}}" data-contact="{{slug}}" data-action="show-contact-slide-in">
     <td class="col-checkbox" data-no-sidebar>
       <div class="checkbox checkbox-default">
         <label>

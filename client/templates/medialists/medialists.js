@@ -1,9 +1,9 @@
 Template.medialists.onCreated(function () {
-  this.filterTerm = new ReactiveVar()
-  this.checkSelect = new ReactiveVar({})
-  this.query = new ReactiveVar({})
-  this.selected = new ReactiveVar()
-  this.autorun(() => {
+  var tpl = this
+  tpl.filterTerm = new ReactiveVar()
+  tpl.checkSelect = new ReactiveVar({})
+  tpl.query = new ReactiveVar({})
+  tpl.autorun(() => {
     var filterTerm = Template.instance().filterTerm.get()
     var query = {}
     if (filterTerm) {
@@ -14,9 +14,24 @@ Template.medialists.onCreated(function () {
         { 'client.name': filterRegExp }
       ]
     }
-    this.query.set(query)
+    tpl.query.set(query)
   })
-  this.subscribe('medialists')
+  tpl.subscribe('medialists')
+
+  tpl.autorun(() => {
+    FlowRouter.watchPathChange()
+    if (!tpl.subscriptionsReady()) return
+    var medialistSlug = FlowRouter.getQueryParam('medialist')
+    if (Medialists.find({ slug: medialistSlug }).count()) {
+      SlideIns.show('right', 'medialistSlideIn', { medialist: medialistSlug })
+      Meteor.setTimeout(() => {
+        var medialistRow = tpl.$(`[data-medialist="${medialistSlug}"]`)
+        if (!medialistRow.visible()) $.scrollTo(medialistRow, { offset: -250 })
+      }, 1)
+    } else {
+      SlideIns.hide('right')
+    }
+  })
 })
 
 Template.medialists.onRendered(function () {
@@ -42,6 +57,7 @@ Template.medialists.helpers({
 
 Template.medialists.events({
   'click [data-action="create-medialist"]': function () {
+    FlowRouter.setQueryParams({ contact: null, medialist: null })
     Modal.show('createMedialist')
   },
   'keyup [data-field="filter-term"]': function (evt, tpl) {
@@ -63,10 +79,8 @@ Template.medialists.events({
     App.toggleReactiveObject(tpl.checkSelect, this.slug)
     if(!$(evt.currentTarget).prop('checked')) $('[data-checkbox-all]').prop('checked', false)
   },
-  'click [data-action="show-medialist-details"]': function (evt, tpl) {
+  'click [data-action="show-medialist-details"]': function (evt) {
     if (evt.target.tagName === 'A') return SlideIns.hide('right')
-    tpl.selected.set(this.slug)
     FlowRouter.setQueryParams({ medialist: this.slug })
-    SlideIns.show('right', 'medialistSlideIn', { medialist: this.slug })
   },
 })

@@ -3,9 +3,9 @@ function makeQuery(term) {
   if (term) {
     var filterRegExp = new RegExp(term, 'gi')
     query.$or = [
-      { 'name': filterRegExp },
-      { 'roles.0.title': filterRegExp },
-      { 'roles.0.org': filterRegExp }
+      { name: filterRegExp },
+      { jobTitles: filterRegExp },
+      { primaryOutlets: filterRegExp }
     ]
   }
   return query

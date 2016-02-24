@@ -36,7 +36,7 @@ Meteor.methods({
       })
     }
     // return if a matching twitter handle already exists
-    var existingContact = details.screenName && Contacts.findOne({ 'socials.label': 'Twitter', 'socials.value': details.screenName }, { transform: null })
+    var existingContact = details.screenName && Contacts.findOne({ 'socials.label': 'Twitter', 'socials.value': details.screenName })
     if (existingContact) return existingContact
     contact.avatar = '/images/avatar.svg'
     contact.slug = details.screenName || App.cleanSlug(details.name)

@@ -23,7 +23,7 @@ Meteor.methods({
       jobTitles: details.jobTitles,
       languages: 'English',
       emails:  [{label: Contacts.emailTypes[0], value: details.email}],
-      phones:  [{label: Contacts.phoneTypes[0], value: details.email}],
+      phones:  [{label: Contacts.phoneTypes[0], value: details.phone}],
       socials: [{label: 'Twitter', value: details.twitter}],
       medialists: [],
       createdAt: new Date(),
@@ -39,9 +39,7 @@ Meteor.methods({
     if (medialistSlug) contact.medialists.push(medialistSlug)
 
     // Save the contact
-
-    // Disable check pending: https://github.com/Medialist/medialist-app/issues/290
-    // check(contact, Schemas.Contacts)
+    check(contact, Schemas.Contacts)
     var contactId = Contacts.insert(contact)
 
     if (medialistSlug) {

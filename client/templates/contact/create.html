@@ -1,40 +1,60 @@
 <template name="createContact">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog">
     <div class="modal-content">
-      {{#if queryingTwitter}}{{> spinner}}{{/if}}
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Create contact</h4>
-        </div>
-        <div class="modal-body">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-sm-3">
-                <img class="circle" width="100" height="100" id="contact-create-avatar" src="/images/avatar.svg" />
-              </div>
-              <div class="col-sm-9">
-                <form>
-                  <div class="form-group">
-                    <label for="contact-create-name">Name</label>
-                    <input type="text" value="{{name}}" id="contact-create-name" class="form-control" autofocus >
-                  </div>
-                  <div class="form-group">
-                    <label for="contact-create-screenName">Twitter</label>
-                    <input type="text" value="{{screenName}}" id="contact-create-screenName" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label for="contact-create-bio">Bio</label>
-                    <textarea id="contact-create-bio" class="form-control"></textarea>
-                  </div>
-                  <div class="form-group" style="text-align:right">
-                    <a class="btn btn-text" data-dismiss="modal" aria-label="Close">Cancel</a>
-                    <button class="btn btn-primary">Save</button>
-                  </div>
-                </form>
-              </div>
+          <div class="row">
+            <div class="col-sm-9 col-sm-offset-2">
+              <h4 class="modal-title">Add new contact</h4>
             </div>
           </div>
         </div>
+        <form>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-2 text-right">
+                  <img class="img-rounded" width="48" height="48" src="{{betterImage twit.profile_image_url_https}}" />
+                  {{#if queryingTwitter}}
+                    {{> spinner}}
+                  {{/if}}
+                </div>
+                <div class="col-sm-9">
+                  <div class="form-group form-group-editable">
+                    <label for="contact-name">Name</label>
+                    <input  id="contact-name" class="form-control input-lg" type="text" value="{{name}}" autofocus required>
+                  </div>
+                  <div class="form-group form-group-editable">
+                    <label for="contact-twitter">Twitter</label>
+                    <input  id="contact-twitter" class="form-control input-lg" type="text" value="{{screenName}}" >
+                  </div>
+                  <div class="form-group form-group-editable">
+                    <label for="contact-primaryOutlets">Media Outlet</label>
+                    <input  id="contact-primaryOutlets" class="form-control input-lg typeahead" type="text" autocomplete="off" spellcheck="off" required>
+                  </div>
+                  <div class="form-group form-group-editable">
+                    <label for="contact-jobTitles">Title</label>
+                    <input  id="contact-jobTitles" class="form-control input-lg" type="text" required>
+                  </div>
+                  <div class="form-group form-group-editable">
+                    <label for="contact-email">Work Email</label>
+                    <input  id="contact-email" class="form-control input-lg" type="email" name="contact-email">
+                  </div>
+                  <div class="form-group form-group-editable">
+                    <label for="contact-phone">Work Phone</label>
+                    <input  id="contact-phone" class="form-control input-lg" type="tel" >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="col-sm-9 col-sm-offset-2">
+              <a class="btn btn-link" data-dismiss="modal" aria-label="Close">Cancel</a>
+              <button class="btn btn-primary">Save</button>
+            </div>
+          </div>
+        </form>
     </div>
   </div>
 </template>

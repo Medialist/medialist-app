@@ -2,47 +2,43 @@ Meteor.methods({
 
   'contacts/create': function (details, medialistSlug) {
     if (!this.userId) throw new Meteor.Error('Only a logged in user can create a contact')
-    var user = Meteor.users.findOne(this.userId)
-    var contact = {
-      name: details.name,
-      bio: details.bio,
-      primaryOutlets: '',
-      sectors: '',
-      jobTitles: '',
-      languages: 'English',
-      emails: [],
-      phones: []
-    }
-
     check(details, Object)
     if (medialistSlug) {
       check(medialistSlug, String)
       if (!Medialists.find({slug: medialistSlug}).count()) throw new Meteor.Error('Medialist #' + medialistSlug + ' does not exist')
     }
 
-    contact.createdAt = new Date()
-    contact.createdBy = {
-      _id: user._id,
-      name: user.profile.name,
-      avatar: user.services.twitter.profile_image_url_https
+    // return if a matching twitter handle already exists
+    var existingContact = details.twitter && Contacts.findOne({ 'socials.label': 'Twitter', 'socials.value': details.twitter })
+    if (existingContact) return existingContact
+
+    var user = Meteor.user()
+    var contact = {
+      name: details.name,
+      slug: App.uniqueSlug(details.twitter || App.cleanSlug(details.name), Contacts),
+      avatar: '/images/avatar.svg',
+      bio: '',
+      primaryOutlets: details.primaryOutlets,
+      sectors: '',
+      jobTitles: details.jobTitles,
+      languages: 'English',
+      emails:  [{label: Contacts.emailTypes[0], value: details.email}],
+      phones:  [{label: Contacts.phoneTypes[0], value: details.phone}],
+      socials: [{label: 'Twitter', value: details.twitter}],
+      medialists: [],
+      createdAt: new Date(),
+      createdBy: {
+        _id: user._id,
+        name: user.profile.name,
+        avatar: user.services.twitter.profile_image_url_https
+      }
     }
     contact.updatedAt = contact.createdAt
     contact.updatedBy = contact.createdBy
-    contact.socials = []
-    if (details.screenName) {
-      contact.socials.push({
-        label: 'Twitter',
-        value: details.screenName
-      })
-    }
-    // return if a matching twitter handle already exists
-    var existingContact = details.screenName && Contacts.findOne({ 'socials.label': 'Twitter', 'socials.value': details.screenName })
-    if (existingContact) return existingContact
-    contact.avatar = '/images/avatar.svg'
-    contact.slug = details.screenName || App.cleanSlug(details.name)
-    contact.slug = App.uniqueSlug(contact.slug, Contacts)
-    contact.medialists = []
+
     if (medialistSlug) contact.medialists.push(medialistSlug)
+
+    // Save the contact
     check(contact, Schemas.Contacts)
     var contactId = Contacts.insert(contact)
 
@@ -53,9 +49,10 @@ Meteor.methods({
       App.medialistUpdated(medialistSlug, this.userId)
     }
 
-    if (details.screenName) {
-      Contacts.changeScreenName(contactId, details.screenName)
+    if (details.twitter) {
+      Contacts.changeScreenName(contactId, details.twitter)
     }
+
     return contact
   },
 

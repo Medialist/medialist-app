@@ -59,7 +59,7 @@ Template.contacts.helpers({
 Template.contacts.events({
   'click [data-action="add-new"]': function () {
     FlowRouter.setQueryParams({ contact: null, medialist: null })
-    Modal.show('addContact', { ignoreExisting: true })
+    Modal.show('createContact', { ignoreExisting: true })
   },
   'keyup [data-field="filter-term"]': function (evt, tpl) {
     var filterTerm = tpl.$(evt.currentTarget).val()

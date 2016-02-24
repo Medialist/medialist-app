@@ -16,7 +16,7 @@ var allContactsTpl
 Template.contacts.onCreated(function () {
   allContactsTpl = this
   allContactsTpl.checkSelect = new ReactiveVar({})
-  allContactsTpl.subscribe('contacts', {limit: 100})
+  allContactsTpl.subscribe('contacts')
   allContactsTpl.filterTerm = new ReactiveVar()
   allContactsTpl.query = new ReactiveVar()
   allContactsTpl.autorun(() => {

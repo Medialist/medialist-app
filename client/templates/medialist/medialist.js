@@ -12,9 +12,9 @@ Template.medialist.onCreated(function () {
     if (filterTerm) {
       var filterRegExp = new RegExp(filterTerm, 'gi')
       query.$or = [
-        { 'name': filterRegExp },
-        { 'roles.0.title': filterRegExp },
-        { 'roles.0.org.name': filterRegExp }
+        { name: filterRegExp },
+        { jobTitles: filterRegExp },
+        { primaryOutlets: filterRegExp }
       ]
     }
     medialistTpl.query.set(query)

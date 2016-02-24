@@ -1,26 +1,16 @@
-var queryingTwitter = new ReactiveVar(false)
-
 Template.createContact.onCreated(function () {
   var tpl = this
   tpl.screenName = ''
+  tpl.queryingTwitter = new ReactiveVar(false)
+  tpl.twit = ReactiveVar({profile_image_url_https: '/images/avatar.svg'})
   tpl.getTwitterDetails = _.debounce(function () {
-    queryingTwitter.set(true)
+    tpl.queryingTwitter.set(true)
     Meteor.call('twitter/grabUserByScreenName', tpl.screenName, function (err, res) {
-      queryingTwitter.set(false)
+      tpl.queryingTwitter.set(false)
       if (err) return console.error(err)
-      if (!tpl.$('#contact-create-name').val()) {
-        tpl.$('#contact-create-name').val(res.name)
-      }
-      if (!tpl.$('#contact-create-bio').val()) {
-        tpl.$('#contact-create-bio').val(res.description)
-      }
-      tpl.$('#contact-create-avatar').attr('src', res.profile_image_url_https)
+      tpl.twit.set(res)
     })
   }, 1000, true)
-})
-
-Template.addContactDetails.onDestroyed(function () {
-  queryingTwitter.set(false)
 })
 
 Template.createContact.onRendered(function () {
@@ -33,31 +23,34 @@ Template.createContact.onRendered(function () {
 
 Template.createContact.helpers({
   queryingTwitter: function () {
-    return queryingTwitter.get()
+    var tpl = Template.instance()
+    return tpl.queryingTwitter.get()
+  },
+  twit: function () {
+    var tpl = Template.instance()
+    return tpl.twit.get()
   }
 })
 
 Template.createContact.events({
-  'change #contact-create-screenName': function (evt, tpl) {
+  'change #contact-twitter': function (evt, tpl) {
     tpl.screenName = tpl.$(evt.currentTarget).val()
     tpl.getTwitterDetails()
   },
 
   'submit': function (evt, tpl) {
     evt.preventDefault()
-
-    var fields = ['name', 'screenName', 'bio']
+    var fields = ['name', 'twitter', 'primaryOutlets', 'jobTitles', 'email', 'phone']
     var contact = fields.reduce(function (contact, field) {
-      var value = tpl.$('#contact-create-' + field).val()
+      var value = tpl.$('#contact-' + field).val()
       if (value && field === 'screenName') contact[field] = value.replace('@', '')
       else if (value) contact[field] = value
       return contact
     }, {})
-
     Meteor.call('contacts/create', contact, tpl.data.medialist, function (err, contact) {
       if (err) return console.error(err)
-      FlowRouter.setQueryParams({ contact: null, medialist: null })
-      Modal.show('addContactDetails', {slug: contact.slug})
+      FlowRouter.setQueryParams({ contact: contact.slug, medialist: null })
+      Modal.hide()
     })
   }
 })

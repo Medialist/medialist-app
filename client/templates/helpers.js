@@ -47,7 +47,7 @@ var helpers = {
   profileImage: function () {
     var user = Meteor.user();
     if (!user || !user.services) return null;
-    return user.services.twitter.profile_image_url_https;
+    return user.services.twitter.profile_image_url_https.replace('_normal.', '.');
   },
   youOrName: function (user) {
     if (user && user._id === Meteor.userId()) return 'You'
@@ -62,9 +62,12 @@ var helpers = {
   socialTypes: function () {
     return Contacts.socialTypes
   },
-  fieldName(a, index, b) {
+  fieldName (a, index, b) {
     var res = [a, index, b].join('.')
     return res
+  },
+  betterImage (url) {
+    return url.replace('_normal.', '.')
   },
   or: (x, y) => x || y,
   and: (x, y) => x && y,

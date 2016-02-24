@@ -20,9 +20,10 @@ Meteor.publish('contacts', function (opts) {
 
   var options = {
     sort: { createdAt: -1 },
-    limit: opts.limit || App.contactSuggestions,
     fields: { importedData: 0 }
   }
+  if (opts.limit)
+  options.limit = opts.limit
 
   return Contacts.find(query, options)
 })

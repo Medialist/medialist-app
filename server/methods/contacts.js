@@ -9,7 +9,7 @@ Meteor.methods({
     }
 
     // return if a matching twitter handle already exists
-    var existingContact = details.twitter && Contacts.findOne({ 'socials.label': 'Twitter', 'socials.value': details.twitter }, { transform: null })
+    var existingContact = details.twitter && Contacts.findOne({ 'socials.label': 'Twitter', 'socials.value': details.twitter })
     if (existingContact) return existingContact
 
     var user = Meteor.user()

@@ -2,10 +2,22 @@ var Migrations = new Mongo.Collection('tableflip_migrations')
 
 var MigrationVersions = [
   {
+    number: 0,
+    instructions () {
+      // Make sure there are no moments actually in the DB
+      ;[Orgs, Clients, Contacts, Medialists, Posts].forEach(Collection => {
+        Collection.find({}).forEach(doc => {
+          if (removeMoments(doc)) Collection.update(doc._id, doc)
+        })
+      })
+    }
+  },
+
+  {
     number: 1,
     instructions () {
       // Contacts migration to update roles.org with reference to org doc (which is added if required)
-      Contacts.find({}, { transform: null }).forEach(contact => {
+      Contacts.find({}).forEach(contact => {
         _.forEach(contact.roles, role => {
           if (typeof role.org !== 'string') return
           var orgName = role.org
@@ -26,7 +38,7 @@ var MigrationVersions = [
     number: 2,
     instructions () {
       // Contacts migration to update createdBy to object with _id and slug if it is just a slug string
-      Contacts.find({}, { transform: null }).forEach(contact => {
+      Contacts.find({}).forEach(contact => {
         if (typeof contact.createdBy !== 'string') return
         var newCreatedBy = { _id: contact.createdBy }
         var user = Meteor.users.findOne(contact.createdBy)
@@ -41,7 +53,7 @@ var MigrationVersions = [
     number: 3,
     instructions () {
       // Posts migration to update contacts info in post to be an object with slug and name if it is just a slug string
-      Posts.find({}, { transform: null }).forEach(post => {
+      Posts.find({}).forEach(post => {
         var newContacts = post.contacts.reduce((memo, contact) => {
           if (typeof contact !== 'string') {
             memo.push(contact)
@@ -65,7 +77,7 @@ var MigrationVersions = [
     number: 4,
     instructions () {
       // Posts migration to add type: 'feedback' to any post with no type field
-      Posts.find({}, { transform: null }).forEach(post => {
+      Posts.find({}).forEach(post => {
         if (!post.type) {
           post.type = 'feedback'
           Posts.update(post._id, post)
@@ -78,7 +90,7 @@ var MigrationVersions = [
     number: 5,
     instructions () {
       // Clients migration to update medialist client to be an object with _id and name (added to Clients collection if required) where they are just a slug string
-      Medialists.find({}, { transform: null }).forEach(medialist => {
+      Medialists.find({}).forEach(medialist => {
         if (typeof medialist.client === 'string') {
           var client = Clients.findOne({ name: medialist.client })
           var newClient = { name: medialist.client }
@@ -98,7 +110,7 @@ var MigrationVersions = [
     number: 7,
     instructions () {
       // Posts migration to add createdBy avatars
-      Posts.find({}, { transform: null }).forEach(post => {
+      Posts.find({}).forEach(post => {
         if (!post.createdBy.avatar) {
           var user = Meteor.users.findOne(post.createdBy._id)
           if (user) {
@@ -114,7 +126,7 @@ var MigrationVersions = [
     number: 8,
     instructions () {
       // Posts migration to add contacts avatars
-      Posts.find({}, { transform: null }).forEach(post => {
+      Posts.find({}).forEach(post => {
         var newContacts = post.contacts.map(contact => {
           if (!contact.avatar) {
             var thisContact = Contacts.findOne({ slug: contact.slug })
@@ -131,20 +143,8 @@ var MigrationVersions = [
   {
     number: 9,
     instructions () {
-      // Make sure there are no moments actually in the DB
-      ;[Orgs, Clients, Contacts, Medialists, Posts].forEach(Collection => {
-        Collection.find({}, { transform: null }).forEach(doc => {
-          if (removeMoments(doc)) Collection.update(doc._id, doc)
-        })
-      })
-    }
-  },
-
-  {
-    number: 10,
-    instructions () {
       // Replaces contact details based on new schema
-      Contacts.find({}, { transform: null }).forEach(contact => {
+      Contacts.find({}).forEach(contact => {
         // Check contact has not already been transformed
         if (contact.socials) return
         var newContact = _.extend({}, contact, {
@@ -192,7 +192,7 @@ var MigrationVersions = [
     number: 11,
     instructions () {
       // Updates id to twitterId in socials objects
-      Contacts.find({}, { transform: null }).forEach(contact => {
+      Contacts.find({}).forEach(contact => {
         var save = false
         contact.socials.forEach(social => {
           if (social.label === 'Twitter' && social.id) {

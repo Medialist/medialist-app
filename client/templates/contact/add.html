@@ -45,14 +45,16 @@
     </div>
     <div class="media-right">
       <a href="#" data-action="view-contact">View contact</a>
-      {{#if inCurrentMedialist}}
-      <span class="btn btn-non-button">
-        <span class="fa fa-check-square-o"></span>
-      </span>
-      {{else}}
-      <span class="btn btn-link" data-action="add-contact">
-        <span class="fa fa-user-plus"></span>
-      </span>
+      {{#if medialistSlug}}
+        {{#if inCurrentMedialist}}
+        <span class="btn btn-non-button">
+          <span class="fa fa-check-square-o"></span>
+        </span>
+        {{else}}
+        <span class="btn btn-link" data-action="add-contact">
+          <span class="fa fa-user-plus"></span>
+        </span>
+        {{/if}}
       {{/if}}
     </div>
   </div>

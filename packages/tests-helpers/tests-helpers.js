@@ -58,7 +58,8 @@ if (Meteor.isServer) {
           client: {
             name: faker.company.companyName()
           },
-          purpose: faker.lorem.sentence()
+          purpose: faker.lorem.sentence(),
+          topics: Array(_.random(1, 3)).fill(0).map(() => faker.commerce.department())
         })
       })
     },
@@ -69,7 +70,8 @@ if (Meteor.isServer) {
         Meteor.call('contacts/create', {
           screenName: faker.internet.domainWord(),
           name: faker.name.findName(),
-          bio: faker.lorem.sentence()
+          primaryOutlets: faker.company.companyName(),
+          jobTitles: faker.name.jobTitle()
         }, _.sample(medialists))
       })
     },
